@@ -32,10 +32,40 @@ label {
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 95%;
   margin: 0 auto;
 }
 
 .section {
   padding: 50px 0;
+}
+
+.tools-button {
+  width: 200px;
+  height: 100px;
+  margin: 20px;
+}
+
+
+.tool-card {
+  display: block;
+  
+  border: solid 1px grey;
+  min-height: 300px;
+}
+
+.section-choices {
+  margin: 0 20px;
+  display: grid;
+  
+  grid-column-gap: 50px;
+  grid-template-columns: 1fr 1fr;
+  
+}
+
+.tool-card-wrapper-inner {
+  margin: 0 20px;
+  display: grid;
+  grid-column-gap: 50px;
+  grid-template-columns: 1fr 1fr;
 }
