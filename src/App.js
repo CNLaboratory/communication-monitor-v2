@@ -75,7 +75,7 @@ class App extends Component {
 
             {showModeratorBoard && (
               <li className="nav-item">
-                <Link to={"/mod tools"} className="nav-link">
+                <Link to={"/mod"} className="nav-link">
                   Moderator Board
                 </Link>
               </li>
@@ -83,7 +83,7 @@ class App extends Component {
 
             {showAdminBoard && (
               <li className="nav-item">
-                <Link to={"/admin tools"} className="nav-link">
+                <Link to={"/admin"} className="nav-link">
                   Admin Board
                 </Link>
               </li>
@@ -91,8 +91,8 @@ class App extends Component {
 
             {currentUser && (
               <li className="nav-item">
-                <Link to={"/user tools"} className="nav-link">
-                  User
+                <Link to={"/user"} className="nav-link">
+                  User Tools
                 </Link>
               </li>
             )}
