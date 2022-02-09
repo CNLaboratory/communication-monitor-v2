@@ -134,12 +134,12 @@ class NtuaCommunicationMonitor extends React.Component {
     }
     if (isTool1) {
       console.log('isTool1');
-      toolComponent1 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/product'} checkInterval={0} responseData = {this.getDataFromComponent} />;
+      toolComponent1 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/product'} checkInterval={5000} responseData = {this.getDataFromComponent} />;
       
     }
     if (isTool2) {
       console.log('isTool2');
-      toolComponent2 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/shifts'} checkInterval={0} responseData = {this.getDataFromComponent} />;
+      toolComponent2 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/shifts'} checkInterval={5000} responseData = {this.getDataFromComponent} />;
     }
     if (this.state.isDataLoaded) {
       //componentsArray.push(<CreateCharts data={this.state.itemData} />);
