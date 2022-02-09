@@ -64,7 +64,7 @@ class NtuaCommunicationMonitor extends React.Component {
     productDataArray = [];
     
     for (url in formValues) {
-      productDataArray.push(<GetDataFromAPI API_URL={formValues[url]['url']} checkInterval={0} responseData = {this.getDataFromComponent} />);
+      productDataArray.push(<GetDataFromAPI API_URL={formValues[url]['url']} checkInterval={5000} responseData = {this.getDataFromComponent} />);
 
       //productDataArray.push(<ProductData API_URL={formValues[url]['url']} checkInterval={0}/> );
     }
