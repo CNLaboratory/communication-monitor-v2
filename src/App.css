@@ -72,8 +72,13 @@ label {
 
 .sidebar {
   height: 100vh;
+  position: sticky;
+  top: 0;
 }
 
 .App {
   display: flex;
+}
+#newtable input {
+  font-size:15px;
 }

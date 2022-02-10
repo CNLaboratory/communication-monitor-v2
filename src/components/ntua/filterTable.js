@@ -17,24 +17,26 @@ export default function FilterTable({ columns, data }) {
         container: {
             
             overflow: "auto",
-            height: "800px"
+            minHeight: "400px"
       
         },
         table: {
-          marginTop: "30px",
+          marginTop: "20px",
           maxWidth: "100%"
         },
       thead: {
+        fontSize: '20px',
         backgroundColor: "#2e2e2e"
       },
       td: {
-        padding: "20px 20px",
+        padding: "10px 10px",
         border: "dotted 1px black"
       },
       tr: {
           color: "white",
           padding: "20px"
       }
+      
     };
     
   
@@ -72,9 +74,10 @@ export default function FilterTable({ columns, data }) {
                 {/*console.log("test2")*/}
                   {headerGroup.headers.map((column) => (
                     <th {...column.getHeaderProps()} style={styles.tr}>
+                      <div>{column.canFilter ? column.render("Filter") : null}</div>
                       {column.render("Header")}
                       
-                      <div>{column.canFilter ? column.render("Filter") : null}</div>
+                      
                     </th>
                   ))}
                 </tr>

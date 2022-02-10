@@ -55,10 +55,11 @@ export default class UserSidebar extends React.Component {
                 </SidebarHeader>
                 <SidebarContent>
                     <Menu>
+                        {/*
                         <MenuItem active={true} >
                             Home <Link to={"/"} />
                         </MenuItem>
-                        
+                        */}
                         <SubMenu title='Visualization Toolset' icon={<FaBezierCurve />}>
                             <MenuItem >Transactions Monitor<Link to={"/transactionsdepiction"} /></MenuItem>
                             <MenuItem >Sensors Depiction<Link to={"/sensorsdepiction"} /></MenuItem>

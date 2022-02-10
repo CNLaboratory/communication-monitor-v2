@@ -32,16 +32,17 @@ export default class DefaultSidebar extends React.Component {
             
                 </SidebarHeader>
                 <SidebarContent>
+                <Menu iconShape="square">
+                        <MenuItem >Login <Link to={"/login"} /></MenuItem>
+                    </Menu>
+                    
+                </SidebarContent>
+                <SidebarFooter>
                     <Menu>
-                        <MenuItem active={true} >
+                        <MenuItem>
                             Home <Link to={"/"} />
                         </MenuItem>
                         
-                    </Menu>
-                </SidebarContent>
-                <SidebarFooter>
-                    <Menu iconShape="square">
-                        <MenuItem >Login <Link to={"/login"} /></MenuItem>
                     </Menu>
                 </SidebarFooter>
             </ProSidebar>
