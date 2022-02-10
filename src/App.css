@@ -69,3 +69,11 @@ label {
   grid-column-gap: 50px;
   grid-template-columns: 1fr 1fr;
 }
+
+.sidebar {
+  height: 100vh;
+}
+
+.App {
+  display: flex;
+}

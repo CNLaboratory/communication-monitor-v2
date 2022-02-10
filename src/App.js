@@ -13,8 +13,26 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
+import LogoutComponent from "./components/logout-component";
+import Sidebar from './components/sidebar/sidebar';
+import DefaultSidebar from "./components/sidebar/default-sidebar";
+import UserSidebar from "./components/sidebar/user-sidebar";
+import ModSidebar from "./components/sidebar/mod-sidebar";
+import AdminSidebar from "./components/sidebar/admin-sidebar";
+
+//import react pro sidebar components
+import {
+  ProSidebar,
+  Menu,
+  MenuItem,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarContent,
+} from "react-pro-sidebar";
+
 // import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
+import DataDisplay from "./components/data-display";
 
 class App extends Component {
   constructor(props) {
@@ -61,7 +79,41 @@ class App extends Component {
     const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
 
     return (
-      <div>
+      
+        <div className="App">
+          <div className="sidebar">
+            {!currentUser && (
+              <DefaultSidebar/>
+            )}
+          
+            {showAdminBoard && (
+              <AdminSidebar logOut={this.logOut}/>
+            )}
+          
+            {showModeratorBoard && (
+              <ModSidebar logOut={this.logOut}/>
+            )}
+          
+            {currentUser && (
+              <UserSidebar logOut={this.logOut}/>
+            )}
+          </div>
+          <div className="container mt-3">
+          <Switch>
+            <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/transactionsdepiction" component={() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction'} />}/>
+            <Route exact path='/sensorsdepiction' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction'} />} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/profile" component={Profile} />
+            <Route path="/user" component={BoardUser} />
+            <Route path="/mod" component={BoardModerator} />
+            <Route path="/admin" component={BoardAdmin} />
+          </Switch>
+        </div>
+              
+      {/*
+        <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/"} className="navbar-brand">
             NTUA
@@ -127,7 +179,6 @@ class App extends Component {
             </div>
           )}
         </nav>
-
         <div className="container mt-3">
           <Switch>
             <Route exact path={["/", "/home"]} component={Home} />
@@ -139,6 +190,10 @@ class App extends Component {
             <Route path="/admin" component={BoardAdmin} />
           </Switch>
         </div>
+          
+        </div>
+        
+        */}
 
         { /*<AuthVerify logOut={this.logOut}/> */ }
       </div>

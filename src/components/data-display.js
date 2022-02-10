@@ -5,13 +5,13 @@ import GetDataFromAPI from './ntua/getDataFromAPI';
 import ToolCard from './ntua/toolCard';
 
 
-const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
+//const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
 const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction";
 const API_URL3 = "http://147.102.40.53:5000/product";
 
 
 
-class NtuaCommunicationMonitor extends React.Component {
+class DataDisplay extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
@@ -22,8 +22,8 @@ class NtuaCommunicationMonitor extends React.Component {
        isCustom: false,
        isTool1: false,
        isTool2: false,
-       refreshInterval: 0,
-       
+       refreshInterval: props.refreshInterval,
+       API_URL: props.API_URL,
        toolCardComponent: [
         <div className='tool-card'><button className="plusButton-1" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0 , background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>,
         <div className='tool-card'><button className="plusButton-2" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0, background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>,
@@ -113,35 +113,10 @@ class NtuaCommunicationMonitor extends React.Component {
     let testComponent2;
     let newToolCardComponent;
     
-    if (isCustom) {
-      console.log('isCustom');
-      customFormComponent = <form  onSubmit={this.handleSubmit}>
-                        {this.state.formValues.map((element, index) => (
-                      <div className="form-inline" key={index}>
-                        <label>Address</label>
-                      <input type="url" name="url" value={element.url || ""} onChange={e => this.handleChange(index, e)} />
-                      {
-                        index ? 
-                          <button type="button"  className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button> 
-                        : null
-                      }
-                    </div>
-                  ))}
-                  <div className="button-section">
-                      <button className="button add" type="button" onClick={() => this.addFormFields()}>Add</button>
-                      <button className="button submit" type="submit">Submit</button>
-                  </div>
-                </form>;
-    }
-    if (isTool1) {
-      console.log('isTool1');
-      toolComponent1 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/product'} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
+    
+    toolComponent1 = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
       
-    }
-    if (isTool2) {
-      console.log('isTool2');
-      toolComponent2 = <GetDataFromAPI API_URL={'http://147.102.40.53:5000/shifts'} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
-    }
+    
     if (this.state.isDataLoaded) {
       //componentsArray.push(<CreateCharts data={this.state.itemData} />);
       console.log('inside loop');
@@ -152,18 +127,15 @@ class NtuaCommunicationMonitor extends React.Component {
         <div className='tool-card'><ToolCard data={this.state.itemData} /></div>
       ]
       
-      //this.state.toolCardComponent.push(<div className='tool-card'><ToolCard data={this.state.itemData} /></div>);
-      //addComponent = <div className='tool-card'><button className="plusButton" onClick={this.handleAddButton} style={{height: '48px', width: '48px', background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>;
+      
     }
 
     return (
-      <div className='App'>
+      <div className='data-display'>
         <div className='header'>
-          <h1>Please, select a tool to use</h1>
+          <h1>Use Fetch Data to pull new data</h1>
           <div>
-            <button className='tools-button' type='button' onClick={() => this.setState({isTool1: true, isTool2: false, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})}>Product</button>
-            <button className='tools-button' type='button' onClick={() => this.setState({isTool1: false, isTool2: true, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})}>Shifts</button>
-            <button className='tools-button' type='button' onClick={() => this.setState({isTool1: false, isTool2: false, isCustom: true, isDataLoaded: false, productDataArray: [], itemData:[]})}>Custom</button>
+            <button className='tools-button' type='button' onClick={() => this.setState({isTool1: true, isTool2: false, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})}>Fetch Data</button>
           </div>
           
         </div>
@@ -194,6 +166,6 @@ class NtuaCommunicationMonitor extends React.Component {
     );
   }
 }
-export default NtuaCommunicationMonitor;
+export default DataDisplay;
 
 

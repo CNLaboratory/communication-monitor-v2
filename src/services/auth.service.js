@@ -1,11 +1,20 @@
 import axios from "axios";
 
-const API_URL = "http://cndevs.cn.ntua.gr:8080/api/auth/";
+//const API_URL = "http://cndevs.cn.ntua.gr:8080/api/auth/";
 
 class AuthService {
+  
+  constructor() {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      this.API_URL = 'http://localhost:8080/api/auth/';
+    } else {
+      this.API_URL = 'http://cndevs.cn.ntua.gr:8080/api/auth/';
+    }
+  }
+
   login(username, password) {
     return axios
-      .post(API_URL + "signin", {
+      .post(this.API_URL + "signin", {
         username,
         password
       })
@@ -23,7 +32,7 @@ class AuthService {
   }
 
   register(username, email, password) {
-    return axios.post(API_URL + "signup", {
+    return axios.post(this.API_URL + "signup", {
       username,
       email,
       password
