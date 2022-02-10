@@ -9,7 +9,7 @@ import {
   } from "react-pro-sidebar";
   
 //import icons from react icons
-import { FaList, FaRegHeart } from "react-icons/fa";
+import { FaList, FaRegHeart, FaBezierCurve, FaCog, FaQuestion, FaBug, FaExclamationTriangle} from "react-icons/fa";
 import { FiHome, FiLogOut, FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
 import { RiPencilLine } from "react-icons/ri";
 import { BiCog } from "react-icons/bi";
@@ -59,19 +59,19 @@ export default class UserSidebar extends React.Component {
                             Home <Link to={"/"} />
                         </MenuItem>
                         
-                        <SubMenu title='Visualization Toolset'>
+                        <SubMenu title='Visualization Toolset' icon={<FaBezierCurve />}>
                             <MenuItem >Transactions Monitor<Link to={"/transactionsdepiction"} /></MenuItem>
                             <MenuItem >Sensors Depiction<Link to={"/sensorsdepiction"} /></MenuItem>
                             <MenuItem onClick={this.handleClickDistances}>Visualize Distances</MenuItem>
                             <MenuItem onClick={this.handleClickTransactions}>Visualize Transactions</MenuItem>
                             <MenuItem onClick={this.handleClickDriveTampering}>Visualize Drive Tampering</MenuItem>
                         </SubMenu>
-                        <SubMenu title='Fusion Toolset'>
+                        <SubMenu title='Fusion Toolset' icon={<FaCog />}>
                             <MenuItem >Abnormal Detection<Link to={"/abnormaldetection"} /></MenuItem>
                             <MenuItem >Driver Tampering<Link to={"/drivertampering"} /></MenuItem>
                             <MenuItem >Driver Tampering Details<Link to={"/drivertamperingdetails"} /></MenuItem>
                         </SubMenu>
-                        <SubMenu title='Advanced Reasoner Toolset'>
+                        <SubMenu title='Advanced Reasoner Toolset' icon={<FaQuestion />}>
                             <MenuItem >Suspicious Transactions<Link to={"/reasoning1"} /></MenuItem>
                             <MenuItem >Suspicious Combinations<Link to={"/reasoning2"} /></MenuItem>
                             <MenuItem >GSM & Antenna Status<Link to={"/reasoning3"} /></MenuItem>
@@ -80,8 +80,8 @@ export default class UserSidebar extends React.Component {
                             <MenuItem >Door & Temp Status<Link to={"/reasoning6"} /></MenuItem>
                             <MenuItem >Broken Door Status<Link to={"/reasoning6"} /></MenuItem>
                         </SubMenu>
-                        <MenuItem>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
-                        <MenuItem>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
+                        <MenuItem icon={<FaBug />}>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
+                        <MenuItem icon={<FaExclamationTriangle/>}>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>
