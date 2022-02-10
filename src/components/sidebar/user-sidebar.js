@@ -78,6 +78,7 @@ export default class UserSidebar extends React.Component {
                             <MenuItem >GPS Deviations<Link to={"/reasoning4"} /></MenuItem>
                             <MenuItem >Higher GPS Deviations<Link to={"/reasoning5"} /></MenuItem>
                             <MenuItem >Door & Temp Status<Link to={"/reasoning6"} /></MenuItem>
+                            <MenuItem >Broken Door Status<Link to={"/reasoning6"} /></MenuItem>
                         </SubMenu>
                         <MenuItem>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
                         <MenuItem>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
