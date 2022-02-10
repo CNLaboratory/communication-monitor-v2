@@ -104,11 +104,23 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/transactionsdepiction" component={() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction'} />}/>
             <Route exact path='/sensorsdepiction' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction'} />} />
-            <Route exact path="/register" component={Register} />
+            <Route exact path='/abnormaldetection' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormaldetection'} />} />
+            <Route exact path='/drivertampering' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertampering'} />} />
+            <Route exact path='/drivertamperingdetails' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertamperingdetails'} />} />
+            <Route exact path='/reasoning1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning1'} />} />
+            <Route exact path='/reasoning2' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning2'} />} />
+            <Route exact path='/reasoning3' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning3'} />} />
+            <Route exact path='/reasoning4' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning4'} />} />
+            <Route exact path='/reasoning5' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning5'} />} />
+            <Route exact path='/reasoning6' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning6'} />} />
+            <Route exact path='/alertlogger' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} />} />
+            
+            {/*<Route exact path="/register" component={Register} />*/}
             <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
+            {/*<Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+            */}
           </Switch>
         </div>
               

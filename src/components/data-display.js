@@ -1,9 +1,10 @@
 import React from 'react';
 import '../App.css';
+import axios from 'axios';
 
 import GetDataFromAPI from './ntua/getDataFromAPI';
 import ToolCard from './ntua/toolCard';
-
+import DisplayTable from './ntua/displayTable';
 
 //const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
 const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction";
@@ -19,149 +20,133 @@ class DataDisplay extends React.Component {
        productDataArray: [],
        itemData: [],
        isDataLoaded: false,
-       isCustom: false,
+       isTransfering: true,
        isTool1: false,
-       isTool2: false,
+       columns: [],
+       data: [],
+       keys: [],
+       labels: [],
        refreshInterval: props.refreshInterval,
        API_URL: props.API_URL,
-       toolCardComponent: [
-        <div className='tool-card'><button className="plusButton-1" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0 , background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>,
-        <div className='tool-card'><button className="plusButton-2" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0, background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>,
-        <div className='tool-card'><button className="plusButton-3" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0, background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>,
-        <div className='tool-card'><button className="plusButton-4" onClick={this.handleAddButton} style={{height: '300px', width: '300px', border: 0, background: 'url(images/icons8-plus-48.png)', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></button></div>
-       ],
        counter: 0
      };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    //this.handleSubmit = this.handleSubmit.bind(this);
     this.checkIfDataIsLoaded = this.checkIfDataIsLoaded.bind(this);
-    this.getDataFromComponent = this.getDataFromComponent.bind(this);
-    this.handleAddButton = this.handleAddButton.bind(this);
-  }
-  
-  handleChange(i, e) {
-    let formValues = this.state.formValues;
-    formValues[i][e.target.name] = e.target.value;
-    this.setState({ formValues });
-  }
-
-  addFormFields() {
-    this.setState(({
-      formValues: [...this.state.formValues, { url: "" }]
-    }))
-  }
-
-  removeFormFields(i) {
-    let formValues = this.state.formValues;
-    formValues.splice(i, 1);
-    this.setState({ formValues });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    let formValues = this.state.formValues;
-    let productDataArray;
-    let toolComponent3;
-    var url;
-    productDataArray = [];
     
-    for (url in formValues) {
-      productDataArray.push(<GetDataFromAPI API_URL={formValues[url]['url']} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />);
-
-      //productDataArray.push(<ProductData API_URL={formValues[url]['url']} checkInterval={0}/> );
-    }
-    this.setState( { productDataArray });
-    //alert(JSON.stringify(this.state.formValues));
+    this.refreshData = this.refreshData.bind(this);
+    //this.handleAddButton = this.handleAddButton.bind(this);
+    this.getProductData();
   }
 
   checkIfDataIsLoaded = (dataLoadedStatus) => {
-    console.log(this.state.isDataLoaded);
-    console.log('dataLoadedStatus');
-    console.log(dataLoadedStatus);
+    
     this.setState( { isDataLoaded: dataLoadedStatus });
     console.log(this.state.isDataLoaded);
   }
 
-  getDataFromComponent = (responseData) => {
-    console.log('responseData');
-    console.log(responseData);
+  /*getDataFromComponent = (responseData) => {
     this.setState( { itemData: responseData });
     this.setState( { isDataLoaded: true });
-  }
+  }*/
+  getProductData = () => {
+    axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
+    .then((response) => {
+        let localKeys=[];
+        let localColumns=[];
+        let itemData=[];
+        let localLabels=[];
 
-  handleAddButton = () => {
-    
-    let toolCardComponentsArray = this.state.toolCardComponent;
-    let newToolCardComponent = <div className='tool-card'><ToolCard key={'too-card-1'} data={this.state.itemData} /></div>;
-    toolCardComponentsArray.push(newToolCardComponent);
-    
-    this.setState({toolCardComponent: toolCardComponentsArray});
-    
-  }
+        this.setState({data:response.data});
+        //this.state.data = response.data;
+
+        const firstItem = this.state.data[0];
+        for (let key in firstItem) {
+            if (firstItem.hasOwnProperty(key)) {
+                localKeys.push(key);
+            }
+        }
+        for (let key in localKeys) {
+            localColumns.push(
+                {
+                    Header: localKeys[key],
+                    accessor: localKeys[key]
+                }
+            )
+        }
+        let i = 0;
+        for (let item in this.state.data) {
+            itemData.push(this.state.data[item]);
+            
+            // Get the label for each car like Car0, Car1 etc
+            const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
+            localLabels.push(label + i++);
+
+        }
+        
+        //this.props.responseData(response.data);
+        console.log('columns');
+        console.log(localColumns);
+        console.log('endcolumns');
+        this.setState({ 
+            
+            isTransfering: false,
+            columns:localColumns,
+            keys:localKeys,
+            labels:localLabels,
+            isDataLoaded: true
+        });
+        
+    });
+
+}
+    refreshData() {
+        console.log('refreshDAta');
+        this.setState({isTool1: true, isTool2: false, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})
+        this.getProductData();
+    }
 
   render() {
-    let isCustom = this.state.isCustom;
-    let isTool1 = this.state.isTool1;
-    let isTool2 = this.state.isTool2;
-    let productDataArray = this.state.productDataArray;
-    let componentsArray = [];
+    
     let toolComponent1;
-    let toolComponent2;
-    
-    let customFormComponent;
     let toolCardComponentsArray = [];
-    let addComponent;
-    let testComponent2;
-    let newToolCardComponent;
+    //let getDataComponent = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
+    console.log(this.state.data);
     
-    
-    toolComponent1 = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
-      
     
     if (this.state.isDataLoaded) {
-      //componentsArray.push(<CreateCharts data={this.state.itemData} />);
-      console.log('inside loop');
       toolCardComponentsArray = [
         <div className='tool-card'><ToolCard data={this.state.itemData} /></div>,
         <div className='tool-card'><ToolCard data={this.state.itemData} /></div>,
         <div className='tool-card'><ToolCard data={this.state.itemData} /></div>,
         <div className='tool-card'><ToolCard data={this.state.itemData} /></div>
-      ]
-      
-      
+      ]  
+      toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
     }
 
     return (
       <div className='data-display'>
         <div className='header'>
-          <h1>Use Fetch Data to pull new data</h1>
+          <h1>Use Refresh Data to pull new data</h1>
           <div>
-            <button className='tools-button' type='button' onClick={() => this.setState({isTool1: true, isTool2: false, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})}>Fetch Data</button>
+            <button className='tools-button' type='button' onClick={this.refreshData}>Refresh Data</button>
           </div>
           
         </div>
         <div className="divider" style={{borderTop: '3px dotted #bbb'}}></div>
         <div className="tool-card-wrapper">
           <div className="tool-card-wrapper-array">
-            {customFormComponent}
+            
             {toolComponent1}
-            {toolComponent2}
-            {this.state.productDataArray}
+            
           </div>
           <div className="tool-card-wrapper-inner">
             {toolCardComponentsArray}
-            {addComponent}
           </div>
         </div>
         <div className="section-charts">
 
         
         </div>
-        {/*
-        <div className="productDataComponent">
-            {this.state.productDataArray}
-
-        </div>
-        */}
       </div>
     );
   }

@@ -67,8 +67,20 @@ export default class UserSidebar extends React.Component {
                             <MenuItem onClick={this.handleClickDriveTampering}>Visualize Drive Tampering</MenuItem>
                         </SubMenu>
                         <SubMenu title='Fusion Toolset'>
-
+                            <MenuItem >Abnormal Detection<Link to={"/abnormaldetection"} /></MenuItem>
+                            <MenuItem >Driver Tampering<Link to={"/drivertampering"} /></MenuItem>
+                            <MenuItem >Driver Tampering Details<Link to={"/drivertamperingdetails"} /></MenuItem>
                         </SubMenu>
+                        <SubMenu title='Advanced Reasoner Toolset'>
+                            <MenuItem >Suspicious Transactions<Link to={"/reasoning1"} /></MenuItem>
+                            <MenuItem >Suspicious Combinations<Link to={"/reasoning2"} /></MenuItem>
+                            <MenuItem >GSM & Antenna Status<Link to={"/reasoning3"} /></MenuItem>
+                            <MenuItem >GPS Deviations<Link to={"/reasoning4"} /></MenuItem>
+                            <MenuItem >Higher GPS Deviations<Link to={"/reasoning5"} /></MenuItem>
+                            <MenuItem >Door & Temp Status<Link to={"/reasoning6"} /></MenuItem>
+                        </SubMenu>
+                        <MenuItem>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
+                        <MenuItem>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>
