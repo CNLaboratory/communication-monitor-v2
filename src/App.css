@@ -32,7 +32,7 @@ label {
 }
 
 .container {
-  max-width: 95%;
+  max-width: 80%;
   margin: 0 auto;
 }
 
@@ -49,7 +49,7 @@ label {
 
 .tool-card {
   display: block;
-  
+  margin-bottom: 30px;
   border: solid 1px grey;
   min-height: 300px;
 }
@@ -81,4 +81,103 @@ label {
 }
 #newtable input {
   font-size:15px;
+}
+.column-search-inp1::placeholder {
+  color: rgb(175, 175, 175);
+}
+
+.global-filter {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.global-search-p1 {
+  margin-top:15px;
+  margin-right: 20px;
+  align-self: center;
+}
+.global-search-inp1 {
+
+}
+.display-table {
+  overflow: auto;
+}
+.tool-card-wrapper-array {
+  margin-top: 100px;
+}
+.refresh-button {
+  margin-left: 30px;
+  border-color: #2e2e2e;
+  background-color:#2E2E2E;
+}
+.refresh-button:hover {
+  border-color: #2e2e2e;
+  background-color: grey;
+}
+.tool-card-header {
+  font-size: 20px;
+  color: white;
+  background-color: #2e2e2e;
+  padding: 10px 10px 1px 10px;
+  
+  text-align: center;
+}
+
+.create-chart-button {
+  height: 50px;
+  bottom: 0px;
+  margin-top: 45px;
+}
+
+form {
+  display: inline-block;
+}
+
+.form-inline {  
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.form-inline label {
+  margin: 5px 10px 5px 0;
+}
+
+.form-inline input {
+  vertical-align: middle;
+  margin: 5px 10px 5px 0;
+  width: 650px;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.button-section {
+  margin: 3%;
+  
+}
+.button {
+  padding: 10px 20px;
+  background-color: dodgerblue;
+  border: 1px solid #ddd;
+  color: white;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: royalblue;
+}
+
+.remove {
+  background-color: rgb(192, 53, 53);
+}
+.remove:hover {
+  background-color: rgb(187, 43, 43);
+}
+.dynamic-api-form {
+  margin-top: 50px;
+}
+
+.display-table table {
+  width: 100%;
 }

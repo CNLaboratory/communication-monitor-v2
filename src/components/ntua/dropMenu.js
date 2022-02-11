@@ -31,7 +31,7 @@ class MySelect extends React.Component {
   render() {
     return (
       <div style={{ margin: '1rem 0' }}>
-        <label htmlFor="color">Select attributes</label>
+        <label htmlFor="color">Select Data</label>
         <Select
           ref={this.props.ref}
           id="chartsSelection"

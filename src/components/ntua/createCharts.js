@@ -7,7 +7,8 @@ import RadarChart from './radarChart';
 import PolarAreaChart from './polarAreaChart';
 import MySelect from "./dropMenu";
 import { Dropdown, Option } from "./dropdown";
-import BootstrapDropdown from './bootstrapDropDown';
+
+import Button from 'react-bootstrap/Button'
 
 export default class CreateCharts extends React.Component {
 
@@ -50,12 +51,15 @@ export default class CreateCharts extends React.Component {
         this.createChartItems = this.createChartItems.bind(this);
         this.handleChartTypeSelection = this.handleChartTypeSelection.bind(this);
         this.handleLabelSelection = this.handleLabelSelection.bind(this);
+        this.createChartButtonPressed = this.createChartButtonPressed.bind(this);
     }
 
     
 
     componentDidMount() {
         this.createGraphData();
+        console.log("createCharts");
+        console.log(this.props.data);
     }
 
     
@@ -240,7 +244,7 @@ export default class CreateCharts extends React.Component {
         labelMenuItems.push(
             <Dropdown
                 key={'labelDropdowns'}
-                formLabel="Choose attribute for label"
+                formLabel="Label"
                 buttonText="Apply"
                 onChange={this.handleLabelSelection}
             >
@@ -251,7 +255,7 @@ export default class CreateCharts extends React.Component {
         chartTypeSelectMenuItems.push(
             <Dropdown
                 key={'dropDowns'}
-                formLabel="Choose a chartType"
+                formLabel="Chart Type"
                 buttonText="Apply"
                 onChange={this.handleChartTypeSelection}
             >
@@ -290,18 +294,15 @@ export default class CreateCharts extends React.Component {
     handleSelectMenuChange = (selectedOption) => {
         this.setState({ selection: selectedOption });
 
-        this.state.newMultiChartSelect.length = 0;
-        this.setState({ selectedOption });
+        
+        //this.setState({ selectedOption });
         console.log('selectedOption');
 
-        for (var attribute in selectedOption) {
-            console.log(selectedOption[attribute].value);
-            
-            this.state.newMultiChartSelect.push(this.state.newChartMap[selectedOption[attribute].value]);
-        }
+        
         console.log(selectedOption);
 
     }
+    
     /*
     handleChartTypeSelectMenuChange = (selectedOption) => {
         this.setState( {
@@ -386,19 +387,41 @@ export default class CreateCharts extends React.Component {
         
     }
 
+    createChartButtonPressed () {
+        
+        if (this.state.selection) {
+            
+            let newMultiChartSelect = [];
+            this.setState({newMultiChartSelect: newMultiChartSelect} ,() => {
+                for (var attribute in this.state.selection) {
+                
+                    let localMultiChartSelect = this.state.newMultiChartSelect;
+                    localMultiChartSelect.push(this.state.newChartMap[this.state.selection[attribute].value]);
+
+                    this.setState({newMultiChartSelect: localMultiChartSelect});
+                }
+                
+
+            });
+        
+            
+        } else {
+            alert('Please select at least on attribute in the "Select Data" field');
+        }
+        
+    }
+
     render() {
 
         return (
 
-
-
-
             <div className='tools'>
                 <div className = "section-choices">
+                    { this.state.newLabelMenuItems /**options to choose label */}
                     { this.state.newChartTypeSelectMenuItems /*options for selecting a chart type*/} 
                     { this.state.newSelectMenuItems /*options for selecting an attribute to create a chart for*/}
-                    { this.state.newLabelMenuItems /**options to choose label */}
-                    <BootstrapDropdown></BootstrapDropdown>
+                    <Button className='create-chart-button' onClick={this.createChartButtonPressed} variant="secondary" size="sm">Create Chart</Button>{' '}
+                    
                 </div>
         
                 <div className="section-newCharts">

@@ -19,6 +19,7 @@ import DefaultSidebar from "./components/sidebar/default-sidebar";
 import UserSidebar from "./components/sidebar/user-sidebar";
 import ModSidebar from "./components/sidebar/mod-sidebar";
 import AdminSidebar from "./components/sidebar/admin-sidebar";
+import DynamicAPI from "./components/dynamic-api";
 
 //import react pro sidebar components
 import {
@@ -95,26 +96,29 @@ class App extends Component {
               <ModSidebar logOut={this.logOut}/>
             )}
           
-            {currentUser && (
+            {currentUser && !showModeratorBoard && (
               <UserSidebar logOut={this.logOut}/>
             )}
           </div>
           <div className="container mt-3">
           <Switch>
-            <Route exact path={["/", "/home"]} component={Home} />
+            <Route exact path={"/"} component={Home} />
+            <Route exact path={"/home"} component={Home} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/transactionsdepiction" component={() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction'} />}/>
-            <Route exact path='/sensorsdepiction' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction'} />} />
-            <Route exact path='/abnormaldetection' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormaldetection'} />} />
-            <Route exact path='/drivertampering' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertampering'} />} />
-            <Route exact path='/drivertamperingdetails' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertamperingdetails'} />} />
-            <Route exact path='/reasoning1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning1'} />} />
-            <Route exact path='/reasoning2' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning2'} />} />
-            <Route exact path='/reasoning3' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning3'} />} />
-            <Route exact path='/reasoning4' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning4'} />} />
-            <Route exact path='/reasoning5' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning5'} />} />
-            <Route exact path='/reasoning6' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning6'} />} />
-            <Route exact path='/alertlogger' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} />} />
+            <Route exact path="/transactionsdepiction" component={() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction'} headerText={'Transactions Depiction'} />}/>
+            <Route exact path='/sensorsdepiction' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction'} headerText={'Sensors Depiction'} />} />
+            <Route exact path='/abnormaldetection' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormaldetection'} headerText={'Abnormal Detection'} />} />
+            <Route exact path='/drivertampering' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertampering'} headerText={'Driver ID Tampering'} />} />
+            <Route exact path='/drivertamperingdetails' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertamperingdetails'} headerText={'Driver ID Tampering Details'} />} />
+            <Route exact path='/reasoning1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning1'} headerText={'Suspicious Transactions'} />} />
+            <Route exact path='/reasoning2' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning2'} headerText={'Suspicious Transacations in Combinations with Unknown Sources'} />} />
+            <Route exact path='/reasoning3' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning3'} headerText={'GSM Jammed & Antenna Removal Status'} />} />
+            <Route exact path='/reasoning4' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning4'} headerText={'Driver & Truck GPS Trackers Deviations'} />} />
+            <Route exact path='/reasoning5' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning5'} headerText={'Higher Driver & Truck GPS Trackers Deviations'} />} />
+            <Route exact path='/reasoning6' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning6'} headerText={'Door & Temperature Status'} />} />
+            <Route exact path='/alertlogger' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} headerText={'Alert Logger'} />} />
+            <Route exact path='/dynamicapi' component = {() => <DynamicAPI />} />
+            
             
             {/*<Route exact path="/register" component={Register} />*/}
             <Route exact path="/profile" component={Profile} />

@@ -27,7 +27,11 @@ export default class DefaultSidebar extends React.Component {
                 <SidebarHeader>
                     <div className="logotext">
                         {/* small and big change using menucollapse state */}
-                        <p>NTUA - Communications Monitor</p>
+                        <img
+                            src="common1.546da79d.svg"
+                            alt="logo-img"
+                            className="logo-img"
+                        />
                     </div>
             
                 </SidebarHeader>

@@ -15,7 +15,10 @@ export default class ToolCard extends React.Component {
 
         return (
             <div className="section-display-tools">
-                <h2>Add a graph by selecting a property</h2>
+                <div className="tool-card-header">
+                    <p>Add a new graph</p>
+                </div>
+                
                 <div className="section-buttons">
                     <CreateCharts data={this.state.itemData} />
                 </div>

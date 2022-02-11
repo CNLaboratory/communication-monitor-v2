@@ -16,11 +16,12 @@ export default function FilterTable({ columns, data }) {
     const styles = {
         container: {
             
-            overflow: "auto",
+            
             minHeight: "400px"
       
         },
         table: {
+          
           marginTop: "20px",
           maxWidth: "100%"
         },
@@ -65,39 +66,41 @@ export default function FilterTable({ columns, data }) {
         
         <div style={styles.container}>
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-          <table {...getTableProps()} style={styles.table}>
-            <thead style={styles.thead}>
-            
-            {/*console.log(columns)*/}
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                {/*console.log("test2")*/}
-                  {headerGroup.headers.map((column) => (
-                    <th {...column.getHeaderProps()} style={styles.tr}>
-                      <div>{column.canFilter ? column.render("Filter") : null}</div>
-                      {column.render("Header")}
-                      
-                      
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-              {rows.map((row, i) => {
-                prepareRow(row);
-                return (
-                  <tr {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td {...cell.getCellProps()} style={styles.td}>{cell.render("Cell")}</td>
-                      );
-                    })}
+          <div className = 'display-table'>
+            <table {...getTableProps()} style={styles.table}>
+              <thead style={styles.thead}>
+              
+              {/*console.log(columns)*/}
+                {headerGroups.map((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                  {/*console.log("test2")*/}
+                    {headerGroup.headers.map((column) => (
+                      <th {...column.getHeaderProps()} style={styles.tr}>
+                        <div>{column.canFilter ? column.render("Filter") : null}</div>
+                        {column.render("Header")}
+                        
+                        
+                      </th>
+                    ))}
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map((row, i) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()}>
+                      {row.cells.map((cell) => {
+                        return (
+                          <td {...cell.getCellProps()} style={styles.td}>{cell.render("Cell")}</td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
         
       );
