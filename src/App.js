@@ -117,6 +117,7 @@ class App extends Component {
             <Route exact path='/reasoning5' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning5'} headerText={'Higher Driver & Truck GPS Trackers Deviations'} />} />
             <Route exact path='/reasoning6' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning6'} headerText={'Door & Temperature Status'} />} />
             <Route exact path='/alertlogger' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} headerText={'Alert Logger'} />} />
+            <Route exact path='/nikotest1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} headerText={'Nikos Test 1'} />} />
             <Route exact path='/dynamicapi' component = {() => <DynamicAPI />} />
             
             
