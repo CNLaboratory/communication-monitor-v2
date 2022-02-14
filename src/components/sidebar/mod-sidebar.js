@@ -91,6 +91,7 @@ export default class UserSidebar extends React.Component {
                         <MenuItem icon={<FaBug />}>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
                         <MenuItem icon={<FaExclamationTriangle/>}>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
                         <MenuItem icon={<SiDynamics365/>}>Dynamic API<Link to={'/dynamicapi'} /></MenuItem>
+                        <MenuItem>Nikos mode test 1<Link to={'/nikotest1'} /> </MenuItem>
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>

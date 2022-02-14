@@ -32,11 +32,11 @@ export default class Home extends Component {
   render() {
     return (
       <div className="container">
-        {/*
+        {
         <header className="jumbotron">
-          <h3>WELCOME TO COMMUNICATIONS MONITOR</h3>
+          <h3>WELCOME TO COMMUNICATION MONITOR</h3>
         </header>
-        */}
+        }
       </div>
     );
   }
