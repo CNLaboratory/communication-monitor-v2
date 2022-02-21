@@ -110,6 +110,8 @@ class App extends Component {
             <Route exact path='/abnormaldetection' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormaldetection'} headerText={'Abnormal Detection'} />} />
             <Route exact path='/drivertampering' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertampering'} headerText={'Driver ID Tampering'} />} />
             <Route exact path='/drivertamperingdetails' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertamperingdetails'} headerText={'Driver ID Tampering Details'} />} />
+            <Route exact path='/abnormalgraph' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormalgraph'} headerText={'Abnormal Behavior Graph Visualization'} />} />
+            <Route exact path='/transactionsgraph' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsgraph'} headerText={'Transactions Graph Visualization'} />} /> 
             <Route exact path='/reasoning1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning1'} headerText={'Suspicious Transactions'} />} />
             <Route exact path='/reasoning2' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning2'} headerText={'Suspicious Transacations in Combinations with Unknown Sources'} />} />
             <Route exact path='/reasoning3' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning3'} headerText={'GSM Jammed & Antenna Removal Status'} />} />
@@ -220,3 +222,4 @@ class App extends Component {
 }
 
 export default App;
+

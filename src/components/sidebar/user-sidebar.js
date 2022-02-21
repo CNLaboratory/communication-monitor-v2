@@ -23,6 +23,9 @@ import { Link } from 'react-router-dom';
 const API_URL_VISUALIZEDISTANCES = 'https://communicationmonitor.cn.ntua.gr:5000/visualizedistances';
 const API_URL_VISUALIZETAMPERING = 'https://communicationmonitor.cn.ntua.gr:5000/visualizedrivertampering';
 const API_URL_VISUALIZETRANSACTIONS = 'https://communicationmonitor.cn.ntua.gr:5000/visualizetransactions';
+const API_URL_VISUALIZETRANSACTIONSGRAPH = 'https://communicationmonitor.cn.ntua.gr:5000/transactionsgraph';
+const API_URL_VISUALIZEABNORMALGRAPH = 'https://communicationmonitor.cn.ntua.gr:5000/abnormalgraph';
+
 
 export default class UserSidebar extends React.Component {
 
@@ -40,6 +43,12 @@ export default class UserSidebar extends React.Component {
     }
     handleClickDriveTampering() {
         window.open(API_URL_VISUALIZETAMPERING, '_blank');
+    }
+    handleClickTransactionsGraph() {
+        window.open(API_URL_VISUALIZETRANSACTIONSGRAPH, '_blank');
+    }
+    handleClickAbnormalGraph() {
+        window.open(API_URL_VISUALIZEABNORMALGRAPH, '_blank');
     }
 
 
@@ -72,6 +81,8 @@ export default class UserSidebar extends React.Component {
                             <MenuItem onClick={this.handleClickDistances}>Visualize Distances</MenuItem>
                             <MenuItem onClick={this.handleClickTransactions}>Visualize Transactions</MenuItem>
                             <MenuItem onClick={this.handleClickDriveTampering}>Visualize Drive Tampering</MenuItem>
+                            <MenuItem onClick={this.handleClickTransactionsGraph}>Transactions Graph</MenuItem>
+                            <MenuItem onClick={this.handleClickAbnormalGraph}>Abnormal Graph</MenuItem>
                         </SubMenu>
                         <SubMenu title='Fusion Toolset' icon={<FaCog />}>
                             <MenuItem >Abnormal Detection<Link to={"/abnormaldetection"} /></MenuItem>
@@ -89,7 +100,6 @@ export default class UserSidebar extends React.Component {
                         </SubMenu>
                         <MenuItem icon={<FaBug />}>Threat and Incident Complex Event Toolset<Link to={'/alertlogger'} /></MenuItem>
                         <MenuItem icon={<FaExclamationTriangle/>}>Alert Logger<Link to={'/alertlogger'} /></MenuItem>
-                        <MenuItem >Nikos Test 1<Link to={'/nikotest1'} /></MenuItem>
                     </Menu>
                 </SidebarContent>
                 <SidebarFooter>
@@ -101,4 +111,5 @@ export default class UserSidebar extends React.Component {
         );
     }
 }
+
 
