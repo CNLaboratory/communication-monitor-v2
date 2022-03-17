@@ -1,0 +1,48 @@
+[
+    {
+        "Alert_Issue": "It is observed a temperature difference in the asset tracker whilst the door is still closed and the truck is immobilized", 
+        "asset_imei": "354018112257906", 
+        "driveid": " XFGRJYHN1234MM", 
+        "fleet_device_temp": 25.1, 
+        "fridge_temp": 25.1, 
+        "temp_diff": 0.0, 
+        "timestamp": "2021-02-17T11:19:58",
+        "truck_imei": "354018112257906", 
+        "truck_plate": "XXX-809", 
+        "truck_speed": 0,
+        "servlet": [   
+            {
+              "servlet-name": "cofaxCDS",
+              "servlet-class": "org.cofax.cds.CDSServlet"
+            },
+            {
+              "servlet-name": "cofaxEmail",
+              "servlet-class": "org.cofax.cds.EmailServlet"
+            },
+            {
+              "servlet-name": "cofaxAdmin",
+              "servlet-class": "org.cofax.cds.AdminServlet"
+            },
+            {
+              "servlet-name": "fileServlet",
+              "servlet-class": "org.cofax.cds.FileServlet"
+            },
+            {
+              "servlet-name": "cofaxTools",
+              "servlet-class": "org.cofax.cms.CofaxToolsServlet"  
+            }
+        ]
+    },
+    {
+        "Alert_Issue": "It is observed a temperature difference in the asset tracker whilst the door is still closed and the truck is immobilized", 
+        "asset_imei": "354018112257906", 
+        "driveid": " XFGRJYHN1234MM", 
+        "fleet_device_temp": 25.1, 
+        "fridge_temp": 25.1, 
+        "temp_diff": 0.0, 
+        "timestamp": "2021-02-17T11:19:58",
+        "truck_imei": "354018112257906", 
+        "truck_plate": "XXX-809", 
+        "truck_speed": 0
+    }
+]

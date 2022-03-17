@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
 
 import AuthService from "../services/auth.service";
 
@@ -15,7 +16,37 @@ const required = value => {
   }
 };
 
-export default class Login extends Component {
+const email = value => {
+  if (!isEmail(value)) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+
+const vusername = value => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The username must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
+const vpassword = value => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+export default class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
@@ -55,8 +86,8 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
-          this.props.history.push("/profile");
-          window.location.reload();
+          //this.props.history.push("/profile");
+          //window.location.reload();
         },
         error => {
           const resMessage =
@@ -77,23 +108,25 @@ export default class Login extends Component {
         loading: false
       });
     }
+
+    this.props.logIn();
   }
 
   render() {
-    return (
-      <div className="col-md-12">
+    return ( 
+      <div className="login-container">
         <div className="card card-container">
           <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+            src="common1.546da79d.svg"
             alt="profile-img"
             className="profile-img-card"
           />
 
           <Form
-            onSubmit={this.handleLogin}
-            ref={c => {
-              this.form = c;
-            }}
+              onSubmit={this.handleLogin}
+              ref={c => {
+                this.form = c;
+              }}
           >
             <div className="form-group">
               <label htmlFor="username">Username</label>

@@ -14,7 +14,7 @@ const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction"
 const API_URL3 = "http://147.102.40.53:5000/product";
 
 
-class DynamicAPI extends React.Component {
+class OrderTrack extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
@@ -23,6 +23,7 @@ class DynamicAPI extends React.Component {
        itemData: [],
        isDataLoaded: false,
        isTransfering: true,
+       emptyOrder: false,
        isTool1: false,
        columns: [],
        data: [],
@@ -59,42 +60,54 @@ class DynamicAPI extends React.Component {
         let itemData=[];
         let localLabels=[];
 
-        this.setState({data:response.data});
-        //this.state.data = response.data;
+        if (response.data === []) {
+          //empty array
+          this.setState({emptyOrder: true});
 
-        const firstItem = this.state.data[0];
-        for (let key in firstItem) {
-            if (firstItem.hasOwnProperty(key)) {
-                localKeys.push(key);
-            }
-        }
-        for (let key in localKeys) {
-            localColumns.push(
-                {
-                    Header: localKeys[key],
-                    accessor: localKeys[key]
+        } else {
+          this.setState({data:response.data, emptyOrder: false}, () => {
+          
+            const firstItem = this.state.data[0];
+            for (let key in firstItem) {
+                if (firstItem.hasOwnProperty(key)) {
+                    localKeys.push(key);
                 }
-            )
-        }
-        let i = 0;
-        for (let item in this.state.data) {
-            itemData.push(this.state.data[item]);
+            }
+            for (let key in localKeys) {
+                localColumns.push(
+                    {
+                        Header: localKeys[key],
+                        accessor: localKeys[key]
+                    }
+                )
+            }
+            let i = 0;
+            for (let item in this.state.data) {
+                itemData.push(this.state.data[item]);
+                
+                // Get the label for each car like Car0, Car1 etc
+                const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
+                localLabels.push(label + i++);
+              
+            }
             
-            // Get the label for each car like Car0, Car1 etc
-            const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
-            localLabels.push(label + i++);
+            
+            this.setState({ 
+                
+                isTransfering: false,
+                columns:localColumns,
+                keys:localKeys,
+                labels:localLabels,
+                isDataLoaded: true
+            });
+          });
+        }
+        
+        
+          
 
-        }
         
-        
-        this.setState({ 
-            
-            isTransfering: false,
-            columns:localColumns,
-            keys:localKeys,
-            labels:localLabels,
-            isDataLoaded: true
-        });
+
         
     });
 
@@ -121,16 +134,26 @@ class DynamicAPI extends React.Component {
         event.preventDefault();
         let formValues = this.state.formValues;
         var url;
-        console.log('url');
-        console.log(url);
 
         for (url in formValues) {
-            this.setState({API_URL: formValues[url]['url']}, () => {
+            let endpoint;
+            console.log('formValues[url]["url"]');
+            console.log(formValues[url]["url"]);
+            if (formValues[url]["url"]) {
                 
-                this.getProductData();
-                //displayTableComponent.push(<DisplayTable columns={this.state.columns} data={this.state.data} />);
-                //this.setState( { displayTableComponent: displayTableComponent });
-            })
+                
+                endpoint = 'https://communicationmonitor.cn.ntua.gr:5000/search?order=';
+                this.setState({API_URL: endpoint + formValues[url]['url']}, () => {
+                
+                    this.getProductData();
+                    //displayTableComponent.push(<DisplayTable columns={this.state.columns} data={this.state.data} />);
+                    //this.setState( { displayTableComponent: displayTableComponent });
+                })
+                
+            } else {
+                this.setState({data: [], isDataLoaded: false});
+            }
+            
           
     
           
@@ -158,8 +181,8 @@ class DynamicAPI extends React.Component {
         <form  onSubmit={this.handleSubmit}>
             {this.state.formValues.map((element, index) => (
                 <div className="form-inline" key={index}>
-                    <label>Address</label>
-                    <input type="url" name="url" value={element.url || ""} onChange={e => this.handleChange(index, e)} />
+                    <label>Order ID</label>
+                    <input type="number" name="url" value={element.url || ""} onChange={e => this.handleChange(index, e)} />
                     {
                         index ? 
                         <button type="button"  className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button> 
@@ -196,7 +219,7 @@ class DynamicAPI extends React.Component {
           <h1>Dynamic API Input</h1>
           
           <div className='dynamic-api-form'>
-            <h4>Please input your API in the form below</h4> 
+            <h4>Please input your order ID below</h4> 
             {customFormComponent}            
             {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}
           </div>
@@ -209,10 +232,11 @@ class DynamicAPI extends React.Component {
             {buttonComponent}
             
             {toolComponent1}
+            {this.state.emptyOrder && <h2>Invalid Order</h2>}
             
           </div>
           <div className="tool-card-wrapper-inner">
-            {toolCardComponentsArray}
+            {/*toolCardComponentsArray*/}
           </div>
         </div>
         <div className="section-charts">
@@ -223,7 +247,7 @@ class DynamicAPI extends React.Component {
     );
   }
 }
-export default DynamicAPI;
+export default OrderTrack;
 
 
 

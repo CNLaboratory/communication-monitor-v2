@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import BasicTable from "../components/basicTable";
 import FilterTable from "../components/filterTable";
-import SortedTable from "../components/sortingTable";
+import SortedTable from "../sortingTable";
 import BarChart from "../components/barChart";
 import MySelect from "../components/dropMenu";
 import { Dropdown, Option } from "../components/dropdown";

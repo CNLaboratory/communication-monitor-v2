@@ -1,19 +1,12 @@
 import React from 'react';
 import '../App.css';
 import axios from 'axios';
-
-import GetDataFromAPI from './ntua/getDataFromAPI';
 import ToolCard from './ntua/toolCard';
 import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
-import { FaList, FaRegHeart, FaBezierCurve, FaCog, FaQuestion, FaBug, FaExclamationTriangle} from "react-icons/fa";
 import { IoRefreshOutline } from 'react-icons/io5';
-import { button } from 'react-validation/build/button';
 
-//const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
-const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction";
-const API_URL3 = "http://147.102.40.53:5000/product";
-
+import { nestedDataExample2 } from '../data/data';
 
 class DataDisplay extends React.Component {
   constructor(props) {
@@ -51,6 +44,14 @@ class DataDisplay extends React.Component {
     this.setState( { itemData: responseData });
     this.setState( { isDataLoaded: true });
   }*/
+
+  getProductDataAdvanced() {
+    const data = nestedDataExample2;
+
+      
+
+  }
+
   getProductData = () => {
     axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
     .then((response) => {
@@ -59,10 +60,7 @@ class DataDisplay extends React.Component {
         let itemData=[];
         let localLabels=[];
 
-        this.setState({data:response.data});
-        //this.state.data = response.data;
-
-        const firstItem = this.state.data[0];
+        const firstItem = response.data[0];
         for (let key in firstItem) {
             if (firstItem.hasOwnProperty(key)) {
                 localKeys.push(key);
@@ -76,19 +74,13 @@ class DataDisplay extends React.Component {
                 }
             )
         }
-        let i = 0;
-        for (let item in this.state.data) {
-            itemData.push(this.state.data[item]);
-            
-            // Get the label for each car like Car0, Car1 etc
-            const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
-            localLabels.push(label + i++);
-
+        
+        for (let item in response.data) {
+            itemData.push(response.data[item]);
         }
         
-        
         this.setState({ 
-            
+            data: response.data,
             isTransfering: false,
             columns:localColumns,
             keys:localKeys,
@@ -116,16 +108,19 @@ class DataDisplay extends React.Component {
     
     if (this.state.isDataLoaded) {
       console.log('dataloaded');
-      console.log(this.state.itemData);
       console.log(this.state.data);
-      toolCardComponentsArray = [
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>
-      ]  
-      toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
-      buttonComponent = <Button className="refresh-button" variant="primary"  onClick={this.refreshData} ><IoRefreshOutline /></Button>;
+      if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
+          toolComponent1 = <h2>No data to display or api error</h2>
+      } else {
+        toolCardComponentsArray = [
+          <div className='tool-card'><ToolCard data={this.state.data} /></div>,
+          <div className='tool-card'><ToolCard data={this.state.data} /></div>,
+          <div className='tool-card'><ToolCard data={this.state.data} /></div>,
+          <div className='tool-card'><ToolCard data={this.state.data} /></div>
+        ]  
+        toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
+        buttonComponent = <Button className="refresh-button" variant="primary"  onClick={this.refreshData} ><IoRefreshOutline /></Button>;
+      }
     }
 
     return (

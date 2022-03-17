@@ -1,8 +1,8 @@
 import React from 'react';
 import '../App.css';
 
-import GetDataFromAPI from './ntua/getDataFromAPI';
-import ToolCard from './ntua/toolCard';
+import GetDataFromAPI from '../ntua/getDataFromAPI';
+import ToolCard from '../ntua/toolCard';
 
 
 const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";

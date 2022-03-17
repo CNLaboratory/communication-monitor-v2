@@ -3,9 +3,14 @@ label {
   margin-top: 10px;
 }
 
+.login-container {
+  height: 40%;
+}
 .card-container.card {
+  
   max-width: 350px !important;
   padding: 40px 40px;
+  top:30%;
 }
 
 .card {
@@ -22,13 +27,8 @@ label {
 }
 
 .profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
+  
   display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
 }
 
 .container {
@@ -180,4 +180,14 @@ form {
 
 .display-table table {
   width: 100%;
+}
+.display-table {
+  max-height: 800px;
+  border-bottom: solid 1px lightgrey;
+}
+.noPointerEvent {
+  pointer-events: none;
+}
+.roleCheckBox {
+  display: inline-block;
 }

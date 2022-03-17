@@ -1,50 +1,38 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-
+import "./constants";
 import AuthService from "./services/auth.service";
-
 import Login from "./components/login.component";
-import Register from "./components/register.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
-import BoardAdmin from "./components/board-admin.component";
-
-import LogoutComponent from "./components/logout-component";
-import Sidebar from './components/sidebar/sidebar';
 import DefaultSidebar from "./components/sidebar/default-sidebar";
 import UserSidebar from "./components/sidebar/user-sidebar";
 import ModSidebar from "./components/sidebar/mod-sidebar";
 import AdminSidebar from "./components/sidebar/admin-sidebar";
 import DynamicAPI from "./components/dynamic-api";
-
-//import react pro sidebar components
-import {
-  ProSidebar,
-  Menu,
-  MenuItem,
-  SidebarHeader,
-  SidebarFooter,
-  SidebarContent,
-} from "react-pro-sidebar";
-
-// import AuthVerify from "./common/auth-verify";
+import OrderTrack from "./components/order-track";
+import Register from "./components/register.component";
 import EventBus from "./common/EventBus";
 import DataDisplay from "./components/data-display";
-
+import { ENDPOINTS } from "./constants";
+import UserManagement from "./components/user-management";
+import UserEdit from "./components/user-edit";
+import NewLogin from "./components/new-login";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
+    this.logIn = this.logIn.bind(this);
 
     this.state = {
+      backgroundColor: true,
       showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
+      loggedIn: false
     };
   }
 
@@ -54,8 +42,10 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
+        backgroundColor: false,
         showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
         showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        loggedIn: true
       });
     }
     
@@ -63,30 +53,60 @@ class App extends Component {
       this.logOut();
     });
   }
-
   componentWillUnmount() {
     EventBus.remove("logout");
+    
+  }
+  logIn() {
+    console.log('logIn() called');
+    const user = AuthService.getCurrentUser();
+
+    if(user) {
+      this.setState({
+        currentUser: user,
+        backgroundColor: false,
+        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        loggedIn: true,
+      })
+    }
+    
   }
 
   logOut() {
     AuthService.logout();
     this.setState({
+      backgroundColor: true,
       showModeratorBoard: false,
       showAdminBoard: false,
+      loggedIn: false,
       currentUser: undefined,
     });
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showModeratorBoard, showAdminBoard, loggedIn } = this.state;
+    let mainWindowBackgroundColor;
+    if (this.state.backgroundColor) {
+      mainWindowBackgroundColor = '#e5e5e5';
+    } else {
+      mainWindowBackgroundColor = 'white'
+    }
+
+    console.log('currentUser');
+    console.log(currentUser);
+    console.log('showAdminBoard');
+    console.log(showAdminBoard);
+    console.log('showModeratorBoard');
+    console.log(showModeratorBoard);
+    console.log('loggedIn');
+    console.log(loggedIn);
+
 
     return (
       
-        <div className="App">
+        <div className="App" style={{backgroundColor: mainWindowBackgroundColor}}>
           <div className="sidebar">
-            {!currentUser && (
-              <DefaultSidebar/>
-            )}
           
             {showAdminBoard && (
               <AdminSidebar logOut={this.logOut}/>
@@ -96,126 +116,47 @@ class App extends Component {
               <ModSidebar logOut={this.logOut}/>
             )}
           
-            {currentUser && !showModeratorBoard && (
+            {currentUser && !showModeratorBoard && !showAdminBoard &&(
               <UserSidebar logOut={this.logOut}/>
             )}
           </div>
           <div className="container mt-3">
-          <Switch>
-            <Route exact path={"/"} component={Home} />
-            <Route exact path={"/home"} component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/transactionsdepiction" component={() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction'} headerText={'Transactions Depiction'} />}/>
-            <Route exact path='/sensorsdepiction' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction'} headerText={'Sensors Depiction'} />} />
-            <Route exact path='/abnormaldetection' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormaldetection'} headerText={'Abnormal Detection'} />} />
-            <Route exact path='/drivertampering' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertampering'} headerText={'Driver ID Tampering'} />} />
-            <Route exact path='/drivertamperingdetails' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/drivertamperingdetails'} headerText={'Driver ID Tampering Details'} />} />
-            <Route exact path='/abnormalgraph' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/abnormalgraph'} headerText={'Abnormal Behavior Graph Visualization'} />} />
-            <Route exact path='/transactionsgraph' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/transactionsgraph'} headerText={'Transactions Graph Visualization'} />} /> 
-            <Route exact path='/reasoning1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning1'} headerText={'Suspicious Transactions'} />} />
-            <Route exact path='/reasoning2' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning2'} headerText={'Suspicious Transacations in Combinations with Unknown Sources'} />} />
-            <Route exact path='/reasoning3' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning3'} headerText={'GSM Jammed & Antenna Removal Status'} />} />
-            <Route exact path='/reasoning4' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning4'} headerText={'Driver & Truck GPS Trackers Deviations'} />} />
-            <Route exact path='/reasoning5' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning5'} headerText={'Higher Driver & Truck GPS Trackers Deviations'} />} />
-            <Route exact path='/reasoning6' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/reasoning6'} headerText={'Door & Temperature Status'} />} />
-            <Route exact path='/alertlogger' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} headerText={'Alert Logger'} />} />
-            <Route exact path='/nikotest1' component = {() => <DataDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/alertlogger'} headerText={'Nikos Test 1'} />} />
-            <Route exact path='/dynamicapi' component = {() => <DynamicAPI />} />
-            
-            
-            {/*<Route exact path="/register" component={Register} />*/}
-            <Route exact path="/profile" component={Profile} />
-            {/*<Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} />
-            <Route path="/admin" component={BoardAdmin} />
-            */}
-          </Switch>
-        </div>
+          {!loggedIn && <NewLogin logIn={this.logIn}/>}
+          {/*loggedIn && <Home />*/}
               
-      {/*
-        <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <Link to={"/"} className="navbar-brand">
-            NTUA
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/home"} className="nav-link">
-                Home
-              </Link>
-            </li>
 
-            {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )}
 
-            {showAdminBoard && (
-              <li className="nav-item">
-                <Link to={"/admin"} className="nav-link">
-                  Admin Board
-                </Link>
-              </li>
-            )}
-
-            {currentUser && (
-              <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User Tools
-                </Link>
-              </li>
-            )}
-          </div>
-
-          {currentUser ? (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
-                </Link>
-              </li>
-              <li className="nav-item">
-                <a href="/login" className="nav-link" onClick={this.logOut}>
-                  LogOut
-                </a>
-              </li>
-            </div>
-          ) : (
-            <div className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link to={"/login"} className="nav-link">
-                  Login
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link to={"/register"} className="nav-link">
-                  Sign Up
-                </Link>
-              </li>
-            </div>
-          )}
-        </nav>
-        <div className="container mt-3">
-          <Switch>
-            <Route exact path={["/", "/home"]} component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} />
-            <Route path="/admin" component={BoardAdmin} />
-          </Switch>
+          <Routes>
+            
+            {/* <Route path="/" component={Login} /> */}
+            {/*loggedIn && <Route path="/" component={Home}/>*/}
+            {/*<Route path="/" element={<Home/>}></Route>*/}
+            <Route path="/login" element={Login} />
+            <Route path="/transactionsdepiction" element={<DataDisplay API_URL={ENDPOINTS.transactionsdepiction.url} headerText={ENDPOINTS.transactionsdepiction.pageTitle}/>}></Route>
+            <Route path='/sensorsdepiction' element = {<DataDisplay API_URL={ENDPOINTS.sensorsdepiction.url} headerText={ENDPOINTS.sensorsdepiction.pageTitle} />}></Route>
+            <Route path='/abnormaldetection' element = {<DataDisplay API_URL={ENDPOINTS.abnormaldetection.url} headerText={ENDPOINTS.abnormaldetection.pageTitle} />}></Route>
+            <Route path='/drivertampering' element = {<DataDisplay API_URL={ENDPOINTS.drivertampering.url} headerText={ENDPOINTS.drivertampering.pageTitle} />}></Route>
+            <Route path='/drivertamperingdetails' element = {<DataDisplay API_URL={ENDPOINTS.drivertamperingdetails.url} headerText={ENDPOINTS.drivertamperingdetails.pageTitle} />}></Route>
+            <Route path='/abnormalgraph' element = {<DataDisplay API_URL={ENDPOINTS.abnormalgraph.url} headerText={ENDPOINTS.abnormalgraph.pageTitle} />}></Route>
+            <Route path='/transactionsgraph' element = {<DataDisplay API_URL={ENDPOINTS.transactionsgraph.url} headerText={ENDPOINTS.transactionsgraph.pageTitle} />}></Route>
+            <Route path='/reasoning1' element = {<DataDisplay API_URL={ENDPOINTS.reasoning1.url} headerText={ENDPOINTS.reasoning1.pageTitle} />} ></Route>
+            <Route path='/reasoning2' element = {<DataDisplay API_URL={ENDPOINTS.reasoning2.url} headerText={ENDPOINTS.reasoning2.pageTitle} />} ></Route>
+            <Route path='/reasoning3' element = {<DataDisplay API_URL={ENDPOINTS.reasoning3.url} headerText={ENDPOINTS.reasoning3.pageTitle} />} ></Route>
+            <Route path='/reasoning4' element = {<DataDisplay API_URL={ENDPOINTS.reasoning4.url} headerText={ENDPOINTS.reasoning4.pageTitle} />} ></Route>
+            <Route path='/reasoning5' element = {<DataDisplay API_URL={ENDPOINTS.reasoning5.url} headerText={ENDPOINTS.reasoning5.pageTitle} />} ></Route>
+            <Route path='/reasoning6' element = {<DataDisplay API_URL={ENDPOINTS.reasoning6.url} headerText={ENDPOINTS.reasoning6.pageTitle} />} ></Route>
+            <Route path='/reasoning7' element = {<DataDisplay API_URL={ENDPOINTS.reasoning7.url} headerText={ENDPOINTS.reasoning7.pagetitle} />} ></Route>
+            <Route path='/alertlogger' element = {<DataDisplay API_URL={ENDPOINTS.alertlogger.url} headerText={ENDPOINTS.alertlogger.pagetitle} />} ></Route>
+            <Route path='/threatandincident' element = {<DataDisplay API_URL={ENDPOINTS.threatandincident.url} headerText={ENDPOINTS.threatandincident.pagetitle} /> } ></Route>
+            <Route path='/dynamicapi' element = {<DynamicAPI />} ></Route>
+            <Route path='/ordertrack' element = {<OrderTrack />} ></Route>
+            
+            <Route path='/usermanagement' element = {<UserManagement />} ></Route>
+            <Route path='/useredit' element = {<UserEdit />} ></Route>
+            <Route path="/profile" element={<Profile />} ></Route>
+            
+          </Routes>
         </div>
-          
-        </div>
-        
-        */}
-
-        { /*<AuthVerify logOut={this.logOut}/> */ }
       </div>
     );
   }
