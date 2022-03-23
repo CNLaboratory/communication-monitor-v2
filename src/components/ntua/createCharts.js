@@ -70,7 +70,6 @@ export default class CreateCharts extends React.Component {
         let chartOptions = [];
         let chartData = [];
         let dropMenuOptions = [];
-        let dropDownItems = [];
         let selectMenuItems = [];
         let chartItems = [];
         let chartMap = {};

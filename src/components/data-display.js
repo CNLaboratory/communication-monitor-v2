@@ -6,8 +6,6 @@ import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
 import { IoRefreshOutline } from 'react-icons/io5';
 
-import { nestedDataExample2 } from '../data/data';
-
 class DataDisplay extends React.Component {
   constructor(props) {
     super(props)
@@ -40,17 +38,6 @@ class DataDisplay extends React.Component {
     console.log(this.state.isDataLoaded);
   }
 
-  /*getDataFromComponent = (responseData) => {
-    this.setState( { itemData: responseData });
-    this.setState( { isDataLoaded: true });
-  }*/
-
-  getProductDataAdvanced() {
-    const data = nestedDataExample2;
-
-      
-
-  }
 
   getProductData = () => {
     axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})

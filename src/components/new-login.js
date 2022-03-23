@@ -1,20 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import AuthService from "../services/auth.service";
 
 export default function NewLogin (props) {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    let loading = false;
-    let message = "";
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    
 
 
     const onSubmit = data => {
         console.log(data);
-        loading = true;
+        setLoading(true);
         AuthService.login(data.username, data.password).then(
             () => {
-                loading = false;
+                setLoading(false);
                 props.logIn();
             },
             error => {
@@ -25,8 +26,8 @@ export default function NewLogin (props) {
                     error.message ||
                     error.toString();
 
-                    loading = false;
-                    message = resMessage;
+                    setLoading(false);
+                    setMessage(resMessage);
             }
         );
     }

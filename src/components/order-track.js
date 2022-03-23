@@ -2,16 +2,9 @@ import React from 'react';
 import '../App.css';
 import axios from 'axios';
 
-import GetDataFromAPI from './ntua/getDataFromAPI';
-import ToolCard from './ntua/toolCard';
 import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
-import { FaList, FaRegHeart, FaBezierCurve, FaCog, FaQuestion, FaBug, FaExclamationTriangle} from "react-icons/fa";
 import { IoRefreshOutline } from 'react-icons/io5';
-
-//const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
-const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction";
-const API_URL3 = "http://147.102.40.53:5000/product";
 
 
 class OrderTrack extends React.Component {
@@ -30,7 +23,7 @@ class OrderTrack extends React.Component {
        keys: [],
        labels: [],
        refreshInterval: props.refreshInterval,
-       API_URL: props.API_URL,
+       API_URL: '',
        counter: 0,
        displayTableComponent: []
      };
@@ -59,9 +52,9 @@ class OrderTrack extends React.Component {
         let localColumns=[];
         let itemData=[];
         let localLabels=[];
-
-        if (response.data === []) {
-          //empty array
+        console.log('response.data:', response.data);
+        if (response.data.length === 0) {
+          console.log('empty order');
           this.setState({emptyOrder: true});
 
         } else {
@@ -142,7 +135,7 @@ class OrderTrack extends React.Component {
             if (formValues[url]["url"]) {
                 
                 
-                endpoint = 'https://communicationmonitor.cn.ntua.gr:5000/search?order=';
+                endpoint = 'https://communicationmonitor.cn.ntua.gr:5000/evaluateorders?order=';
                 this.setState({API_URL: endpoint + formValues[url]['url']}, () => {
                 
                     this.getProductData();
@@ -173,7 +166,7 @@ class OrderTrack extends React.Component {
     
     let toolComponent1;
     let buttonComponent;
-    let toolCardComponentsArray = [];
+    
     //let getDataComponent = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
     console.log(this.state.data);
     
@@ -198,15 +191,7 @@ class OrderTrack extends React.Component {
         </form>;
     
     if (this.state.isDataLoaded) {
-      console.log('dataloaded');
-      console.log(this.state.itemData);
-      console.log(this.state.data);
-      toolCardComponentsArray = [
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>,
-        <div className='tool-card'><ToolCard data={this.state.data} /></div>
-      ]  
+      
       toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
       buttonComponent = <Button className="refresh-button" variant="primary"  onClick={this.refreshData} ><IoRefreshOutline /></Button>;
     }

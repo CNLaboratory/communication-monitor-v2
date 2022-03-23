@@ -3,39 +3,21 @@ import {
     Button, 
     Form
 } from 'react-bootstrap'
-import AlertModal from './alert-modal';
-/*
-pass a 'user' object with the following properties:
-user = {
-    username: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    phonenumber: '',
-    disabled: bool
-}
-*/
-export default class UserEdit extends React.Component {
+
+export default class CreateUser extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            isCurrentUser:this.props.isCurrentUser,
-            username:this.props.user.username,
+            username:'',
             password:'',
-            firstName:this.props.user.firstName,
-            lastName:this.props.user.lastName,
-            phoneNumber:this.props.user.phoneNumber,
-            disabled:this.props.user.disabled,
-            email:this.props.user.email,
-            roles:this.props.user.roles,
-            isAdmin: this.checkRoles('admin'),
-            isModerator: this.checkRoles('moderator'),
-            isUser:this.checkRoles('user'),
-            showAlert: false,
-            alertMessage: ''
-
+            firstName:'',
+            lastName:'',
+            phoneNumber:'',
+            disabled:'',
+            email:'',
+            roles:[]
         }
 
         this.onSubmit = this.onSubmit.bind(this);
@@ -46,19 +28,7 @@ export default class UserEdit extends React.Component {
         this.onChangePhoneNumber = this.onChangePhoneNumber.bind(this);
         this.onChangeDisabled = this.onChangeDisabled.bind(this);
         this.onChangeRole = this.onChangeRole.bind(this);
-        this.setRoles = this.setRoles.bind(this);
-        this.checkRoles = this.checkRoles.bind(this);
-        this.onAlertClose = this.onAlertClose.bind(this);
-    }
-    
-    checkRoles(role) {
-        let roles = this.props.user.roles;
-        if (roles.some(e => e === role)) {
-            return true;
-        } else return false;
-    }
-    onAlertClose() {
-        this.setState({showAlert: false, alertMessage:''});
+        this.onChangeUsername = this.onChangeUsername.bind(this);
     }
 
     onSubmit(event) {
@@ -75,25 +45,10 @@ export default class UserEdit extends React.Component {
             roles:this.state.roles
         }
         console.log('onSubmit, formValues:', formValues);
-        if (!formValues.roles.length) {
-            this.setState({
-                showAlert: true,
-                alertMessage: 'A user must always have a role assigned. Please select a role for this user'
-            })
-        } /*else if (formValues.disabled && this.state.isAdmin) {
-            this.setState({
-                showAlert: true,
-                alertMessage: 'Admin users cannot be disabled. Please remove the disabled option or change role for this user'
-            })*/
-            else if (formValues.disabled && this.state.isCurrentUser) {
-                this.setState({
-                    showAlert: true,
-                    alertMessage: 'You cannot disable yourself. Please remove the disabled option'
-                })
-        } else {
-            this.props.saveUser(formValues);
-        }
-        
+        this.props.saveUser(formValues);
+    }
+    onChangeUsername(event) {
+        this.setState({username: event.target.value});
     }
     onChangeFirstName(event) {
         
@@ -118,6 +73,7 @@ export default class UserEdit extends React.Component {
     }
     onChangeDisabled(event) {
         console.log('onChangeDisabled: event.target.value', event.target.value);
+        console.log('onChangeDisabled: event.target.checked', event.target.checked);
         this.setState({disabled: event.target.checked});
     }
     onChangeRole(event) {
@@ -132,27 +88,7 @@ export default class UserEdit extends React.Component {
             roles = roles.filter(item => item !== event.target.value);
         }
         console.log('roles after:', roles);
-        this.setState({roles: roles}, () => {
-            this.setRoles()});
-    }
-    setRoles() {
-        let roles = this.state.roles;
-        console.log('roles:', roles);
-        for (let i = 0; i < roles.length; i++) {
-            if (roles[i] === 'admin') {
-                this.setState({isAdmin: true}, () => {
-                    console.log('afterSetState, isAdmin:', this.state.isAdmin)
-                }
-                    );
-            } else if (roles[i] === 'moderator') {
-                this.setState({isModerator: true});
-            } else if (roles[i] === 'user') {
-                this.setState({isUser: true});
-            }
-        }
-        console.log('isAdmin:', this.state.isAdmin);
-        console.log('isModerator:', this.state.isModerator);
-        console.log('isUser:', this.state.isUser);
+        this.setState({roles: roles});
     }
     
 
@@ -160,37 +96,37 @@ export default class UserEdit extends React.Component {
         return(
             <div>
                 {console.log('user:', this.props.user)}
-                <h2>Edit User</h2>
+                <h2>Create User</h2>
                 <Form style={{width:'50%'}}>
                     <Form.Group className="mb-3" controlId="formUserUserName">
                         <Form.Label>Username</Form.Label>
-                        <Form.Control readOnly type="text" placeholder={this.props.user.username}></Form.Control>
+                        <Form.Control required type="text" onChange={this.onChangeUsername}></Form.Control>
                         <Form.Text className="text-muted"></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder=""  onChange={this.onChangePassword}/>
+                        <Form.Control required type="password"   onChange={this.onChangePassword}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserFirstName">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="text" placeholder={this.props.user.firstName} onChange={this.onChangeFirstName}></Form.Control>
+                        <Form.Control type="text"  onChange={this.onChangeFirstName}></Form.Control>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserLastName">
                         <Form.Label>Last Name</Form.Label>
-                        <Form.Control type="text" placeholder={this.props.user.lastName} onChange={this.onChangeLastName}></Form.Control>
+                        <Form.Control type="text"  onChange={this.onChangeLastName}></Form.Control>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formUserEmail">
                         <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder={this.props.user.email}  onChange={this.onChangeEmail}/>
+                        <Form.Control required type="email"   onChange={this.onChangeEmail}/>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formUserPhoneNumber">
                         <Form.Label>Phone Number</Form.Label>
-                        <Form.Control type="email" placeholder={this.props.user.phoneNumber}  onChange={this.onChangePhoneNumber}/>
+                        <Form.Control type="email"   onChange={this.onChangePhoneNumber}/>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserDisabled">
@@ -199,18 +135,21 @@ export default class UserEdit extends React.Component {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserRole">
                         <Form.Label>Role</Form.Label>
-                        <Form.Check inline defaultChecked={this.state.isAdmin} type="checkbox" value="admin" label="Admin" onChange={this.onChangeRole} name="group1" id="formUserRoleAdmin"/>
-                        <Form.Check inline defaultChecked={this.state.isModerator} type="checkbox" value="moderator" label="Moderator" onChange={this.onChangeRole} name="group1" id="formUserRoleModerator"/>
-                        <Form.Check inline defaultChecked={this.state.isUser} type="checkbox" value="user" label="User" onChange={this.onChangeRole} name="group1" id="formUserRoleUser"/>
+                        <div key='inline-role-radio' className="mb-3">
+                            <Form.Check inline type="checkbox" value="admin" onChange={this.onChangeRole} label="Admin" name="group1" id="formUserRoleAdmin"/>
+                            <Form.Check inline type="checkbox" value="moderator" onChange={this.onChangeRole} label="Moderator" name="group1" id="formUserRoleModerator"/>
+                            <Form.Check inline type="checkbox" value="user" onChange={this.onChangeRole} label="User" name="group1" id="formUserRoleUser"/>
+                        </div>
                     </Form.Group>
                     <Button variant="primary" type="submit" onClick={this.onSubmit}>
-                        Save
+                        Create
                     </Button>
                     <Button variant='light' type='button' onClick={this.props.onCancel}>
                         Cancel
                     </Button>
                 </Form>
-                {this.state.showAlert && <AlertModal show={this.state.showAlert} message={this.state.alertMessage} onClose={this.onAlertClose}/>}
+                
+
             </div>
             
         )

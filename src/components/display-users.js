@@ -1,18 +1,9 @@
 import React from 'react';
 import {
     Button,
-    Card,
-    Col,
-    Container,
-    Form,
-    Modal,
-    Row,
     Table,
   } from "react-bootstrap";
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 
 
 
@@ -27,6 +18,8 @@ export default class DisplayUsers extends React.Component {
         }
 
         this.onEdit = this.onEdit.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.convertRolesToString = this.convertRolesToString.bind(this);
     }
 
     onEdit = (e) => {
@@ -35,12 +28,29 @@ export default class DisplayUsers extends React.Component {
         this.props.onEdit(e.target.value);
 
     }
+    onDelete = (e) => {
+        console.log('e',e);
+        console.log('e.target.value',e.target.value);
+        this.props.onDelete(e.target.value);
+    }
+    convertRolesToString(roles) {
+        let rolesString = '';
+        let addComma = false;
+        for (let i = 0; i < roles.length; i++) {
+            if (addComma) {
+                rolesString += ', ';
+            }
+            rolesString += roles[i];
+            addComma = true;
+        }
+        return rolesString;
+    }
     
 
     render() {
         return (
             <div>
-                <h1>User Management</h1>
+                
                 <Table responsive>
                 <thead>
                     <tr>
@@ -50,9 +60,10 @@ export default class DisplayUsers extends React.Component {
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
+                        <th>Roles</th>
                         <th>Disabled</th>
                         <th>Actions</th>
-                        <ht></ht>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -67,23 +78,24 @@ export default class DisplayUsers extends React.Component {
                         <td>{item.lastName}</td>
                         <td>{item.email}</td>
                         <td>{item.phoneNumber}</td>
+                        <td>{this.convertRolesToString(item.roles)}</td>
                         <td>{item.disabled ? 'YES':'NO'}</td>
                             
                         <td><Button
                             variant="info"
                             title="Edit user details"
-                            onClick={this.onEdit}
                             value={item.username}
+                            onClick={this.onEdit}
                             >
                             <FaPencilAlt className='noPointerEvent'/> 
-                                
                             </Button>{" "}
                             <Button
                             variant="danger"
                             title="Delete user"
-                            //onClick={() => thisonEdit(user1)}
+                            value={item.username}
+                            onClick={this.onDelete}
                             >
-                            <FaTrashAlt />
+                            <FaTrashAlt className='noPointerEvent'/>
                             </Button>
                         </td>
                         </tr>

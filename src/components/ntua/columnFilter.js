@@ -1,9 +1,7 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
-import { IconContext } from "react-icons";
 
 export default function ColumnFilter({ column }) {
-    const { filterValue, setFilter, preFilteredRows } = column;
+    const { filterValue, setFilter } = column;
     //const count = preFilteredRows.length;
     
     //this.changeSearchEnabled = this.changeSearchEnabled.bind(this);

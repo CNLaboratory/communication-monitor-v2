@@ -36,36 +36,42 @@ export default class GetDataFromAPI extends React.Component {
         .then((response) => {
             console.log('transfer complete');
 
-            this.state.data = response.data;
-
-            const firstCar = this.state.data[0];
-            for (let key in firstCar) {
-                if (firstCar.hasOwnProperty(key)) {
-                    this.state.keys.push(key);
-                }
-            }
-            for (let key in this.state.keys) {
-                this.state.columns.push(
-                    {
-                        Header: this.state.keys[key],
-                        accessor: this.state.keys[key]
+            this.setState({data: response.data}, () => {
+                const firstCar = this.state.data[0];
+                for (let key in firstCar) {
+                    if (firstCar.hasOwnProperty(key)) {
+                        this.state.keys.push(key);
                     }
-                )
-            }
-            let i = 0;
-            for (let item in this.state.data) {
-                this.state.itemData.push(this.state.data[item]);
-                
-                // Get the label for each car like Car0, Car1 etc
-                const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
-                this.state.labels.push(label + i++);
-    
-            }
-            
-            this.props.responseData(response.data);
+                }
+                for (let key in this.state.keys) {
+                    this.state.columns.push(
+                        {
+                            Header: this.state.keys[key],
+                            accessor: this.state.keys[key]
+                        }
+                    )
+                }
+                let i = 0;
+                let itemData = this.state.itemData;
+                let labels = this.state.labels;
 
-            this.setState({ 
-                isTransfering: false
+                for (let item in this.state.data) {
+
+                    itemData.push(this.state.data[item]);
+                    
+                    // Get the label for each car like Car0, Car1 etc
+                    const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
+                    labels.push(label + i++);
+        
+                }
+                
+                this.props.responseData(response.data);
+
+                this.setState({ 
+                    isTransfering: false,
+                    itemData: itemData,
+                    labels: labels
+                });
             });
         });
 

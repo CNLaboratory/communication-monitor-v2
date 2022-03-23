@@ -2,17 +2,10 @@ import React from 'react';
 import '../App.css';
 import axios from 'axios';
 
-import GetDataFromAPI from './ntua/getDataFromAPI';
 import ToolCard from './ntua/toolCard';
 import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
-import { FaList, FaRegHeart, FaBezierCurve, FaCog, FaQuestion, FaBug, FaExclamationTriangle} from "react-icons/fa";
 import { IoRefreshOutline } from 'react-icons/io5';
-
-//const API_URL = "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction";
-const API_URL2 = "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction";
-const API_URL3 = "http://147.102.40.53:5000/product";
-
 
 class DynamicAPI extends React.Component {
   constructor(props) {

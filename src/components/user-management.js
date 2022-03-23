@@ -1,20 +1,14 @@
 import React from 'react';
-import {
-    Button,
-    Card,
-    Col,
-    Container,
-    Form,
-    Modal,
-    Row,
-    Table,
-  } from "react-bootstrap";
-import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import DisplayUsers from './display-users';
 import UserEdit from './user-edit';
-import {users} from '../data/data';
 import authService from '../services/auth.service';
+import ToastNotification from './toast-notification';
+import ToastContainer from 'react-bootstrap/ToastContainer';
+import {NotificationManager} from 'react-notifications';
+import { Button } from 'react-bootstrap';
+import { FaPlusSquare } from 'react-icons/fa';
+import CreateUser from './create-user';
+import AlertModal, { AlertModalDangerousAction } from './alert-modal';
 
 export default class UserManagement extends React.Component {
 
@@ -23,17 +17,34 @@ export default class UserManagement extends React.Component {
 
         this.state = {
             isEditing: false,
+            isCreating: false,
+            isDeleting: false,
+            showDeleteAlert: false,
+            userToDelete: {},
             usersArray: [],
-            userForEditing: {}
+            userForEditing: {},
+            showNotification: true,
+            notificationsArray: [],
+            currentUser: authService.getCurrentUser().username
         }
 
         this.onEdit = this.onEdit.bind(this);
-        this.onCancel = this.onCancel.bind(this);
+        this.onEditCancel = this.onEditCancel.bind(this);
+        this.onCreateCancel = this.onCreateCancel.bind(this);
         this.getAllUsersFromDB = this.getAllUsersFromDB.bind(this);
         this.getUserFromUsername = this.getUserFromUsername.bind(this);
+        this.saveUser = this.saveUser.bind(this);
+        this.register = this.register.bind(this);
+        this.onCreateUser = this.onCreateUser.bind(this);
+        this.onDelete = this.onDelete.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+        this.cancelDeleteUser = this.cancelDeleteUser.bind(this);
+        this.cancelDeleteSelf = this.cancelDeleteSelf.bind(this);
+        
     }
     componentDidMount () {
         this.getAllUsersFromDB();
+        console.log('currentUser:', this.state.currentUser);
     }
 
     getAllUsersFromDB() {
@@ -49,30 +60,57 @@ export default class UserManagement extends React.Component {
                     error.response.data.message) ||
                   error.message ||
                   error.toString();
+                  /*let notificationsArray = this.state.notificationsArray;
+                  notificationsArray.push(<ToastNotification message={resMessage}/>);
+                  this.setState({notificationsArray: notificationsArray});*/
+                  NotificationManager.error(resMessage, 'Something went wrong:', 3000);
             }
         )
+    }
+
+    onCreateUser() {
+        console.log('createUser');
+        this.setState({
+            isCreating: true,
+        });
     }
 
 
     onEdit = (username) => {
         
         console.log('onEdit, username:', username);
-        const usernameForEditing = this.getUserFromUsername(username);
-        console.log('onEdit, usernameForEditing', usernameForEditing);
+        const userForEditing = this.getUserFromUsername(username);
+        console.log('onEdit, userForEditing', userForEditing);
         this.setState({
             isEditing: true,
-            userForEditing: usernameForEditing
+            userForEditing: userForEditing
         });
         
     }
-    onCancel = () => {
-        console.log('onCancel');
+    onEditCancel = () => {
+        console.log('onEditCancel');
         this.setState({
             isEditing: false
-        })
+        });
+        /*let notificationsArray = this.state.notificationsArray;
+            notificationsArray.push(<ToastNotification message={'Cancelled!'}/>);
+            this.setState({notificationsArray: notificationsArray});
+            */
+        NotificationManager.warning('No changes were made to the user', 'Canceled', 3000);
+    }
+    onCreateCancel = () => {
+        console.log('onCreateCancel');
+        this.setState({
+            isCreating: false
+        });
+        /*let notificationsArray = this.state.notificationsArray;
+            notificationsArray.push(<ToastNotification message={'Cancelled!'}/>);
+            this.setState({notificationsArray: notificationsArray});
+            */
+        NotificationManager.warning('No user was added', 'Cancelled', 3000);
     }
     getUserFromUsername(username) {
-        console.log('usernametoUserInState, username:', username);
+        console.log('getUserFromUsername, username:', username);
         console.log('this.state.userArray', this.state.usersArray);
         let userObj;
         this.state.usersArray.forEach((item, index) => {
@@ -86,26 +124,26 @@ export default class UserManagement extends React.Component {
                         lastName: item.lastName,
                         phoneNumber: item.phoneNumber,
                         email: item.email,
-                        disabled: item.disabled
+                        disabled: item.disabled,
+                        roles: item.roles
                     }
             }
         })
         return userObj;
     }
-    updateUserInAllUsersArray(updatedUser) {
-        const newUsersArray = this.state.usersArray;
-
-        
-    }
+    
     saveUser(updatedUser) {
         console.log('saveUser, updatedUser:', updatedUser);
         authService.updateUser(updatedUser).then(
             (response) => {
                 console.log('saveUser() response: ', response);
-                const newUsersArray = this.state.usersArray;
-                this.updateUserInAllUsersArray(updatedUser);
-
-                this.setState({usersArray: newUsersArray});
+                this.setState({isEditing: false});
+                this.getAllUsersFromDB();
+                /*let notificationsArray = this.state.notificationsArray;
+                notificationsArray.push(<ToastNotification message={"User Saved!"}/>);
+                this.setState({notificationsArray: notificationsArray});
+                */
+                NotificationManager.success('User was saved successfully', 'Sucess', 3000);
             }, 
             error => {
                 const resMessage =
@@ -114,16 +152,141 @@ export default class UserManagement extends React.Component {
                     error.response.data.message) ||
                   error.message ||
                   error.toString();
+                  /*let notificationsArray = this.state.notificationsArray;
+                  notificationsArray.push(<ToastNotification message={resMessage}/>);
+                  this.setState({notificationsArray: notificationsArray});
+                  */
+                  NotificationManager.error(resMessage, 'Something went wrong:', 3000);
+            }
+            
+        );
+    }
+    register(newUser) {
+        console.log('createUser, newUser:', newUser);
+        authService.register(newUser).then(
+            (response) => {
+                console.log('saveUser() response: ', response);
+                this.setState({isCreating: false});
+                this.getAllUsersFromDB();
+                /*let notificationsArray = this.state.notificationsArray;
+                notificationsArray.push(<ToastNotification message={"User Saved!"}/>);
+                this.setState({notificationsArray: notificationsArray});
+                */
+                NotificationManager.success('User was created successfully','Sucess', 3000);
+            }, 
+            error => {
+                const resMessage =
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+                  /*let notificationsArray = this.state.notificationsArray;
+                  notificationsArray.push(<ToastNotification message={resMessage}/>);
+                  this.setState({notificationsArray: notificationsArray});
+                  */
+                  NotificationManager.error(resMessage, 'Something went wrong:', 3000);
+            }
+            
+        );
+    }
+    onDelete(username) {
+        console.log('onDelete, username:', username);
+        if (username === this.state.currentUser) {
+            this.setState({
+                isDeletingSelf: true
+            })
+        } else {
+            this.setState({
+                isDeleting: true,
+                showDeleteAlert: true,
+                userToDelete: this.getUserFromUsername(username)
+            });
+    
+        }
+        
+    }
+    deleteUser () {
+        console.log('deleteUser');
+        authService.deleteUser(this.state.userToDelete.username).then(
+            (response) => {
+                this.setState({
+                    isDeleting: false,
+                    showDeleteAlert: false,
+                    userToDelete: {}
+                });
+                this.getAllUsersFromDB();
+                NotificationManager.success('User deleted successfully!', 'Success', 3000);
+            }, 
+            error => {
+                const resMessage =
+                  (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+                  
+                  NotificationManager.error(resMessage, 'Something went wrong:', 3000);
             }
         )
+
     }
+    cancelDeleteUser () {
+        this.setState({
+            isDeleting: false,
+            showDeleteAlert: false,
+            userToDelete: {}
+        })
+    }
+    cancelDeleteSelf() {
+        this.setState({
+            isDeletingSelf: false
+        })
+    }
+    
 
     render() {
         return (
             <div>
+                <h1>User Management</h1>
+                <div>
+                    {!this.state.isCreating && 
+                    <Button
+                        variant="info"
+                        title="Edit user details"
+                        onClick={this.onCreateUser}
+                        >
+                        <FaPlusSquare className='noPointerEvent'/> 
+                                
+                    </Button>
+                    }
+                </div>
                 
-                {!this.state.isEditing && <DisplayUsers users={this.state.usersArray} onEdit={this.onEdit}/>}
-                {this.state.isEditing && <UserEdit user={this.state.userForEditing} saveUser={this.saveUser} onCancel={this.onCancel}/>}
+                {!this.state.isEditing && !this.state.isCreating && <DisplayUsers users={this.state.usersArray} onEdit={this.onEdit} onDelete={this.onDelete} /> }
+                {this.state.isEditing && <UserEdit user={this.state.userForEditing} isCurrentUser={this.state.userForEditing.username === this.state.currentUser} saveUser={this.saveUser} onCancel={this.onEditCancel}/>}
+                {this.state.isCreating && <CreateUser saveUser={this.register} onCancel={this.onCreateCancel}/>}
+                {
+                    this.state.notificationsArray.length > 0 && 
+                    
+                    <ToastContainer position={'top-end'} className="p-3">
+                        {console.log('this.state.notificationsArray:', this.state.notificationsArray)}
+                        {<ToastNotification message='Test1'/>}
+                        {<ToastNotification message='Test1'/>}
+                        {this.state.notificationsArray}
+                    </ToastContainer>
+                    
+                }
+                
+                {this.state.isDeletingSelf && <AlertModal show={this.state.isDeletingSelf} onClose={this.cancelDeleteSelf} message="You can't delete yourself :)"/>}
+                {this.state.showDeleteAlert && <AlertModalDangerousAction 
+                                                    show={this.state.showDeleteAlert}
+                                                    message={'Are you sure you want to delete user: "' + this.state.userToDelete.username + '" ?'}
+                                                    proceedMessage='Delete'
+                                                    cancelMessage='Cancel'
+                                                    onProceed={this.deleteUser}
+                                                    onCancel={this.cancelDeleteUser}
+                                                    />}
+                
             </div>
 
             

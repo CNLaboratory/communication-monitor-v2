@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Routes, Route } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./constants";
@@ -7,19 +8,22 @@ import AuthService from "./services/auth.service";
 import Login from "./components/login.component";
 import Home from "./components/home.component";
 import Profile from "./components/profile.component";
-import DefaultSidebar from "./components/sidebar/default-sidebar";
 import UserSidebar from "./components/sidebar/user-sidebar";
 import ModSidebar from "./components/sidebar/mod-sidebar";
 import AdminSidebar from "./components/sidebar/admin-sidebar";
 import DynamicAPI from "./components/dynamic-api";
 import OrderTrack from "./components/order-track";
-import Register from "./components/register.component";
 import EventBus from "./common/EventBus";
 import DataDisplay from "./components/data-display";
 import { ENDPOINTS } from "./constants";
 import UserManagement from "./components/user-management";
 import UserEdit from "./components/user-edit";
 import NewLogin from "./components/new-login";
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer} from 'react-notifications';
+
+import background from "./img/background-main.jpg";
+
 
 class App extends Component {
   constructor(props) {
@@ -87,11 +91,14 @@ class App extends Component {
   render() {
     const { currentUser, showModeratorBoard, showAdminBoard, loggedIn } = this.state;
     let mainWindowBackgroundColor;
+    //let backgroundImage = `url(${background})`;
+    let backgroundImage = ''
     if (this.state.backgroundColor) {
       mainWindowBackgroundColor = '#e5e5e5';
     } else {
       mainWindowBackgroundColor = 'white'
     }
+    
 
     console.log('currentUser');
     console.log(currentUser);
@@ -105,7 +112,7 @@ class App extends Component {
 
     return (
       
-        <div className="App" style={{backgroundColor: mainWindowBackgroundColor}}>
+        <div className="App" style={{backgroundColor: mainWindowBackgroundColor, backgroundImage: backgroundImage, backgroundSize: 'cover'}}>
           <div className="sidebar">
           
             {showAdminBoard && (
@@ -124,14 +131,15 @@ class App extends Component {
           {!loggedIn && <NewLogin logIn={this.logIn}/>}
           {/*loggedIn && <Home />*/}
               
+          {<NotificationContainer/>}
 
 
           <Routes>
             
             {/* <Route path="/" component={Login} /> */}
             {/*loggedIn && <Route path="/" component={Home}/>*/}
+            {/*<Route path="/login" element={Login}></Route>*/}
             {/*<Route path="/" element={<Home/>}></Route>*/}
-            <Route path="/login" element={Login} />
             <Route path="/transactionsdepiction" element={<DataDisplay API_URL={ENDPOINTS.transactionsdepiction.url} headerText={ENDPOINTS.transactionsdepiction.pageTitle}/>}></Route>
             <Route path='/sensorsdepiction' element = {<DataDisplay API_URL={ENDPOINTS.sensorsdepiction.url} headerText={ENDPOINTS.sensorsdepiction.pageTitle} />}></Route>
             <Route path='/abnormaldetection' element = {<DataDisplay API_URL={ENDPOINTS.abnormaldetection.url} headerText={ENDPOINTS.abnormaldetection.pageTitle} />}></Route>
