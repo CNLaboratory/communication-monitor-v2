@@ -15,7 +15,8 @@ class AuthService {
     } else {
       this.API_URL = 'https://cndevs.cn.ntua.gr:8443/api/auth/';
     }*/
-    this.API_URL = 'http://' + process.env.REACT_APP_NODE_SERVER_DOMAIN + ':' + process.env.REACT_APP_NODE_SERVER_PORT + '/api/auth/';
+    this.API_URL = (process.env.HTTPS) ? 'https://' : 'http://' + process.env.REACT_APP_NODE_SERVER_DOMAIN + ':' + process.env.REACT_APP_NODE_SERVER_PORT + '/api/auth/';
+    
   }
   
 
