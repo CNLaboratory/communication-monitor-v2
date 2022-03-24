@@ -25,6 +25,7 @@ import {NotificationContainer} from 'react-notifications';
 import background from "./img/background-main.jpg";
 import UploadFile from './components/upload-file-test';
 import DataVisualization from "./components/data-visualization";
+import IFrameTest from "./components/iframe-test";
 
 
 class App extends Component {
@@ -171,6 +172,7 @@ class App extends Component {
             {/*Experimental */}
             <Route path='/uploadfiletest' element={<UploadFile />} ></Route>
             <Route path='/datavisualization' element={<DataVisualization/>} ></Route>
+            <Route path='/iframetest' element={<IFrameTest/>}></Route>
           </Routes>
         </div>
       </div>

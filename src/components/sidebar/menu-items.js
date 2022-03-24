@@ -112,6 +112,7 @@ export const menuAdmin = [
     <MenuItem icon={<SiDynamics365/>}>{ENDPOINTS.ordertrack.menuTitle}<Link to={'/ordertrack'} /></MenuItem>,
     <MenuItem>Upload File Test<Link to={'/uploadfiletest'} /></MenuItem>,
     <MenuItem>Data Visualization<Link to={'/datavisualization'} /></MenuItem>,
+    <MenuItem>iFrame Test<Link to={'/iframetest'} /></MenuItem>,
     
 ];
 
