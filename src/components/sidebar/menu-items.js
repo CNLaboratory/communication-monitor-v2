@@ -110,6 +110,8 @@ export const menuAdmin = [
     <MenuItem icon={<FaExclamationTriangle/>}>{ENDPOINTS.alertlogger.menuTitle}<Link to={'/alertlogger'} /></MenuItem>,
     <MenuItem icon={<SiDynamics365/>}>Dynamic API<Link to={'/dynamicapi'} /></MenuItem>,
     <MenuItem icon={<SiDynamics365/>}>{ENDPOINTS.ordertrack.menuTitle}<Link to={'/ordertrack'} /></MenuItem>,
+    <MenuItem>Upload File Test<Link to={'/uploadfiletest'} /></MenuItem>,
+    <MenuItem>Data Visualization<Link to={'/datavisualization'} /></MenuItem>,
     
 ];
 

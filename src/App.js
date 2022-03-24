@@ -23,6 +23,8 @@ import 'react-notifications/lib/notifications.css';
 import {NotificationContainer} from 'react-notifications';
 
 import background from "./img/background-main.jpg";
+import UploadFile from './components/upload-file-test';
+import DataVisualization from "./components/data-visualization";
 
 
 class App extends Component {
@@ -140,6 +142,7 @@ class App extends Component {
             {/*loggedIn && <Route path="/" component={Home}/>*/}
             {/*<Route path="/login" element={Login}></Route>*/}
             {/*<Route path="/" element={<Home/>}></Route>*/}
+            
             <Route path="/transactionsdepiction" element={<DataDisplay API_URL={ENDPOINTS.transactionsdepiction.url} headerText={ENDPOINTS.transactionsdepiction.pageTitle}/>}></Route>
             <Route path='/sensorsdepiction' element = {<DataDisplay API_URL={ENDPOINTS.sensorsdepiction.url} headerText={ENDPOINTS.sensorsdepiction.pageTitle} />}></Route>
             <Route path='/abnormaldetection' element = {<DataDisplay API_URL={ENDPOINTS.abnormaldetection.url} headerText={ENDPOINTS.abnormaldetection.pageTitle} />}></Route>
@@ -159,10 +162,15 @@ class App extends Component {
             <Route path='/dynamicapi' element = {<DynamicAPI />} ></Route>
             <Route path='/ordertrack' element = {<OrderTrack />} ></Route>
             
+            
+
             <Route path='/usermanagement' element = {<UserManagement />} ></Route>
             <Route path='/useredit' element = {<UserEdit />} ></Route>
             <Route path="/profile" element={<Profile />} ></Route>
             
+            {/*Experimental */}
+            <Route path='/uploadfiletest' element={<UploadFile />} ></Route>
+            <Route path='/datavisualization' element={<DataVisualization/>} ></Route>
           </Routes>
         </div>
       </div>

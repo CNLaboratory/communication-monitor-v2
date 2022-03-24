@@ -7,7 +7,14 @@ import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
 import { IoRefreshOutline } from 'react-icons/io5';
 
-class DynamicAPI extends React.Component {
+import { DataGrid } from '@mui/x-data-grid';
+import { GridToolbar} from '@mui/x-data-grid';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+export default class DataVisualization extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
@@ -18,6 +25,7 @@ class DynamicAPI extends React.Component {
        isTransfering: true,
        isTool1: false,
        columns: [],
+       rows: [],
        data: [],
        keys: [],
        labels: [],
@@ -46,40 +54,53 @@ class DynamicAPI extends React.Component {
         let localColumns=[];
         let itemData=[];
         let localLabels=[];
+        let localRows=[];
 
         
         //this.state.data = response.data;
 
         const firstItem = this.state.data[0];
         console.log('firstItem:', firstItem);
+        
         for (let key in firstItem) {
             if (firstItem.hasOwnProperty(key)) {
                 localKeys.push(key);
             }
         }
+        localColumns.push({field: 'id'});
         for (let key in localKeys) {
             localColumns.push(
                 {
-                    Header: localKeys[key],
-                    accessor: localKeys[key]
+                    field: localKeys[key]
                 }
             )
         }
         let i = 0;
-        for (let item in this.state.data) {
+        for (const item of this.state.data) {
+            let row = {};
             itemData.push(this.state.data[item]);
+            row['id'] = i;
+            console.log('item:', item);
             
+            for (const key of localKeys) {
+                row[key] = item[key];
+            }
+            localRows.push(row);
+            console.log('row:', row);
+
             // Get the label for each car like Car0, Car1 etc
             const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
             localLabels.push(label + i++);
-
         }
-        
+        console.log('localKeys:', localKeys);
+        console.log('localLabels:', localLabels);
+        console.log('localColumns: ', localColumns);
         
         this.setState({ 
             
             isTransfering: false,
             columns:localColumns,
+            rows: localRows,
             keys:localKeys,
             labels:localLabels,
             isDataLoaded: true
@@ -201,7 +222,12 @@ class DynamicAPI extends React.Component {
         <div className='tool-card'><ToolCard data={this.state.data} /></div>,
         <div className='tool-card'><ToolCard data={this.state.data} /></div>
       ]  
-      toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
+      //toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
+      toolComponent1 = <div style={{ display: 'flex', height: 700, marginTop: 30, marginBottom: 100}}><div style={{ flexGrow: 1 }}>
+                            {console.log('this.state.rows:', this.state.rows)}
+                            {console.log('this.state.columns:', this.state.columns)}
+                            <DataGrid rows={this.state.rows} columns={this.state.columns} components={{ Toolbar: GridToolbar }}/>
+                        </div></div>
       buttonComponent = <Button className="refresh-button" variant="primary"  onClick={this.refreshData} ><IoRefreshOutline /></Button>;
     }
 
@@ -241,7 +267,6 @@ class DynamicAPI extends React.Component {
     );
   }
 }
-export default DynamicAPI;
 
 
 
