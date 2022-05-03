@@ -232,6 +232,7 @@ export function Dashboard() {
         <Route path='/usermanagement' element = {<Tools.UserManagementTool />}/>
         <Route path='/complexdatavisualization' element = {<Tools.ComplexDataVisualizationTool/>} />
         <Route path='/leafletexample' element = {<Tools.LeafleftExampleTool/>} />
+        <Route path='/notifications' element = {<Tools.NotificationsDisplayTool/>} />
         
       </Routes>
       

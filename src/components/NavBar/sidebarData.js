@@ -207,6 +207,15 @@ const LeafletExampleExperiment = {
   path: '/leafletexample',
   pageTitle: 'Leaflet Example'
 }
+const NotificationsDisplay = {
+  title: 'Notifications Display',
+  icon: <SiDynamics365 />,
+  iconAlt: "Notifications Display",
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/notifications',
+  pageTitle: 'Notifications Display'
+}
 
 export const AdminSidebarData = [
   visualizationToolset,
@@ -222,5 +231,6 @@ export const ExperimentsSidebarData = [
   dataVisualizationExperiment,
   iFrameTestExperiment,
   complexDataVisualizationExperiment,
-  LeafletExampleExperiment
+  LeafletExampleExperiment,
+  NotificationsDisplay
 ];

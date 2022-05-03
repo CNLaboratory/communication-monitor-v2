@@ -11,7 +11,7 @@ import * as S from './styles';
 import { DataGrid } from '@mui/x-data-grid';
 import { GridToolbar} from '@mui/x-data-grid';
 
-export default class NewDataDisplay extends React.Component {
+export default class NotificationsDisplay extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
@@ -23,8 +23,10 @@ export default class NewDataDisplay extends React.Component {
        isTool1: false,
        columns: [],
        data: [],
+       itemData: [],
        keys: [],
        labels: [],
+
        refreshInterval: props.refreshInterval,
        API_URL: props.API_URL,
        counter: 0,
@@ -41,12 +43,17 @@ export default class NewDataDisplay extends React.Component {
 
   componentDidMount() {
     console.log('New Data Display, url:', this.props.API_URL);
+    if (this.props.checkInterval) {
+      setInterval(this.getProductData, this.props.checkInterval);
+  }
   }
 
   checkIfDataIsLoaded = (dataLoadedStatus) => {
     
     this.setState( { isDataLoaded: dataLoadedStatus });
-    
+    if (this.props.checkInterval) {
+      setInterval(this.getProductData, this.props.checkInterval);
+    }
   }
 
   //process data for the react-table
@@ -60,7 +67,7 @@ export default class NewDataDisplay extends React.Component {
         
         //this.state.data = response.data;
 
-        const firstItem = this.state.data[0];
+        const firstItem = this.state.data[0]['message'];
         for (let key in firstItem) {
             if (firstItem.hasOwnProperty(key)) {
                 localKeys.push(key);
@@ -76,11 +83,12 @@ export default class NewDataDisplay extends React.Component {
         }
         
         for (let item in this.state.data) {
-            itemData.push(this.state.data[item]);
+            console.log('item.message:', this.state.data[item]['message'])
+            itemData.push(this.state.data[item]['message']);
         }
         
         this.setState({ 
-            data: this.state.data,
+            itemData: itemData,
             isTransfering: false,
             columns:localColumns,
             keys:localKeys,
@@ -89,63 +97,9 @@ export default class NewDataDisplay extends React.Component {
         });
   }
 
+  
 
-  //process data for the mui table
-  /*processData() {
-    let localKeys=[];
-        let localColumns=[];
-        let itemData=[];
-        let localLabels=[];
-        let localRows=[];
-
-        
-        //this.state.data = response.data;
-
-        const firstItem = this.state.data[0];
-        
-        
-        for (let key in firstItem) {
-            if (firstItem.hasOwnProperty(key)) {
-                localKeys.push(key);
-            }
-        }
-        localColumns.push({field: 'id'});
-        for (let key in localKeys) {
-            localColumns.push(
-                {
-                    field: localKeys[key]
-                }
-            )
-        }
-        let i = 0;
-        for (const item of this.state.data) {
-            let row = {};
-            itemData.push(this.state.data[item]);
-            row['id'] = i;
-            
-            
-            for (const key of localKeys) {
-                row[key] = item[key];
-            }
-            localRows.push(row);
-            
-
-            // Get the label for each car like Car0, Car1 etc
-            const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
-            localLabels.push(label + i++);
-        }
-        
-        
-        this.setState({ 
-            
-            isTransfering: false,
-            columns:localColumns,
-            rows: localRows,
-            keys:localKeys,
-            labels:localLabels,
-            isDataLoaded: true
-        });
-  }*/
+  
 
   getProductData = () => {
     axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
@@ -189,7 +143,7 @@ export default class NewDataDisplay extends React.Component {
           </S.Col12></S.Row>
         ]  
         //toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
-        toolComponent1 = <NewDisplayTable columns={this.state.columns} data={this.state.data} refreshData={this.refreshData}/>;
+        toolComponent1 = <NewDisplayTable columns={this.state.columns} data={this.state.itemData} refreshData={this.refreshData} columnDensity='compact' paginationEnabled/>;
         //toolComponent1 = <div style={{display: 'flex', height: 500, marginTop: 30}}><DataGrid rows={this.state.rows} columns={this.state.columns} components={{ Toolbar: GridToolbar }}/></div>;
         //buttonComponent = <S.StyledButton onClick={this.refreshData} ><IoRefreshOutline /></S.StyledButton>;
       }

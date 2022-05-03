@@ -12,6 +12,7 @@ import HomeComponent from './home-component';
 import ComplexDataVisualization from './complex-data';
 import LeafletExample from './leaflet-example';
 import NewDynamicAPI from './new-dynamic-api';
+import NotificationsDisplay from './notifications';
 
 export function MainHome () {
   return(
@@ -314,5 +315,16 @@ export function LeafleftExampleTool () {
     breadcrumpToolsetTitle='Leaflet Example Tool'
     mainComponent= 
     {<LeafletExample />}
+  />
+)};
+export function NotificationsDisplayTool () {
+  return (
+
+  <MainContent key='NotificationsDisplayTool'
+    title='Notifications Display Tool' 
+    breadcrumpToolsetLink='/notifications' 
+    breadcrumpToolsetTitle='Notifications Display Tool'
+    mainComponent= 
+    {<NotificationsDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} checkInterval={10000}/>}
   />
 )};
