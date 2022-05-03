@@ -54,7 +54,7 @@ export class MainContent extends React.Component {
                 </S.PageContentHeader>
               </S.Col12>
             </S.Row>
-            {console.log('MainContent, API_URL: ', this.props.API_URL)}
+            
             {this.props.mainComponent}
             
             

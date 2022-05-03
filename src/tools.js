@@ -10,6 +10,8 @@ import IFrameTest from './components/iframe-test';
 import UserManagement from './components/user-management/user-management';
 import HomeComponent from './home-component';
 import ComplexDataVisualization from './complex-data';
+import LeafletExample from './leaflet-example';
+import NewDynamicAPI from './new-dynamic-api';
 
 export function MainHome () {
   return(
@@ -225,7 +227,7 @@ export function DynamicApiExperiment() {
     breadcrumpToolsetLink='/dynamicapi' 
     breadcrumpToolsetTitle='Dynamic API'
     mainComponent= 
-    {<DynamicAPI />}
+    {<NewDynamicAPI />}
   />
 )};
 
@@ -300,5 +302,17 @@ export function ComplexDataVisualizationTool () {
     breadcrumpToolsetTitle='Complex Data Visualization'
     mainComponent= 
     {<ComplexDataVisualization />}
+  />
+)};
+
+export function LeafleftExampleTool () {
+  return (
+
+  <MainContent key='LeafleftExampleTool'
+    title='Leaflet Example Tool' 
+    breadcrumpToolsetLink='/leafletexample' 
+    breadcrumpToolsetTitle='Leaflet Example Tool'
+    mainComponent= 
+    {<LeafletExample />}
   />
 )};

@@ -197,6 +197,15 @@ const complexDataVisualizationExperiment = {
   iconOpened: <RiIcons.RiArrowUpSFill />,
   path: '/complexdatavisualization',
   pageTitle: 'Complex Data Visualization'
+};
+const LeafletExampleExperiment = {
+  title: 'Leaflet Example',
+  icon: <SiDynamics365 />,
+  iconAlt: "Leaflet Example",
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/leafletexample',
+  pageTitle: 'Leaflet Example'
 }
 
 export const AdminSidebarData = [
@@ -212,5 +221,6 @@ export const ExperimentsSidebarData = [
   uploadFileTestExperiment,
   dataVisualizationExperiment,
   iFrameTestExperiment,
-  complexDataVisualizationExperiment
-]
+  complexDataVisualizationExperiment,
+  LeafletExampleExperiment
+];

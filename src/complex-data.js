@@ -71,10 +71,7 @@ export default class ComplexDataVisualization extends React.Component {
       const text = (e.target.result)
       //console.log(text)
       console.log('readFile, JSON.parse(reader.result)', JSON.parse(reader.result));
-      this.setState({data: JSON.parse(reader.result)}, () => {
-        this.processData();
-      }
-        );
+      this.setState({data: JSON.parse(reader.result)});
     };
     
   }
@@ -116,7 +113,7 @@ export default class ComplexDataVisualization extends React.Component {
           </div>
           <div><input type="file" onChange={(e) => this.readFile(e)} /></div>
         </div>
-        <div>
+        <div style={{overflowX:'auto'}}>
           {this.state.data && <JsonToTable json={this.state.data} />}
         </div>
 

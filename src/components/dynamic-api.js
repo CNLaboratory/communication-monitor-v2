@@ -34,6 +34,7 @@ class DynamicAPI extends React.Component {
     
     //this.handleAddButton = this.handleAddButton.bind(this);
     //this.getProductData();
+    console.log('API_URL', props.API_URL);
   }
 
   checkIfDataIsLoaded = (dataLoadedStatus) => {
