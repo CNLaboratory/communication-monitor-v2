@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import * as S from './styles';
 //import { colourOptions } from '../data';
 
 /*
@@ -30,8 +31,8 @@ class MySelect extends React.Component {
 
   render() {
     return (
-      <div style={{ margin: '1rem 0' }}>
-        <label htmlFor="color">Select Data</label>
+      <S.DropdownWrapper>
+        <S.StyledLabel>Select Data</S.StyledLabel>
         <Select
           ref={this.props.ref}
           id="chartsSelection"
@@ -46,7 +47,7 @@ class MySelect extends React.Component {
           this.props.touched && (
             <div style={{ color: 'red', marginTop: '.5rem' }}>{this.props.error}</div>
           )}
-      </div>
+      </S.DropdownWrapper>
     );
   }
 }

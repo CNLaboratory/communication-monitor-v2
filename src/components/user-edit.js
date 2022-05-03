@@ -4,6 +4,7 @@ import {
     Form
 } from 'react-bootstrap'
 import AlertModal from './alert-modal';
+import * as S from '../styles'
 /*
 pass a 'user' object with the following properties:
 user = {
@@ -158,47 +159,47 @@ export default class UserEdit extends React.Component {
 
     render() {
         return(
-            <div>
+            <S.FormWrapper>
                 {console.log('user:', this.props.user)}
                 <h2>Edit User</h2>
                 <Form style={{width:'50%'}}>
                     <Form.Group className="mb-3" controlId="formUserUserName">
-                        <Form.Label>Username</Form.Label>
+                        <S.FormLabel>Username</S.FormLabel>
                         <Form.Control readOnly type="text" placeholder={this.props.user.username}></Form.Control>
                         <Form.Text className="text-muted"></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserPassword">
-                        <Form.Label>Password</Form.Label>
+                        <S.FormLabel>Password</S.FormLabel>
                         <Form.Control type="password" placeholder=""  onChange={this.onChangePassword}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserFirstName">
-                        <Form.Label>First Name</Form.Label>
+                        <S.FormLabel>First Name</S.FormLabel>
                         <Form.Control type="text" placeholder={this.props.user.firstName} onChange={this.onChangeFirstName}></Form.Control>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserLastName">
-                        <Form.Label>Last Name</Form.Label>
+                        <S.FormLabel>Last Name</S.FormLabel>
                         <Form.Control type="text" placeholder={this.props.user.lastName} onChange={this.onChangeLastName}></Form.Control>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formUserEmail">
-                        <Form.Label>Email address</Form.Label>
+                        <S.FormLabel>Email address</S.FormLabel>
                         <Form.Control type="email" placeholder={this.props.user.email}  onChange={this.onChangeEmail}/>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     
                     <Form.Group className="mb-3" controlId="formUserPhoneNumber">
-                        <Form.Label>Phone Number</Form.Label>
+                        <S.FormLabel>Phone Number</S.FormLabel>
                         <Form.Control type="email" placeholder={this.props.user.phoneNumber}  onChange={this.onChangePhoneNumber}/>
                         <Form.Text></Form.Text>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserDisabled">
-                        <Form.Label>Disabled</Form.Label>
+                        <S.FormLabel>Disabled</S.FormLabel>
                         <Form.Check type="checkbox"  onChange={this.onChangeDisabled}/>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formUserRole">
-                        <Form.Label>Role</Form.Label>
+                        <S.FormLabel>Role</S.FormLabel>
                         <Form.Check inline defaultChecked={this.state.isAdmin} type="checkbox" value="admin" label="Admin" onChange={this.onChangeRole} name="group1" id="formUserRoleAdmin"/>
                         <Form.Check inline defaultChecked={this.state.isModerator} type="checkbox" value="moderator" label="Moderator" onChange={this.onChangeRole} name="group1" id="formUserRoleModerator"/>
                         <Form.Check inline defaultChecked={this.state.isUser} type="checkbox" value="user" label="User" onChange={this.onChangeRole} name="group1" id="formUserRoleUser"/>
@@ -211,7 +212,7 @@ export default class UserEdit extends React.Component {
                     </Button>
                 </Form>
                 {this.state.showAlert && <AlertModal show={this.state.showAlert} message={this.state.alertMessage} onClose={this.onAlertClose}/>}
-            </div>
+            </S.FormWrapper>
             
         )
     }

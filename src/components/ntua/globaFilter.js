@@ -1,14 +1,15 @@
 import React from "react";
+import * as S from "../../styles"
 
 export default function GlobalFilter({ filter, setFilter }) {
     return ( 
       <>
         {/*console.log("globalFilter")*/}
         {/*console.log(filter)*/}
-        <div className='global-filter'>
-          <p className ='global-search-p1'> Global Search: </p>
-          <input className ='global-search-inp1' value={filter || ""} onChange={(e) => setFilter(e.target.value)} />
-        </div>
+        <S.GlobalFilterWrapper>
+          {/*<S.GlobalFilterLabel> Global Search: </S.GlobalFilterLabel>*/}
+          <S.GlobalFilterInput value={filter || ""} placeholder='Global search' onChange={(e) => setFilter(e.target.value)} />
+        </S.GlobalFilterWrapper>
         </>
     );
   }

@@ -17,7 +17,6 @@ export const visualizationMenuItemsUser = [
     <MenuItem onClick={()=> window.open(ENDPOINTS.visualizedrivertampering.url, '_blank')}>{ENDPOINTS.visualizedrivertampering.menuTitle}</MenuItem>,
     <MenuItem onClick={()=> window.open(ENDPOINTS.transactionsgraph.url, '_blank')}>{ENDPOINTS.transactionsgraph.menuTitle}</MenuItem>,
     <MenuItem onClick={()=> window.open(ENDPOINTS.abnormalgraph.url, '_blank')}>{ENDPOINTS.abnormalgraph.menuTitle}</MenuItem>,
-    
 ];
 export const visualizationMenuItemsModerator = [
     

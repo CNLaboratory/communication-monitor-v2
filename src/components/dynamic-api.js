@@ -31,6 +31,7 @@ class DynamicAPI extends React.Component {
     this.processData = this.processData.bind(this);
     this.refreshData = this.refreshData.bind(this);
     this.readFile = this.readFile.bind(this);
+    
     //this.handleAddButton = this.handleAddButton.bind(this);
     //this.getProductData();
   }

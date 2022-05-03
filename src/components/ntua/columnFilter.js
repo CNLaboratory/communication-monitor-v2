@@ -1,4 +1,5 @@
 import React from "react";
+import * as S from '../../styles'
 
 export default function ColumnFilter({ column }) {
     const { filterValue, setFilter } = column;
@@ -6,14 +7,14 @@ export default function ColumnFilter({ column }) {
     
     //this.changeSearchEnabled = this.changeSearchEnabled.bind(this);
     return (
-      <div className='column-search-div1'>
+      <S.ColumnFilterWrapper>
         
-        {<input className='column-search-inp1' style={{backgroundColor:'grey', color:'white'}}
+        {<S.ColumnFilterInput
           value={filterValue || ""}
           onChange={(e) => setFilter(e.target.value)}
           placeholder={'search column'}
         />}
-        {<div style={{paddingBottom: 10}}></div>}
-      </div>
+        
+      </S.ColumnFilterWrapper>
     );
   }

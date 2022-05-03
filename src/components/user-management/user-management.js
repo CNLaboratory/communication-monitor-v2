@@ -1,14 +1,16 @@
 import React from 'react';
 import DisplayUsers from './display-users';
-import UserEdit from './user-edit';
-import authService from '../services/auth.service';
-import ToastNotification from './toast-notification';
+import UserEdit from '../user-edit';
+import authService from '../../services/auth.service';
+import ToastNotification from '../toast-notification';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import {NotificationManager} from 'react-notifications';
 import { Button } from 'react-bootstrap';
 import { FaPlusSquare } from 'react-icons/fa';
-import CreateUser from './create-user';
-import AlertModal, { AlertModalDangerousAction } from './alert-modal';
+import CreateUser from '../create-user';
+import AlertModal, { AlertModalDangerousAction } from '../alert-modal';
+import * as S from '../../styles'
+import DisplayUsersAdvanced from './display-users-advanced';
 
 export default class UserManagement extends React.Component {
 
@@ -247,22 +249,21 @@ export default class UserManagement extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>User Management</h1>
-                <div>
+            <S.Card>
+              <S.CardBody>
+                <S.UserManagementHeaderToolsWrapper>
                     {!this.state.isCreating && 
-                    <Button
+                    <S.StyledButtonPrimary
                         variant="info"
                         title="Edit user details"
                         onClick={this.onCreateUser}
-                        >
-                        <FaPlusSquare className='noPointerEvent'/> 
-                                
-                    </Button>
+                    >
+                        Add User
+                    </S.StyledButtonPrimary>
                     }
-                </div>
+                </S.UserManagementHeaderToolsWrapper>
                 
-                {!this.state.isEditing && !this.state.isCreating && <DisplayUsers users={this.state.usersArray} onEdit={this.onEdit} onDelete={this.onDelete} /> }
+                {!this.state.isEditing && !this.state.isCreating && <DisplayUsersAdvanced users={this.state.usersArray} onEdit={this.onEdit} onDelete={this.onDelete} /> }
                 {this.state.isEditing && <UserEdit user={this.state.userForEditing} isCurrentUser={this.state.userForEditing.username === this.state.currentUser} saveUser={this.saveUser} onCancel={this.onEditCancel}/>}
                 {this.state.isCreating && <CreateUser saveUser={this.register} onCancel={this.onCreateCancel}/>}
                 {
@@ -286,8 +287,8 @@ export default class UserManagement extends React.Component {
                                                     onProceed={this.deleteUser}
                                                     onCancel={this.cancelDeleteUser}
                                                     />}
-                
-            </div>
+                </S.CardBody>
+            </S.Card>
 
             
             

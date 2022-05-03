@@ -71,11 +71,11 @@ export default function FilterTable({ columns, data }) {
               <thead style={styles.thead}>
               
               {/*console.log(columns)*/}
-                {headerGroups.map((headerGroup) => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroups.map((headerGroup, index) => (
+                  <tr key={index} {...headerGroup.getHeaderGroupProps()}>
                   {/*console.log("test2")*/}
-                    {headerGroup.headers.map((column) => (
-                      <th {...column.getHeaderProps()} style={styles.tr}>
+                    {headerGroup.headers.map((column, index) => (
+                      <th key={index} {...column.getHeaderProps()} style={styles.tr}>
                         <div>{column.canFilter ? column.render("Filter") : null}</div>
                         {column.render("Header")}
                         
@@ -89,10 +89,10 @@ export default function FilterTable({ columns, data }) {
                 {rows.map((row, i) => {
                   prepareRow(row);
                   return (
-                    <tr {...row.getRowProps()}>
-                      {row.cells.map((cell) => {
+                    <tr key={i} {...row.getRowProps()}>
+                      {row.cells.map((cell, index) => {
                         return (
-                          <td {...cell.getCellProps()} style={styles.td}>{cell.render("Cell")}</td>
+                          <td key={index} {...cell.getCellProps()} style={styles.td}>{cell.render("Cell")}</td>
                         );
                       })}
                     </tr>

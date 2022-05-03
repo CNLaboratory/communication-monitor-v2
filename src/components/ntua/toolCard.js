@@ -1,5 +1,6 @@
 import React from 'react';
 import CreateCharts from './createCharts';
+import * as S from '../../styles';
 
 export default class ToolCard extends React.Component {
 
@@ -12,19 +13,11 @@ export default class ToolCard extends React.Component {
     }
 
     render() {
-
         return (
-            <div className="section-display-tools">
-                <div className="tool-card-header">
-                    <p>Add a new graph</p>
-                </div>
-                
-                <div className="section-buttons">
-                    <CreateCharts data={this.state.itemData} />
-                </div>
-            
-                
-            </div>
+            <>
+            {/*<S.CardTitle>Add a new graph</S.CardTitle>*/}
+            <CreateCharts data={this.state.itemData} />
+            </>
         )
     }
 }
