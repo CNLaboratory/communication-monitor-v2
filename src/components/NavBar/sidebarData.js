@@ -100,14 +100,24 @@ const advancedReasonerToolset = {
       path: '/reasoning3'
     },
     {
-      title: 'GPS Deviations',
+      title: 'Driver GPS Deviations',
       pageTitle: 'Driver & Truck GPS Trackers Deviations',
       path: '/reasoning4'
     },
     {
-      title: 'Higher GPS Deviations',
-      pageTitle: 'Higher Driver & Truck GPS Trackers Deviations',
+      title: 'GPS Deviations Detection',
+      pageTitle: 'Alerts Detection Based on the Driver & Truck GPS Trackers Deviations',
       path: '/reasoning5'
+    },
+    {
+      title: 'Asset GPS Deviations',
+      pageTitle: 'Asset & Truck GPS Trackers Deviations',
+      path: '/reasoning4b'
+    },
+    {
+      title: 'Packet Theft Detection',
+      pageTitle: 'Packet Theft Detection',
+      path: '/reasoning5b'
     },
     {
       title: 'Door & Temp Status',

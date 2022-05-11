@@ -77,10 +77,20 @@ export const ENDPOINTS = {
     pageTitle: "Driver & Truck GPS Trackers Deviations",
     menuTitle: "GPS Deviations"
   },
+  reasoning4b: {
+    url: "https://communicationmonitor.cn.ntua.gr:5000/reasoning4b",
+    pageTitle: "Asset & Truck GPS Trackers Deviations",
+    menuTitle: "Asset GPS Deviations"
+  },
   reasoning5: {
     url: "https://communicationmonitor.cn.ntua.gr:5000/reasoning5",
-    pageTitle: "Higher Driver & Truck GPS Trackers Deviations",
-    menuTitle: "Higher GPS Deviations"
+    pageTitle: "Alerts Detection Based on the Driver & Truck GPS Trackers Deviations",
+    menuTitle: "GPS Deviations Detection"
+  },
+  reasoning5b: {
+    url: "https://communicationmonitor.cn.ntua.gr:5000/reasoning5b",
+    pageTitle: "Packet Theft Detection",
+    menuTitle: "Packet Theft Detection"
   },
   reasoning6: {
     url: "https://communicationmonitor.cn.ntua.gr:5000/reasoning6",

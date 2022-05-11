@@ -145,20 +145,52 @@ export function Reasoning4 () {
         headerText={ENDPOINTS.reasoning4.pageTitle}/>}
   />
 )};
+export function Reasoning4b () {
+  return (
+
+  <MainContent key='Reasoning4b'
+    title='Asset & Truck GPS Trackers Deviations' 
+    breadcrumpToolsetLink='/advancedreasonertoolset' 
+    breadcrumpToolsetTitle='Advanced Reasoner Toolset'
+    breadcrumpToolLink='/reasoning4b'
+    breadcrumpToolTitle='Asset GPS Deviations'
+    mainComponent= 
+    {<NewDataDisplay 
+        API_URL={ENDPOINTS.reasoning4b.url} 
+        headerText={ENDPOINTS.reasoning4b.pageTitle}/>}
+  />
+)};
+
 
 export function Reasoning5 () {
   return (
 
   <MainContent key='Reasoning5'
-    title='Higher Driver & Truck GPS Trackers Deviations' 
+    title='Alerts Detection Based on the Driver & Truck GPS Trackers Deviations' 
     breadcrumpToolsetLink='/advancedreasonertoolset' 
     breadcrumpToolsetTitle='Advanced Reasoner Toolset'
     breadcrumpToolLink='/reasoning5'
-    breadcrumpToolTitle='Higher GPS Deviations'
+    breadcrumpToolTitle='GPS Deviations Detection'
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning5.url} 
         headerText={ENDPOINTS.reasoning5.pageTitle}/>}
+  />
+)};
+
+export function Reasoning5b () {
+  return (
+
+  <MainContent key='Reasoning5b'
+    title='Packet Theft Detection' 
+    breadcrumpToolsetLink='/advancedreasonertoolset' 
+    breadcrumpToolsetTitle='Advanced Reasoner Toolset'
+    breadcrumpToolLink='/reasoning5b'
+    breadcrumpToolTitle='Packet Theft Detection'
+    mainComponent= 
+    {<NewDataDisplay 
+        API_URL={ENDPOINTS.reasoning5b.url} 
+        headerText={ENDPOINTS.reasoning5b.pageTitle}/>}
   />
 )};
 

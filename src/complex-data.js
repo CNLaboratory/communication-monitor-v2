@@ -1,6 +1,7 @@
 import React from 'react';
 import { JsonToTable } from "react-json-to-table";
 import axios from 'axios';
+import * as S from './styles'
 
 export default class ComplexDataVisualization extends React.Component {
 
@@ -10,7 +11,8 @@ export default class ComplexDataVisualization extends React.Component {
     this.state = {
       formValues: [{ url: "" }],
       API_URL: '',
-      data:''
+      data:'',
+      urlSubmitted: false
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +55,9 @@ export default class ComplexDataVisualization extends React.Component {
     console.log(url);
 
     for (url in formValues) {
-      this.setState({API_URL: formValues[url]['url']}, () => {
+      this.setState({
+        urlSubmitted: true,
+        API_URL: formValues[url]['url']}, () => {
                 
         this.getData();
         
@@ -71,7 +75,10 @@ export default class ComplexDataVisualization extends React.Component {
       const text = (e.target.result)
       //console.log(text)
       console.log('readFile, JSON.parse(reader.result)', JSON.parse(reader.result));
-      this.setState({data: JSON.parse(reader.result)});
+      this.setState({
+        urlSubmitted: true,
+        data: JSON.parse(reader.result)
+      });
     };
     
   }
@@ -102,22 +109,25 @@ export default class ComplexDataVisualization extends React.Component {
 
 
     return(
-      <div className='complex-data-visualization'>
-        <div className='header'>
-          <h1>Complex JSON Data Visualization</h1>
-          
-          <div className='dynamic-api-form'>
-            <p>This component accepts a JSON formatted input.<br/> Please input an address in the form below or upload a file</p> 
+      <S.Row>
+      <S.Col12>
+          <p>This component accepts a JSON formatted input.<br/> Please input an address in the form below or upload a file</p> 
             {customFormComponent}            
             {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}
-          </div>
+          
           <div><input type="file" onChange={(e) => this.readFile(e)} /></div>
-        </div>
-        <div style={{overflowX:'auto'}}>
-          {this.state.data && <JsonToTable json={this.state.data} />}
-        </div>
-
-      </div>
+        
+        {this.state.urlSubmitted && 
+        <S.Card>
+        <S.CardBody>
+        {this.state.data && <JsonToTable json={this.state.data} />}
+        </S.CardBody>
+      </S.Card>
+        }
+          
+        
+      </S.Col12>
+      </S.Row>
     )
   }
 }

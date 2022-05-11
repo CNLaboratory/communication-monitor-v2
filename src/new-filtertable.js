@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import { useGlobalFilter, useTable, useFilters, useSortBy} from "react-table";
 import GlobalFilter from "./components/ntua/globaFilter";
 import ColumnFilter from "./components/ntua/columnFilter";
@@ -7,7 +7,7 @@ import { usePagination } from 'react-table'
 import { Dropdown } from "./components/ntua/dropdown";
 
 
-export default function NewFilterTable({ columns, data, columnFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped}) {
+export default function NewFilterTable({ columns, data, columnFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped, getFilteredDataFunc}) {
     const defaultColumn = React.useMemo(
       () => ({
         // Let's set up our default Filter UI
@@ -54,13 +54,24 @@ export default function NewFilterTable({ columns, data, columnFiltersEnabled, co
     );
     const { globalFilter } = state;
 
+    let reactTable = useRef(null);
+    React.useEffect(() => {
+      getFilteredDataFunc.current = getFilteredData
+    });
+    
+    const getFilteredData = () => {
+      console.log('reactTable.rows:', reactTable.rows);
+      return reactTable.rows;
+    }
+
+
     return (
         
         <div className="NewFilterTableWrapper">
           
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           <S.ReactTableWrapper maxHeight={paginationEnabled ? '' : '500px'}>
-            <S.ReactTable {...getTableProps()} >
+            <S.ReactTable ref={(r)=> (reactTable = r)}  {...getTableProps()} >
               <S.ReactTableTHead >
               
               {/*console.log(columns)*/}

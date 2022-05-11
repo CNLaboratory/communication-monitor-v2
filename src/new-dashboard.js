@@ -275,37 +275,40 @@ export class NewDashboard extends React.Component {
     let itemData=[];
     let localLabels=[];
     
-    const firstItem = this.state.data[0]['message'];
-    for (let key in firstItem) {
-        if (firstItem.hasOwnProperty(key)) {
-            localKeys.push(key);
-        }
-    }
-    for (let key in localKeys) {
-        localColumns.push(
-            {
-                Header: localKeys[key],
-                accessor: localKeys[key]
-            }
-        )
-    }
+    if (this.state.data.length > 0) {
+      const firstItem = this.state.data[0]['message'];
+      for (let key in firstItem) {
+          if (firstItem.hasOwnProperty(key)) {
+              localKeys.push(key);
+          }
+      }
+      for (let key in localKeys) {
+          localColumns.push(
+              {
+                  Header: localKeys[key],
+                  accessor: localKeys[key]
+              }
+          )
+      }
+      
+      for (let item in this.state.data) {
+          //console.log('item.message:', this.state.data[item]['message'])
+          let newItem = this.state.data[item]['message'];
+          itemData.push(newItem);
+      }
+      //we reverse the items so that more recent events are first
+      itemData.reverse();
     
-    for (let item in this.state.data) {
-        //console.log('item.message:', this.state.data[item]['message'])
-        let newItem = this.state.data[item]['message'];
-        itemData.push(newItem);
+      this.setState({ 
+          itemData: itemData,
+          isTransfering: false,
+          columns:localColumns,
+          keys:localKeys,
+          labels:localLabels,
+          isDataLoaded: true
+      }, () => this.analyzeData());
+      
     }
-    //we reverse the items so that more recent events are first
-    itemData.reverse();
-    
-    this.setState({ 
-        itemData: itemData,
-        isTransfering: false,
-        columns:localColumns,
-        keys:localKeys,
-        labels:localLabels,
-        isDataLoaded: true
-    }, () => this.analyzeData());
   }
 
   analyzeData() {
@@ -339,7 +342,7 @@ export class NewDashboard extends React.Component {
       // with the latest five unread notifications available
       if (messagesTable[key] === true) {
         if (newNotificationsCounter++ < this.state.newNotificationsDisplayMax)
-          newNotificationsTable.push(currentData[i]);
+          newNotificationsTable.unshift(currentData[i]);
       }
 
     }
@@ -642,7 +645,9 @@ export class NewDashboard extends React.Component {
         <Route path="/reasoning2" element={<Tools.Reasoning2/>}/>
         <Route path="/reasoning3" element={<Tools.Reasoning3/>}/>
         <Route path="/reasoning4" element={<Tools.Reasoning4/>}/>
+        <Route path="/reasoning4b" element={<Tools.Reasoning4b/>}/>
         <Route path="/reasoning5" element={<Tools.Reasoning5/>}/>
+        <Route path="/reasoning5b" element={<Tools.Reasoning5b/>}/>
         <Route path="/reasoning6" element={<Tools.Reasoning6/>}/>
         <Route path="/reasoning7" element={<Tools.Reasoning7/>}/>
         <Route path="/threatandincident" element={<Tools.ThreatAndIncidentToolset/>}/>

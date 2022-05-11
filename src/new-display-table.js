@@ -1,6 +1,7 @@
 import React, {useRef} from "react";
 import NewFilterTable from "./new-filtertable";
 import { IoRefreshOutline } from 'react-icons/io5';
+import { FiDownload} from 'react-icons/fi';
 import * as S from './styles';
 import { RiSettings2Line } from "react-icons/ri";
 import Circle from "./assets/images/circle.svg"
@@ -19,10 +20,12 @@ export default class NewDisplayTable extends React.Component {
       columnDensity: props.columnDensity ? props.columnDensity : 'standard',
       stickyHeaderEnabled: true,
       paginationEnabled: props.paginationEnabled ? props.paginationEnabled : false,
-      strippedRows: true
+      strippedRows: true,
+      exportMenuClicked: false,
     }
 
-    this.userMenu = React.createRef();
+    //this.userMenu = React.createRef();
+    this.newFilterTableRef = React.createRef();
     this.refreshData = this.refreshData.bind(this);
     this.handleSettingsMenuClicked = this.handleSettingsMenuClicked.bind(this);
     this.handleColumnFiltersClicked = this.handleColumnFiltersClicked.bind(this);
@@ -31,6 +34,11 @@ export default class NewDisplayTable extends React.Component {
     this.handlePaginationEnabledClicked = this.handlePaginationEnabledClicked.bind(this);
     this.handleStrippedRowsEnabledClicked = this.handleStrippedRowsEnabledClicked.bind(this);
     this.hanldeOutsideSettingsButtonClicked = this.hanldeOutsideSettingsButtonClicked.bind(this);
+    this.makeCsv = this.makeCsv.bind(this);
+    this.getTableDataForExport = this.getTableDataForExport.bind(this);
+    this.handleExportMenuClicked = this.handleExportMenuClicked.bind(this);
+    this.makeJson = this.makeJson.bind(this);
+    
   }
 
   refreshData() {
@@ -83,12 +91,88 @@ export default class NewDisplayTable extends React.Component {
       userMenuClicked: userMenuClicked
     });
   }
+  handleExportMenuClicked() {
+    const exportMenuClicked = !this.state.exportMenuClicked;
+    this.setState({
+      exportMenuClicked: exportMenuClicked
+    });
+  }
+  getTableDataForExport (data, columns) {
+    console.log('this.reactTable.getFilteredData():', this.newFilterTableRef.current());
+    return data?.map((record) => columns.reduce((recordToDownload, column) => (
+      { ...recordToDownload, [column.Header]: record[column.accessor] }
+    ), {}));
+
+  };
+
+  async makeCsv (rows, filename) {
+    const separator = ';';
+    const keys = Object.keys(rows[0]);
+
+    const csvContent = `${keys.join(separator)}\n${
+      rows.map((row) => keys.map((k) => {
+        let cell = row[k] === null || row[k] === undefined ? '' : row[k];
+    
+        cell = cell instanceof Date
+          ? cell.toLocaleString()
+          : cell.toString().replace(/"/g, '""');
+    
+        if (cell.search(/("|,|\n)/g) >= 0) {
+          cell = `"${cell}"`;
+        }
+        return cell;
+      }).join(separator)).join('\n')}`;
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    if (navigator.msSaveBlob) { // In case of IE 10+
+      navigator.msSaveBlob(blob, filename);
+    } else {
+      const link = document.createElement('a');
+      if (link.download !== undefined) {
+        // Browsers that support HTML5 download attribute
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+  async makeJson (rows, filename) {
+    const separator = ';';
+    const keys = Object.keys(rows[0]);
+
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(rows)
+    )}`;
+    
+    
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "data.json";
+
+    link.click();
+  }
+
 
   render () {
       
     return (
       <S.DisplayTableWrapper>
         <S.MultipleButtonsWrapper>
+          <S.ButtonWrapper onClick={this.handleExportMenuClicked}>
+            <S.StyledButtonGrey><FiDownload/></S.StyledButtonGrey>
+            <S.TableSettingsPanel style={{display: this.state.exportMenuClicked ? 'flex' : 'none'}}>
+              <S.SettingWrapper onClick={() => this.makeCsv(this.getTableDataForExport(this.props.data, this.props.columns), 'export.csv')}>
+                Export to CSV
+              </S.SettingWrapper>
+              <S.SettingWrapper onClick={() => this.makeJson(this.getTableDataForExport(this.props.data, this.props.columns), 'export.json')}>
+                Export to JSON
+              </S.SettingWrapper>
+            </S.TableSettingsPanel>
+          </S.ButtonWrapper>
           <S.ButtonWrapper onClick={this.refreshData}>
             <S.StyledButtonGrey><IoRefreshOutline /></S.StyledButtonGrey>
           </S.ButtonWrapper>
@@ -128,6 +212,7 @@ export default class NewDisplayTable extends React.Component {
           </OutsideClickHandler>
         </S.MultipleButtonsWrapper>
         <NewFilterTable 
+          getFilteredDataFunc={this.newFilterTableRef}
           columns={this.props.columns} 
           data={this.props.data} 
           columnFiltersEnabled={this.state.columnFiltersEnabled}
