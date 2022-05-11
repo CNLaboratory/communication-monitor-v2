@@ -70,7 +70,7 @@ export class NewDashboard extends React.Component {
       newNotifications: false,
       newNotificationsTable: [],
       newNotificationsDisplayMax: 20,
-      getDataLocally: true,
+      getDataLocally: false,
 
       columns: [],
       data: [],
