@@ -70,7 +70,9 @@ export default class IFrameTest extends React.Component {
       <S.Col12>
         <p>Input the URL for the iFrame below</p> 
         {customFormComponent}
-        {this.state.urlSubmitted && <S.Card>
+        {
+        this.state.urlSubmitted && 
+        <S.Card>
           <S.CardBody>
             <div style={{height: '800px', width: '100%'}}>
                 <iframe style={{height:'100%', width: '100%'}} title={this.state.iFrameTitle} src={this.state.API_URL}/>
