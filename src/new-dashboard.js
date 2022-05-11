@@ -113,8 +113,7 @@ export class NewDashboard extends React.Component {
 
   componentDidMount() {
     
-    document.addEventListener("mousedown", this.handleClickOutsideNotificationsMenu);
-    document.addEventListener("mousedown", this.handleClickOutsideUserMenu);
+    
 
     if (!this.state.loggedIn) {
       console.log('not logged in');
@@ -125,8 +124,7 @@ export class NewDashboard extends React.Component {
     }
   }
   componentDidUnMount() {
-    document.removeEventListener("mousedown", this.handleClickOutsideNotificationsMenu);
-    document.removeEventListener("mousedown", this.handleClickOutsideUserMenu);
+    
   }
 
   logIn() {
@@ -143,12 +141,15 @@ export class NewDashboard extends React.Component {
         this.updateAutoRefresh();
       })
     }
+    //document.addEventListener("mousedown", this.handleClickOutsideNotificationsMenu);
+    //document.addEventListener("mousedown", this.handleClickOutsideUserMenu);
   }
 
   logOut() {
     AuthService.logout();
     clearInterval(this.state.timer);
-
+    //document.removeEventListener("mousedown", this.handleClickOutsideNotificationsMenu);
+    //document.removeEventListener("mousedown", this.handleClickOutsideUserMenu);
     this.setState({
       currentUser: undefined,
       showModeratorBoard: false,
