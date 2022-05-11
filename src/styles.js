@@ -300,7 +300,7 @@ export const TableSettingsPanel = styled.div`
   margin: 0;
   top:100px;
   right: 50px;
-  z-index: 1000;
+  z-index: 10002;
   position: absolute;
   will-change: transform;
   transform: translate3d(0px, 70px, 0px);

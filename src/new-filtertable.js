@@ -60,8 +60,14 @@ export default function NewFilterTable({ columns, data, columnFiltersEnabled, co
     });
     
     const getFilteredData = () => {
-      console.log('reactTable.rows:', reactTable.rows);
-      return reactTable.rows;
+      console.log('reactTable.rows:');
+      const filteredData = [];
+      rows.map((row, i) => {
+        console.log(row.id);
+        filteredData.push(data[row.id]);
+      });
+
+      return filteredData;
     }
 
 

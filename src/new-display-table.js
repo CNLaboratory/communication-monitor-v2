@@ -98,8 +98,8 @@ export default class NewDisplayTable extends React.Component {
     });
   }
   getTableDataForExport (data, columns) {
-    console.log('this.reactTable.getFilteredData():', this.newFilterTableRef.current());
-    return data?.map((record) => columns.reduce((recordToDownload, column) => (
+    const filteredData = this.newFilterTableRef.current();
+    return filteredData?.map((record) => columns.reduce((recordToDownload, column) => (
       { ...recordToDownload, [column.Header]: record[column.accessor] }
     ), {}));
 
@@ -177,8 +177,8 @@ export default class NewDisplayTable extends React.Component {
             <S.StyledButtonGrey><IoRefreshOutline /></S.StyledButtonGrey>
           </S.ButtonWrapper>
           <OutsideClickHandler onOutsideClick={this.hanldeOutsideSettingsButtonClicked}>
-          <S.ButtonWrapper onClick={this.handleSettingsMenuClicked}>
-            <S.StyledButtonGrey ><RiSettings2Line/></S.StyledButtonGrey>
+          <S.ButtonWrapper >
+            <S.StyledButtonGrey onClick={this.handleSettingsMenuClicked}><RiSettings2Line/></S.StyledButtonGrey>
             <S.TableSettingsPanel style={{display: this.state.userMenuClicked ? 'flex' : 'none'}}>
               <S.SettingWrapper>
                 <Dropdown
