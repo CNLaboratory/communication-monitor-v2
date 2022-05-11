@@ -14,7 +14,7 @@ export class MainContent extends React.Component {
   render() {
   return (
     <>
-      <S.MainContent>
+      
         <S.PageContent>
           <S.ContainerFluid>
             <S.Row>
@@ -72,7 +72,7 @@ export class MainContent extends React.Component {
             </S.Row>
           </S.ContainerFluid>
         </S.Footer>
-      </S.MainContent>
+      
     </>
 
 

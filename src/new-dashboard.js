@@ -17,6 +17,7 @@ import Logo from "./assets/images/comm-monitor-logo-dark.png";
 import Avatar from "./assets/images/white-gray-circle-avatar-png-transparent-png.png";
 import {RiApps2Line, RiFullscreenLine, RiSearchLine, RiNotification3Line, RiSettings2Line, RiUserLine, RiShutDownLine} from "react-icons/ri"
 import {BiChevronDown} from "react-icons/bi";
+import {HiOutlineMenuAlt1} from 'react-icons/hi';
 import {AiOutlineClockCircle} from 'react-icons/ai';
 import {BsArrowRightCircleFill} from 'react-icons/bs';
 import SubMenu from "./components/NavBar/subMenu";
@@ -61,6 +62,7 @@ export class NewDashboard extends React.Component {
       userMenuClicked: false,
       notificationsBellClicked: false,
       isFullScreen: false,
+      menuCollapse: false,
       
       currentData: [],
       //messagesTable: JSON.parse(localStorage.getItem('messagesTable')) ? JSON.parse(localStorage.getItem('messagesTable')) : {}, //this map logs all messages and read/unread status. The format is {item: true/false} where true is unread and false is read
@@ -180,9 +182,9 @@ export class NewDashboard extends React.Component {
   }
   
   handleMenuCollapse() {
-    let isCollapsed = this.state.isCollapsed;
+    let menuCollapse = this.state.menuCollapse;
     this.setState({
-      isCollapsed: !isCollapsed
+      menuCollapse: !menuCollapse
     })
   }
   changeIsHovered() {
@@ -485,20 +487,18 @@ export class NewDashboard extends React.Component {
             enabled={this.state.isFullScreen}
             onChange={(isFullScreen) => this.setState({ isFullScreen })}
           >
-            <S.DashboardWrapper>
+      <S.DashboardWrapper>
     <ThemeProvider theme={this.isCollapsed ? defaultCollapsedTheme : defaultTheme }>
-      <S.PageTopbar>
+      <S.PageTopbar collapsed={this.state.menuCollapse}>
         <S.NavbarHeader>
           <S.dFlex>
             <S.BrandWrapper>
               <Link to='/'>
-              <S.BrandImage src={Logo} alt='logo' className='logo'></S.BrandImage>
+                <S.BrandImage src={Logo} alt='logo' className='logo'></S.BrandImage>
               </Link>
             </S.BrandWrapper>
-            <S.MenuIconWrap onMouseEnter={this.changeIsHovered} onMouseLeave={this.changeIsHovered} onClick={this.handleMenuCollapse}>
-              <S.MenuIconLine style={this.isHovered ? {width: '22px'} : {width: '18px'}}></S.MenuIconLine>
-              <S.MenuIconLine></S.MenuIconLine>
-              <S.MenuIconLine style={this.isHovered ? {width: '22px'} : {width: '18px'}}></S.MenuIconLine>
+            <S.MenuIconWrap onClick={this.handleMenuCollapse}>
+              <HiOutlineMenuAlt1/>
             </S.MenuIconWrap>
             <S.SearchFieldFormWrap>
               <S.SearchFieldInputWrap>
@@ -598,7 +598,7 @@ export class NewDashboard extends React.Component {
         </S.NavbarHeader>
       </S.PageTopbar>
       
-      <S.VerticalMenuWrapper>
+      <S.VerticalMenuWrapper collapsed={this.state.menuCollapse}>
         <SimpleBar style={{ height: '100%', maxHeight: '100%' }}>
           <S.VerticalMenu>
             <this.MenuGroup title='Toolsets'>
@@ -629,6 +629,8 @@ export class NewDashboard extends React.Component {
         refreshInterval={10000}
             />
             */}
+      <S.MainContent collapsed={this.state.menuCollapse}>
+
       <Routes>
         <Route path='/' element={<Tools.MainHome/>}/>
         <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor/>}/>
@@ -677,6 +679,7 @@ export class NewDashboard extends React.Component {
           />}
         />
       </Routes>
+      </S.MainContent>
       
     </ThemeProvider>
     

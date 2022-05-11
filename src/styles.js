@@ -28,6 +28,12 @@ export const PageTopbar = styled.header`
   background-color: #252b3b;
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
   cursor: pointer;
+
+  ${props => props.collapsed && css`
+    left: -240px;
+  `}
+  transition: left .15s ease-in-out;
+
 `;
 export const NavbarHeader = styled.div`
   display: -webkit-flex;
@@ -48,6 +54,14 @@ export const dFlex = styled.div`
 export const BrandWrapper = styled.div`
   padding: 0 1.5rem;
   width: 240px;
+
+  ${props => props.collapsed && css`
+    
+    width: 0px;
+    padding:0;
+    
+  `}
+  transition: width .15s ease-in-out;
 `;
 export const BrandImage = styled.img`
   width: 100%;
@@ -57,9 +71,11 @@ export const MenuIconWrap = styled.div`
   left: 0px;
   position: relative;
   
+  color: #EAECEF;
+  font-size: 28px;
   padding-right: 2rem;
   padding-left: 1rem;
-  transition: all 0.3s ease-in-out 0s;
+  
   width: 22px;
   z-index: 999;
   
@@ -351,7 +367,12 @@ export const VerticalMenuWrapper = styled.div`
   position: fixed;
   top: 70px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%);  
-  
+  left:0;
+  ${props => props.collapsed && css`
+    left: -240px;
+    
+  `}
+  transition: left .15s ease-in-out;
 `;
 export const VerticalMenu = styled.div`
   direction: inherit;
@@ -395,6 +416,12 @@ export const ListHeader = styled.li`
 export const MainContent = styled.div`
   margin-left: 240px;
   overflow: hidden;
+
+  ${props => props.collapsed && css`
+    margin-left: 0px;
+    
+  `}
+  transition: margin-left 0.15s ease-in-out;
 `;
 export const PageContent = styled.div`
   padding: 94px 12px 60px;
