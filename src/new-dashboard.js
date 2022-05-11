@@ -38,6 +38,8 @@ import NewNotificationsDisplay from "./new-notifications-display";
 import { kafkatorest } from "./kafkatorest";
 import { kafkaMessageTest } from "./kafkatorest";
 
+import OutsideClickHandler from 'react-outside-click-handler';
+
 const defaultTheme = {
   sidebarWidth: '262px'
 }
@@ -108,6 +110,8 @@ export class NewDashboard extends React.Component {
     this.getNotificationDataFromFile = this.getNotificationDataFromFile.bind(this);
     this.updateAutoRefresh = this.updateAutoRefresh.bind(this);
     this.handleNewNotificationsBell = this.handleNewNotificationsBell.bind(this);
+
+    this.toggleFullscreen = this.toggleFullscreen.bind(this);
     
   }
 
@@ -440,10 +444,37 @@ export class NewDashboard extends React.Component {
     console.log('newNotifications:', newNotifications);
     this.setState({newNotifications: newNotifications});
   }
-  
+
+  toggleFullscreen() {
+    if (
+        !document.fullscreenElement &&
+  /* alternative standard method */ !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement
+    ) {
+        // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(
+                Element.ALLOW_KEYBOARD_INPUT
+            );
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        }
+    }
+}
+
+
   render() {
 
-  
   return (
     <>
     { !this.state.loggedIn && <S.LogInScreenWrapper>
@@ -480,12 +511,15 @@ export class NewDashboard extends React.Component {
           </S.dFlex>
           <S.dFlex>
             <S.IconWrap><RiApps2Line/></S.IconWrap>
-            <S.IconWrap>{this.state.isFullScreen 
+            <S.IconWrap><RiFullscreenLine onClick={this.toggleFullscreen}/>
+
+              {/*this.state.isFullScreen 
               ? <RiFullscreenLine onClick={() => {this.setState({isFullScreen: false})}}/> 
               : <RiFullscreenLine onClick={() => {this.setState({isFullScreen: true})}}/>
-              }
+              */}
             </S.IconWrap>
             {/*<Link to='newnotifications'>*/}
+            <OutsideClickHandler onOutsideClick={this.handleClickOutsideNotificationsMenu}>
             <S.IconWrap ref={this.notificationsMenuRef}>
               <RiNotification3Line onClick={this.handleNotificationsBellClicked}/>
               {this.state.newNotifications && <S.NotificationBellRedNotice></S.NotificationBellRedNotice>}
@@ -529,7 +563,9 @@ export class NewDashboard extends React.Component {
               
               </S.NotificationsDropDownWrapper>
             </S.IconWrap>
+            </OutsideClickHandler>
             {/*</Link>*/}
+            <OutsideClickHandler onOutsideClick={this.handleClickOutsideUserMenu}>
             <S.UserWrap ref={this.userMenuRef}>
               <S.UserProfile onClick={this.handleUserMenuClicked}>
                 <S.UserAvatar src={Avatar} alt='user image'/>
@@ -556,6 +592,7 @@ export class NewDashboard extends React.Component {
                 </S.DropdownItemLink>
               </S.UserDropdown>
             </S.UserWrap>
+            </OutsideClickHandler>
             <S.IconWrap><RiSettings2Line/></S.IconWrap>
           </S.dFlex>
         </S.NavbarHeader>

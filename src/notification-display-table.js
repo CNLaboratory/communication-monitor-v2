@@ -6,6 +6,7 @@ import { RiSettings2Line } from "react-icons/ri";
 import Circle from "./assets/images/circle.svg"
 import CircleDark from "./assets/images/circle-dark.svg"
 import { Dropdown, Option } from "./components/ntua/dropdown";
+import OutsideClickHandler from 'react-outside-click-handler';
 
 export default class NotificationsDisplayTable extends React.Component {
 
@@ -33,6 +34,8 @@ export default class NotificationsDisplayTable extends React.Component {
     this.handleAutoRefreshClicked = this.handleAutoRefreshClicked.bind(this);
     this.markAsRead = this.markAsRead.bind(this);
     this.markAllAsRead = this.markAllAsRead.bind(this);
+
+    this.hanldeOutsideSettingsButtonClicked = this.hanldeOutsideSettingsButtonClicked.bind(this);
   }
 
   refreshData() {
@@ -86,7 +89,12 @@ export default class NotificationsDisplayTable extends React.Component {
     }, () => {
       this.props.handleAutoRefreshChanged(autoRefreshEnabled);
     })
-    
+  }
+  hanldeOutsideSettingsButtonClicked() {
+    const userMenuClicked = false;
+    this.setState({
+      userMenuClicked: userMenuClicked
+    });
   }
   markAsRead(rowID) {
     this.props.markAsRead(rowID);
@@ -103,20 +111,20 @@ export default class NotificationsDisplayTable extends React.Component {
     return (
       <S.DisplayTableWrapper>
         <S.MultipleButtonsWrapper>
-        <S.ButtonWrapper>
-            <S.StyledButtonGrey onClick={this.markAllAsRead}>Mark All As Read</S.StyledButtonGrey>
+        <S.ButtonWrapper onClick={this.markAllAsRead}>
+            <S.StyledButtonGrey>Mark All As Read</S.StyledButtonGrey>
           </S.ButtonWrapper>
         <S.ButtonWrapper onClick={this.handleAutoRefreshClicked}>
             
             <S.ToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.autoRefreshEnabled}/>
             <S.ToggleSwitchLabel>Auto Refresh</S.ToggleSwitchLabel>
           </S.ButtonWrapper>
-          <S.ButtonWrapper>
-            <S.StyledButtonGrey onClick={this.refreshData}><IoRefreshOutline /></S.StyledButtonGrey>
+          <S.ButtonWrapper onClick={this.refreshData}>
+            <S.StyledButtonGrey><IoRefreshOutline /></S.StyledButtonGrey>
           </S.ButtonWrapper>
-          
-          <S.ButtonWrapper>
-            <S.StyledButtonGrey ><RiSettings2Line onClick={this.handleSettingsMenuClicked}/></S.StyledButtonGrey>
+          <OutsideClickHandler onOutsideClick={this.hanldeOutsideSettingsButtonClicked}>
+          <S.ButtonWrapper onClick={this.handleSettingsMenuClicked}>
+            <S.StyledButtonGrey ><RiSettings2Line/></S.StyledButtonGrey>
             <S.TableSettingsPanel style={{display: this.state.userMenuClicked ? 'flex' : 'none'}}>
               <S.SettingWrapper>
                 <Dropdown
@@ -147,6 +155,7 @@ export default class NotificationsDisplayTable extends React.Component {
               </S.SettingWrapper>
             </S.TableSettingsPanel>
           </S.ButtonWrapper>
+          </OutsideClickHandler>
         </S.MultipleButtonsWrapper>
         <NotificationsTable 
           columns={this.props.columns} 
