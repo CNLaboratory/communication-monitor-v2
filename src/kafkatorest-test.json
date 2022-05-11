@@ -1,0 +1,44 @@
+[
+  {
+    "message": {
+      "Alert_message": "Suspicious Distance computed between driverTracker and Fleet Management Device equal to:1946.5561893370316 meters", 
+      "alert_timestamp": "28-Apr-2022 (09:58:05)", 
+      "asset": "860599005521554", 
+      "detection_timestamp": "2022-04-28T07:31", 
+      "partner_id": "ICCS", 
+      "service_name": "Advanced Reasoner Toolset", 
+      "service_type": "GPS Deviations Detection", 
+      "set_of_data": "text files", 
+      "severity_level": "high",
+      "uuid": "66afea46-2491-4982-a8d9-1770c90ca175"
+    }
+  }, 
+  {
+    "message": {
+      "Alert_message": "A Packet Theft was detected", 
+      "alert_timestamp": "28-Apr-2022 (09:58:05)", 
+      "asset": "860599005521554", 
+      "detection_timestamp": "2022-04-28T07:31", 
+      "partner_id": "ICCS", 
+      "service_name": "Advanced Reasoner Toolset", 
+      "service_type": "Packet Theft Detection", 
+      "set_of_data": "text files", 
+      "severity_level": "high",
+      "uuid": "8c2e5a55-c6ba-4b78-9a2d-518f36ecccd5"
+    }
+  }, 
+  {
+    "message": {
+      "Alert_message": "DriverID Tampering Detection", 
+      "alert_timestamp": "28-Apr-2022 (09:58:05)", 
+      "asset": "TFRDRVRTest", 
+      "detection_timestamp": "2022-04-28T07:31", 
+      "partner_id": "ICCS", 
+      "service_name": "Fusion Toolset", 
+      "service_type": "Driver Tampering", 
+      "set_of_data": "text files", 
+      "severity_level": "high",
+      "uuid": "76a9cae9-79f1-43d9-a944-14bb828f8bf1"
+    }
+  }
+]

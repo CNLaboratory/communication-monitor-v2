@@ -29,6 +29,7 @@ import NewLogin from "./components/new-login";
 import Logout from './logout';
 import { LoginOne } from "./login";
 import ComplexDataVisualization from "./complex-data";
+import NotificationsBackgroundService from "./notifications-background-service";
 
 const defaultTheme = {
   sidebarWidth: '262px'
@@ -71,7 +72,6 @@ export function Dashboard() {
     if (!loggedIn) {
       logIn();
     }
-    
   }) 
 
   const handleMenuCollapse = () => {
@@ -115,6 +115,42 @@ export function Dashboard() {
 
   document.addEventListener('mousedown',closeUserMenu);
 
+
+  //Live Notifications
+  const [itemData, setItemData] = useState([]);
+  const [currentData, setCurrentData] = useState([]);
+  const [messagesTable, setMessagesTable] = useState({});
+  const [readTable, setReadTable] = useState({});
+  const [readKeyTable, setReadKeyTable] = useState({});
+  const [isNotificationsDataLoaded, setIsNotificationsDataLoaded] = useState(false);
+  const [isNotificationsDataTransfering, setIsNotificationsDataTransfering] = useState(false);
+  
+  
+  
+
+  const markNotificationAsRead = (rowId) => {
+    console.log('notifications - markAsRead called');
+    let messagesTable = this.state.messagesTable;
+    
+    let key = this.state.readKeyTable[rowId];
+    messagesTable[key] = !messagesTable[key];
+
+    let readTable = this.state.readTable;
+    readTable[rowId] = !readTable[rowId];
+
+    this.setState({
+      readTable: readTable,
+      messagesTable: messagesTable
+    })
+
+  }
+  const refreshNotificationData = () => {
+    NotificationsBackgroundService.getProductData();
+  }
+  const markAllAsRead = () => {
+    NotificationsBackgroundService.markAllAsRead();
+  }
+
   return (
     <>
     { !loggedIn && <S.LogInScreenWrapper>
@@ -151,7 +187,12 @@ export function Dashboard() {
               ? <RiFullscreenLine onClick={handleFullScreenEnter.exit}/> 
               : <RiFullscreenLine onClick={handleFullScreenEnter.enter}/>
               }</S.IconWrap>
-            <S.IconWrap><RiNotification3Line/></S.IconWrap>
+              <Link to='notifications'>
+            <S.IconWrap>
+              <RiNotification3Line/>
+              <S.NotificationBellRedNotice></S.NotificationBellRedNotice>
+            </S.IconWrap>
+            </Link>
             <S.UserWrap>
               <S.UserProfile onClick={handleUserMenuClicked}>
                 <S.UserAvatar src={Avatar} alt='user image'/>
@@ -208,6 +249,11 @@ export function Dashboard() {
       </S.VerticalMenuWrapper>
 
       {<NotificationContainer/>}
+      {<NotificationsBackgroundService
+        API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
+        autoRefreshEnabled={true} 
+        refreshInterval={10000}
+            />}
       <Routes>
         <Route path='/' element={<Tools.MainHome/>}/>
         <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor/>}/>
@@ -233,10 +279,13 @@ export function Dashboard() {
         <Route path='/complexdatavisualization' element = {<Tools.ComplexDataVisualizationTool/>} />
         <Route path='/leafletexample' element = {<Tools.LeafleftExampleTool/>} />
         <Route path='/notifications' element = {<Tools.NotificationsDisplayTool/>} />
-        
+        <Route path='/newnotifications' element = 
+        { <Tools.NewNotificationsDisplayTool
+          refreshData = {refreshNotificationData}
+            
+        />} />
       </Routes>
       
-
     </ThemeProvider>
     </FullScreen>
     <Routes>

@@ -1,5 +1,6 @@
 import React from "react";
 import Button from 'react-bootstrap/Button'
+import * as S from '../styles'
 
 //const URL = 'http://95.217.39.26:8261/'
 //const URL = "https://cndevs.cn.ntua.gr:9000"
@@ -8,22 +9,23 @@ import Button from 'react-bootstrap/Button'
 
 export default class IFrameTest extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+      super(props);
 
-        this.state = {
-            formValues: [{ url: "" }],
-            iFrameTitle: 'Checking iFrame',
-            API_URL: ''
-        }
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-    }
-    handleChange(i, e) {
-        let formValues = this.state.formValues;
-        formValues[i][e.target.name] = e.target.value;
-        this.setState({ formValues });
+      this.state = {
+          formValues: [{ url: "" }],
+          iFrameTitle: 'Checking iFrame',
+          API_URL: '',
+          urlSubmitted: false
       }
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(i, e) {
+      let formValues = this.state.formValues;
+      formValues[i][e.target.name] = e.target.value;
+      this.setState({ formValues });
+    }
 
       handleSubmit(event) {
         event.preventDefault();
@@ -33,7 +35,10 @@ export default class IFrameTest extends React.Component {
         console.log(url);
 
         for (url in formValues) {
-            this.setState({API_URL: formValues[url]['url']});
+            this.setState({
+              API_URL: formValues[url]['url'],
+              urlSubmitted: true
+            });
         }
       }
 
@@ -61,12 +66,20 @@ export default class IFrameTest extends React.Component {
         </form>;
 
     return (
-        <div style={{height: '100%', width:'100%'}}>
-            <p>Input the URL for the iFrame below</p> 
-            {customFormComponent}
-
-            <iframe style={{height:'100%', width: '100%'}} title={this.state.iFrameTitle} src={this.state.API_URL} />
-        </div>
-        );
+      <S.Row>
+      <S.Col12>
+        <p>Input the URL for the iFrame below</p> 
+        {customFormComponent}
+        {this.state.urlSubmitted && <S.Card>
+          <S.CardBody>
+            <div style={{height: '800px', width: '100%'}}>
+                <iframe style={{height:'100%', width: '100%'}} title={this.state.iFrameTitle} src={this.state.API_URL}/>
+            </div>
+          </S.CardBody>
+        </S.Card>}
+      </S.Col12>
+      </S.Row>
+    );
+        
   }
 }

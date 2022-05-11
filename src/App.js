@@ -7,6 +7,7 @@ import 'react-notifications/lib/notifications.css';
 
 import GlobalStyles from "./globalStyles";
 import {Dashboard} from "./dashboard";
+import { NewDashboard } from "./new-dashboard";
 //import OldDashboard from "./old-dashboard";
 
 
@@ -19,7 +20,8 @@ class App extends Component {
     return (
       <div>
         <GlobalStyles />
-        {<Dashboard/>}
+        {<NewDashboard/>}
+        {/*<Dashboard/>*/}
         {/*<OldDashboard/>*/}
       </div>
         

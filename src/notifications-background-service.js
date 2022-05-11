@@ -1,15 +1,11 @@
 import React from 'react';
 import axios from 'axios';
-import NewDisplayTable from './new-display-table';
-import * as S from './styles';
-import NotificationsDisplayTable from './notification-display-table';
 
-export default class NotificationsDisplay extends React.Component {
+export default class NotificationsBackgroundService extends React.Component {
   constructor(props) {
     super(props)
     this.state = { 
-      formValues: [{ url: "" }],
-      productDataArray: [],
+      
       itemData: [],
       currentData: [],
       messagesTable: {}, //this map logs all messages and read/unread status. The format is {item: true/false} where true is unread and false is read
@@ -24,6 +20,8 @@ export default class NotificationsDisplay extends React.Component {
       labels: [],
       autoRefreshEnabled: this.props.autoRefreshEnabled ? this.props.autoRefreshEnabled : false,
       refreshInterval: props.refreshInterval,
+
+      newNotifications: false,
       
       API_URL: props.API_URL,
       displayTableComponent: [],
@@ -37,18 +35,20 @@ export default class NotificationsDisplay extends React.Component {
     this.handleAutoRefreshChanged = this.handleAutoRefreshChanged.bind(this);
     this.markAsRead = this.markAsRead.bind(this);
     this.markAllAsRead = this.markAllAsRead.bind(this);
+    this.handleNewNotificationsBell = this.handleNewNotificationsBell.bind(this);
     this.getProductData();
   }
 
   updateAutoRefresh() {
-    if (this.props.autoRefreshEnabled && this.props.checkInterval) {
+    if (this.props.autoRefreshEnabled && this.props.refreshInterval) {
+      //console.log('enabling auto refresh');
       this.setState({
-        timer: setInterval(this.getProductData, this.props.checkInterval)
+        timer: setInterval(this.getProductData, this.props.refreshInterval)
       });
     }
   }
   componentDidMount() {
-    console.log('New Data Display, url:', this.props.API_URL);
+    //console.log('New Data Display, url:', this.props.API_URL);
     this.updateAutoRefresh();
   }
   handleAutoRefreshChanged(autoRefreshEnabled) {
@@ -56,18 +56,14 @@ export default class NotificationsDisplay extends React.Component {
       this.setState({
         timer: setInterval(this.getProductData, this.state.refreshInterval)
       })
-      
     } else {
       clearInterval(this.state.timer);
     }
   }
 
   checkIfDataIsLoaded = (dataLoadedStatus) => {
-    
     this.setState( { isDataLoaded: dataLoadedStatus });
-    
   }
-
 
   //process data for the react-table
   processData() {
@@ -96,10 +92,10 @@ export default class NotificationsDisplay extends React.Component {
             let newItem = this.state.data[item]['message'];
             itemData.push(newItem);
         }
-        console.log('itemData:', itemData)
+        //console.log('itemData:', itemData)
         //we reverse the items so that more recent events are first
         itemData.reverse();
-        console.log('after reverse, itemData:', itemData);
+        //console.log('after reverse, itemData:', itemData);
         
         this.setState({ 
             itemData: itemData,
@@ -121,13 +117,16 @@ export default class NotificationsDisplay extends React.Component {
         console.log('new data found');
         messagesTable[key] = true;
         currentData.unshift(newData[i]);
+
+        //new data found so set notification bell to true
+        this.handleNewNotificationsBell(true);
       }
     }
-    console.log('before setting state');
-    console.log('messagesTable length:', Object.keys(messagesTable).length);
-    console.log('messagesTable:', messagesTable);
-    console.log('currentData:', currentData);
-    console.log('newData:', newData);
+    //console.log('before setting state');
+    //console.log('messagesTable length:', Object.keys(messagesTable).length);
+    //console.log('messagesTable:', messagesTable);
+    //console.log('currentData:', currentData);
+    //console.log('newData:', newData);
     
     //create readTable with [rowId: read/unread status]
     let readTable = {};
@@ -157,7 +156,7 @@ export default class NotificationsDisplay extends React.Component {
   }
 
   refreshData() {
-    console.log('refreshData()');
+    //console.log('refreshData()');
     this.setState({isTool1: true, isTool2: false, isCustom: false, isDataLoaded: false, productDataArray: [], itemData:[]})
     this.getProductData();
   }
@@ -172,6 +171,11 @@ export default class NotificationsDisplay extends React.Component {
     let readTable = this.state.readTable;
     readTable[rowId] = !readTable[rowId];
 
+    for (let row in readTable) {
+      if (row === true) {
+        this.props.handleNewNotificationsBell(true);
+      }
+    }
     this.setState({
       readTable: readTable,
       messagesTable: messagesTable
@@ -187,6 +191,8 @@ export default class NotificationsDisplay extends React.Component {
     for (let key in readTable) {
       readTable[key] = false;
     }
+    console.log('markAllAsRead - handleNewNotificationsBell(false)');
+    this.props.handleNewNotificationsBell(false);
 
     this.setState({
       readTable: readTable,
@@ -194,44 +200,13 @@ export default class NotificationsDisplay extends React.Component {
     })
   }
 
-  render() {
-    
-    let toolComponent1;
-    if (this.state.isDataLoaded) {
-      if (!Array.isArray(this.state.itemData) || this.state.data.length === 0) {
-          toolComponent1 = <h3>No data to display or api error</h3>
-      } else {
-        toolComponent1 = 
-          <NotificationsDisplayTable 
-            columns={this.state.columns} 
-            data={this.state.itemData}
-            readTable={this.state.readTable}
-            refreshData={this.refreshData}
-            autoRefreshCallBack={this.handleAutoRefreshChanged} 
-            autoRefreshEnabled={this.state.autoRefreshEnabled} 
-            columnDensity='compact' 
-            paginationEnabled
-            markAsRead={this.markAsRead}
-            markAllAsRead={this.markAllAsRead}
-            />;
-      }
-    }
+  handleNewNotificationsBell(newNotifications) {
+    this.props.handleNewNotificationsBell(newNotifications);
+  }
 
+  render() {
     return (
-      <>
-      <S.Row>
-      <S.Col12>
-        
-        {this.state.activeTab==='Table' &&
-          <S.Card>
-            <S.CardBody>
-              {toolComponent1}
-            </S.CardBody>
-          </S.Card>    
-        }
-      </S.Col12>
-      </S.Row>
-      </>
+      null
     );
   }
 }

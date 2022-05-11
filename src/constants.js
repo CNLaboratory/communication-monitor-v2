@@ -103,8 +103,13 @@ export const ENDPOINTS = {
     menuTitle: "Alert Logger"
   },
   ordertrack: {
-    url: 'https://communicationmonitor.cn.ntua.gr:5000/search?order=',
+    url: 'https://communicationmonitor.cn.ntua.gr:5000/evaluateorders?order=',
     pageTitle: 'Order Track',
     menuTitle: 'Order Track'
+  },
+  totalorders: {
+    url: 'https://communicationmonitor.cn.ntua.gr:5000/allorders',
+    pageTitle: 'Total Orders',
+    menuTitle: 'Total Orders'
   }
 }

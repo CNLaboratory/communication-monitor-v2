@@ -13,6 +13,8 @@ import ComplexDataVisualization from './complex-data';
 import LeafletExample from './leaflet-example';
 import NewDynamicAPI from './new-dynamic-api';
 import NotificationsDisplay from './notifications';
+import NewNotificationsDisplay from './new-notifications-display';
+import CustomIFrame from './components/custom-iframe';
 
 export function MainHome () {
   return(
@@ -325,6 +327,62 @@ export function NotificationsDisplayTool () {
     breadcrumpToolsetLink='/notifications' 
     breadcrumpToolsetTitle='Notifications Display Tool'
     mainComponent= 
-    {<NotificationsDisplay API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} checkInterval={10000}/>}
+    {<NotificationsDisplay 
+      API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
+      autoRefreshEnabled={false} 
+      refreshInterval={10000}/>}
+  />
+)};
+
+export function NewNotificationsDisplayTool (autoRefreshEnabled) {
+  return (
+
+  <MainContent key='NewNotificationsDisplayTool'
+    title='New Notifications Display Tool' 
+    breadcrumpToolsetLink='/newnotifications' 
+    breadcrumpToolsetTitle='New Notifications Display Tool'
+    mainComponent= 
+    {<NewNotificationsDisplay 
+      API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
+      autoRefreshEnabled={autoRefreshEnabled} 
+    />}
+  />
+)};
+
+export function TotalOrdersTool () {
+  return (
+
+  <MainContent key='TotalOrdersTool'
+    title='Total Orders Tool' 
+    breadcrumpToolsetLink='/immutableaudittrail' 
+    breadcrumpToolsetTitle='Immutable Audit Trail'
+    breadcrumpToolLink='/totalorders'
+    breadcrumpToolTitle='Total Orders Tool'
+    mainComponent= 
+    {<NewDataDisplay API_URL={ENDPOINTS.totalorders.url} headerText={ENDPOINTS.totalorders.pageTitle}/>}
+  />
+)};
+
+export function ETLComponentTool () {
+  return (
+    <MainContent key='ETLComponentTool'
+    title='ETL Component Tool' 
+    breadcrumpToolsetLink='/iframeintegration' 
+    breadcrumpToolsetTitle='iFrame Integration'
+    breadcrumpToolLink='/etlcomponent'
+    breadcrumpToolTitle='ETL Component Tool'
+    mainComponent= {<CustomIFrame API_URL='https://cndevs.cn.ntua.gr:9000'/>}
+  />
+)};
+
+export function CustomIFrameTool () {
+  return (
+    <MainContent key='CustomIFrameTool'
+    title='Custom IFrame' 
+    breadcrumpToolsetLink='/iframeintegration' 
+    breadcrumpToolsetTitle='iFrame Integration'
+    breadcrumpToolLink='/customiframe'
+    breadcrumpToolTitle='Custom iFrame'
+    mainComponent= {<IFrameTest/>}
   />
 )};

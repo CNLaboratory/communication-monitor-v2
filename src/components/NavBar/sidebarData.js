@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RiIcons from 'react-icons/ri';
-import { FaBezierCurve, FaCog, FaQuestion, FaBug, FaExclamationTriangle} from "react-icons/fa";
+import { FaBezierCurve, FaCog, FaQuestion, FaUpload, FaWindowRestore, FaBug, FaExclamationTriangle, FaChromecast} from "react-icons/fa";
 import { SiDynamics365 } from 'react-icons/si';
 
 const visualizationToolset = {
@@ -142,6 +142,54 @@ const alertLoggerToolset = {
   pageTitle: 'Alert Logger'
 };
 
+const immutableAuditTrailToolset = {
+  title: 'Immutable Audit Trail',
+  icon: <SiDynamics365/>,
+  iconAlt: 'Immutable Audio Trail',
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/immutableaudittrail',
+  pageTitle: 'Immutable Audit Trail',
+
+  subNav: [
+    {
+      title: 'Total Orders',
+      pageTitle: 'Total Orders',
+      path: '/totalorders'
+    },
+    {
+      title: 'Order Track',
+      pageTitle: 'Order Track',
+      path: '/ordertrack'
+    }
+  ]
+};
+
+const iFrameIntegration = {
+  title: 'iFrame Integration',
+  icon: <FaChromecast/>,
+  iconAlt: 'iFrame Integration',
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/iframeintegration',
+  pageTitle: 'iFrame Integration',
+
+  subNav: [
+    {
+      title: 'ETL Component',
+      pageTitle: 'ETL Component',
+      path: '/etlcomponent',
+      icon: <FaUpload/>
+    },
+    {
+      title: 'Custom iFrame',
+      pageTitle: 'Custom iFrame',
+      path: '/customiframe',
+      icon: <FaWindowRestore/>
+    }
+  ]
+}
+
 const dynamicApiExperiment = {
   title: 'Dynamic API',
   icon: <SiDynamics365 />,
@@ -161,6 +209,8 @@ const orderTrackExperiment = {
   path: '/ordertrack',
   pageTitle: 'Order Track'
 };
+
+
 
 const uploadFileTestExperiment = {
   title: 'Upload File Test',
@@ -216,13 +266,23 @@ const NotificationsDisplay = {
   path: '/notifications',
   pageTitle: 'Notifications Display'
 }
-
+const NewNotificationsDisplay = {
+  title: 'New Notifications Display',
+  icon: <SiDynamics365 />,
+  iconAlt: "New Notifications Display",
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/newnotifications',
+  pageTitle: 'New Notifications Display'
+}
 export const AdminSidebarData = [
   visualizationToolset,
   fusionToolset,
   advancedReasonerToolset,
   threadAndIncidentToolset,
-  alertLoggerToolset
+  alertLoggerToolset,
+  immutableAuditTrailToolset,
+  iFrameIntegration
 ];
 export const ExperimentsSidebarData = [
   dynamicApiExperiment,
@@ -232,5 +292,6 @@ export const ExperimentsSidebarData = [
   iFrameTestExperiment,
   complexDataVisualizationExperiment,
   LeafletExampleExperiment,
-  NotificationsDisplay
+  NotificationsDisplay,
+  NewNotificationsDisplay
 ];

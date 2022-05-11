@@ -76,6 +76,7 @@ export const MenuIconLine = styled.span`
   transition: all 0.3s ease-in-out;
 `;
 export const IconWrap = styled.div`
+  position:relative;
   margin-left: 0.25rem!important;
   font-size: 22px;
   color: #e9ecef;
@@ -763,18 +764,35 @@ export const ReactTableTHead = styled.thead `
 `;
 export const ReactTableTHeaderRow = styled.tr`
   border-width: 1px 0;
+  ${props => props.sticky && css`
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+  `}
 `;
 export const ReactTableTHeaderRowSticky = styled.tr`
   border-width: 1px 0;
-  position: sticky;
-  top: 0;
-  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-  background-color: #fff;
+  ${props => props.sticky && css`
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+  `}
 `
 export const ReactTableTHeaderColumn = styled.th`
   white-space: nowrap;
   font-weight: 600;
   padding: 0.75rem 2rem 0.75rem 0.2rem;
+  ${props => props.density==='compact' && css`
+    padding: 0.15rem 2rem 0.15rem 0.2rem;
+  `}
+  ${props => props.density==='standard' && css`
+    padding: 0.75rem 2rem 0.75rem 0.2rem;
+  `}
+  ${props => props.density==='comfortable' && css`
+    padding: 1.75rem 2rem 1.75rem 0.2rem;
+  `}
   border: 0 solid;
   border-color: inherit;
   text-align: left;
@@ -818,13 +836,27 @@ export const ReactTableTRow = styled.tr`
       background-color: #f2f2f2;
     }`
   }
+  ${ props => props.unread
+  && css`
+    background-color: #8590A5;
+    color: white;
+  `}
 `;
 export const ReactTableTColumn = styled.th`
   border: 0 solid;
   border-color: inherit;
-  font-weight: 400;
+  font-weight: ${props => props.bold ? '700' : '400'};
   font-size: 14.4px;
   padding: 0.75rem 2rem 0.75rem 0.2rem;
+  ${props => props.density==='compact' && css`
+    padding: 0.15rem 2rem 0.15rem 0.2rem;
+  `}
+  ${props => props.density==='standard' && css`
+  padding: 0.75rem 2rem 0.75rem 0.2rem;
+  `}
+  ${props => props.density==='comfortable' && css`
+  padding: 1.75rem 2rem 1.75rem 0.2rem;
+  `}
   white-space: nowrap;
   text-align: left;
   border-bottom-color: #eff2f7;
@@ -838,7 +870,7 @@ export const ReactTableTColumn = styled.th`
 export const ReactTableTColumnCompact = styled.th`
   border: 0 solid;
   border-color: inherit;
-  font-weight: 400;
+  font-weight: ${props => props.bold ? '700' : '400'};
   font-size: 14.4px;
   padding: 0.15rem 2rem 0.15rem 0.2rem;
   white-space: nowrap;
@@ -1165,6 +1197,156 @@ export const MainComponentLinksWrapper = styled.div`
 `
 export const MainComponentLink = styled.a`
   color: #5664d2;
+`
+export const RoundCheckBoxInput = styled.input`
+  width: 1.3em;
+  height: 1.3em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+
+  &:checked {
+    padding: 2px;
+    background-color: #8590A5;
+  }
+`
+export const ConcentricCircle = styled.div`
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid grey;
+  box-shadow: inset 0 0 0 4px #fff;
+  cursor: pointer;
   
+  ${props => props.isChecked && css`
+    background-color: grey;
+  `}
+`
+export const NotificationBellRedNotice = styled.span`
+  position: relative;
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  background-color: #ff3d60;
+  border-radius: 50%;
+  top: -15px;
+  right: 4px;
+
+  font-size: 8px;
+`
+export const NotificationsDropDownWrapper = styled.div `
+  display:block;
+  font-size: .9rem;
+  color: #505d69;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0 solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 10%);
+  -webkit-animation-name: DropDownSlide;
+  animation-name: DropDownSlide;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  margin: 0;
+  right: 0;
+  top:60px;
+  left: auto;
+  z-index: 1000;
+
+  position: absolute;
+  will-change: transform;
+
+  @media (min-width: 600px){
+   width: 320px;
+  }
+
+  @keyframes DropDownSlide {
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    0% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+        } 
+  }
+`
+export const NotificationsDropDownHeaderWrapper = styled.div`
+  padding: 1rem;
+`
+export const NotificatioinsDropDownHeader = styled.h6`
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.2;
+`
+export const NotificationDropDownSingleWrapper = styled(Link)`
+  cursor: pointer;
+`
+export const NotificationDropDownSingle = styled.div`
+  display: flex;
+  padding: 0.75rem 1rem;
+`
+export const NotificationDropDownSingleIconWrapper = styled.div`
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  padding-top: 0.3rem;
+  border-radius: 50%;
+  margin-right: 1rem!important;
+  background-color: #8590A5;
+  color: white;
+`
+export const NotificationDropDownSingleContentWrapper = styled.div`
+  flex: 1 1;
+`
+export const NotificationDropDownSingleContentHeader = styled.div`
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+  color: #343a40;
+  font-family: "Inter",sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
+`
+export const NotificationDropDownSingleContentMain = styled.div`
+  font-size: 12px;
+  color: #74788d;
+`
+export const NotificationDropDownSingleContentMainMessage = styled.p`
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+`
+export const NotificationDropDownSingleContentMainTimeWrapper = styled.div`
+  margin-bottom: 0;
+  margin-top: 0;
+  display: flex;
+`
+export const NotificationDropDownSingleContentMainTimeIconWrapper = styled.div`
+  margin-right: 5px;
+`
+export const NotificationDropDownSingleContentMainTimeText = styled.p`
+  line-height: 1.7;
+`
+export const NotificationsDropDownFooterWrapper = styled.div`
+  padding: 0.5rem;
+  border-top: 1px solid #eff2f7;
+`
+export const NotificationsDropDownFooterLink = styled(Link)`
+  color: #5664d2;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0.25rem 0.5rem;
+`
+export const NotificationsDropDownFooterLinkIconWrapper = styled.div`
 
 `

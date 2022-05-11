@@ -11,7 +11,6 @@ const SubMenu = (props) => {
   const [activeItem, setActiveItem] = useState();
   const [active, setActive] = useState(false);
   
-  
   return (
     <>
     {props.sidebarData.map((item, index) => {

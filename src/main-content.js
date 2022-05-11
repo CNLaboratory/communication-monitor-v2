@@ -7,6 +7,10 @@ import { ENDPOINTS } from './constants';
 
 export class MainContent extends React.Component {
 
+  componentDidMount() {
+    console.log('MainContent');
+  }
+
   render() {
   return (
     <>
