@@ -6,6 +6,13 @@ export const COLORS = {
   total: "#D97706",
 };
 
+export const SEARCHBARTOOLS = [
+  {
+    'id': 1,
+    
+  }
+]
+
 export const ENDPOINTS = {
   transactionsdepiction: { 
     url: "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction",

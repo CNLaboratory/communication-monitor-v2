@@ -9,6 +9,7 @@ const visualizationToolset = {
   iconAlt: "visualization toolset",
   iconClosed: <RiIcons.RiArrowDownSFill />,
   iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/visualizationtoolset',
 
   subNav: [
     {
@@ -56,6 +57,7 @@ const fusionToolset = {
   iconAlt: "fusion toolset",
   iconClosed: <RiIcons.RiArrowDownSFill />,
   iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/fusiontoolset',
 
   subNav: [
     {
@@ -82,7 +84,8 @@ const advancedReasonerToolset = {
   iconAlt: "Advanced Reasoner Toolset",
   iconClosed: <RiIcons.RiArrowDownSFill />,
   iconOpened: <RiIcons.RiArrowUpSFill />,
-
+  path: '/advancedreasonertoolset',
+  
   subNav: [
     {
       title: 'Suspicious Transactions',

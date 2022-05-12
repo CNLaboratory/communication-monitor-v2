@@ -84,7 +84,10 @@ export class NewDashboard extends React.Component {
       autoRefreshEnabled: true,
       refreshInterval: 10000,
       
-      messageCounter: 0
+      messageCounter: 0,
+      searchBarQuery: '',
+      availableTools: [],
+      availableExperiments: []
     }
 
     this.userMenuRef = React.createRef();
@@ -128,6 +131,33 @@ export class NewDashboard extends React.Component {
       console.log('logged in');
       this.updateAutoRefresh();
     }
+
+    let availableTools = [];
+    let toolCounter = 0;
+    for (let i = 0; i < AdminSidebarData.length; i++) {
+      const tool = {
+        id: toolCounter,
+        title: AdminSidebarData[i].title,
+        path: AdminSidebarData[i].path
+      }
+      availableTools.push(tool);
+      toolCounter++;
+
+      if (AdminSidebarData[i].subNav) {
+        for (let j = 0; j < AdminSidebarData[i].subNav.length; j++) {
+          const subTool = {
+            id: toolCounter,
+            title: AdminSidebarData[i].subNav[j].title,
+            path: AdminSidebarData[i].subNav[j].path,
+          };
+          availableTools.push(subTool);
+        }
+      }
+    }
+    console.log('availableTools:', availableTools);
+    this.setState({
+      availableTools: availableTools
+    })
   }
   componentDidUnMount() {
     
@@ -505,7 +535,7 @@ export class NewDashboard extends React.Component {
             </S.MenuIconWrap>
             <S.SearchFieldFormWrap>
               <S.SearchFieldInputWrap>
-                <S.SearchFieldFormInput placeholder='Search' type='text'/>
+                <S.SearchFieldFormInput placeholder='Search' type='text' onChange={event => this.setState({searchBarQuery: event.target.value})}/>
                   <S.SearchFieldInputSearchIcon>
                     <RiSearchLine/>
                   </S.SearchFieldInputSearchIcon>

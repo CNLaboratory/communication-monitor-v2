@@ -14,27 +14,29 @@ import { GridToolbar} from '@mui/x-data-grid';
 export default class NewDataDisplay extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { 
-       formValues: [{ url: "" }],
-       productDataArray: [],
-       itemData: [],
-       isDataLoaded: false,
-       isTransfering: true,
-       isTool1: false,
-       columns: [],
-       data: [],
-       keys: [],
-       labels: [],
-       refreshInterval: props.refreshInterval,
-       API_URL: props.API_URL,
-       counter: 0,
-       displayTableComponent: [],
-       activeTab: 'Table'
-     };
+    this.state = {
+      formValues: [{ url: "" }],
+      productDataArray: [],
+      itemData: [],
+      isDataLoaded: false,
+      isTransfering: true,
+      isTool1: false,
+      columns: [],
+      data: [],
+      keys: [],
+      labels: [],
+      refreshInterval: props.refreshInterval,
+      API_URL: props.API_URL,
+      counter: 0,
+      displayTableComponent: [],
+      activeTab: "Table",
+      errorMessage: ''
+    };
     //this.handleSubmit = this.handleSubmit.bind(this);
     this.checkIfDataIsLoaded = this.checkIfDataIsLoaded.bind(this);
     this.processData = this.processData.bind(this);
     this.refreshData = this.refreshData.bind(this);
+    this.getProductData = this.getProductData.bind(this);
     //this.handleAddButton = this.handleAddButton.bind(this);
     this.getProductData();
   }
@@ -148,13 +150,27 @@ export default class NewDataDisplay extends React.Component {
   }*/
 
   getProductData = () => {
-    axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
-    .then((response) => {
-      
-      this.setState({data:response.data}, () => {
-        this.processData();
-      });
-    });
+    console.log('getProductData()');
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = 10000;
+
+    axiosInstance
+      .get(this.state.API_URL, {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      }, {timeout: 1})
+      .then(
+        response => {
+          console.log("response:", response);
+          this.setState({ data: response.data }, () => {
+            this.processData();
+          });
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({
+            errorMessage: error,
+          });
+        })
   }
 
   refreshData() {
@@ -175,8 +191,11 @@ export default class NewDataDisplay extends React.Component {
     if (this.state.isDataLoaded) {
       
       
-      if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
-          toolComponent1 = <h3>No data to display or api error</h3>
+      //if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
+      if(this.state.errorMessage) {
+          toolComponent1 = (
+            <h3>No data to display or api error: {this.state.errorMessage}.</h3>
+          );
       } else {
         toolCardComponentsArray = [
           <S.Row key='row1'><S.Col12>
@@ -197,30 +216,43 @@ export default class NewDataDisplay extends React.Component {
 
     return (
       <>
-      <S.Row>
-      <S.Col12>
-        <S.MainContentTabsWrapper>
-          <S.MainContentTab>
-            <S.MainContentTabLink className={this.state.activeTab==='Table' ? 'active' : ''} onClick={()=>{this.setState({activeTab: 'Table'})}}>
-              Table
-            </S.MainContentTabLink>
-          </S.MainContentTab>
-          <S.MainContentTab>
-            <S.MainContentTabLink className={this.state.activeTab==='Charts' ? 'active' : ''} onClick={()=>{this.setState({activeTab: 'Charts'})}}>
-              Charts
-            </S.MainContentTabLink>
-          </S.MainContentTab>
-        </S.MainContentTabsWrapper>
-        {this.state.activeTab==='Table' &&
-          <S.Card>
-            <S.CardBody>
-              {toolComponent1}
-            </S.CardBody>
-          </S.Card>    
-        } 
-      </S.Col12>
-      </S.Row>
-      {this.state.activeTab==='Charts' && toolCardComponentsArray}
+        <S.Row>
+          <S.Col12>
+            <S.MainContentTabsWrapper>
+              <S.MainContentTab>
+                <S.MainContentTabLink
+                  className={this.state.activeTab === "Table" ? "active" : ""}
+                  onClick={() => {
+                    this.setState({ activeTab: "Table" });
+                  }}
+                >
+                  Table
+                </S.MainContentTabLink>
+              </S.MainContentTab>
+              <S.MainContentTab>
+                <S.MainContentTabLink
+                  className={this.state.activeTab === "Charts" ? "active" : ""}
+                  onClick={() => {
+                    this.setState({ activeTab: "Charts" });
+                  }}
+                >
+                  Charts
+                </S.MainContentTabLink>
+              </S.MainContentTab>
+            </S.MainContentTabsWrapper>
+            {this.state.activeTab === "Table" && (
+              <S.Card>
+                <S.CardBody>
+                  {this.state.isTransfering && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  {toolComponent1}
+                </S.CardBody>
+              </S.Card>
+            )}
+          </S.Col12>
+        </S.Row>
+        {this.state.activeTab === "Charts" && toolCardComponentsArray}
       </>
     );
   }
