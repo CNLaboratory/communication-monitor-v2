@@ -11,6 +11,7 @@ const SubMenu = (props) => {
   const [activeItem, setActiveItem] = useState();
   const [active, setActive] = useState(false);
   
+  
   return (
     <>
     {props.sidebarData.map((item, index) => {
@@ -29,9 +30,24 @@ const SubMenu = (props) => {
             <S.SidebarLinkArrow src={ArrowDown} rotate= {(activeItem===item) ? '180deg' : '0'}/>
           }
         </div>
-      </S.SidebarAnchorLink>
+        </S.SidebarAnchorLink>
       : 
-        item.path ? 
+        item.path ?
+          item.subNav ?
+            <S.SidebarAnchorLink key={index} to={""} onClick={() => (activeItem===item) ? setActiveItem('') : setActiveItem(item)} >
+        <div>
+          {item.icon}
+          <S.SidebarLabel>{item.title}</S.SidebarLabel>
+        </div>
+        <div>
+          {item.subNav && 
+            <S.SidebarLinkArrow src={ArrowDown} rotate= {(activeItem===item) ? '180deg' : '0'}/>
+          }
+        </div>
+      </S.SidebarAnchorLink>
+      
+      :
+
         <S.SidebarLink key={index} to={item.path ? item.path : ""} onClick={() => (activeItem===item) ? setActiveItem('') : setActiveItem(item)} >
           <div>
             {item.icon}

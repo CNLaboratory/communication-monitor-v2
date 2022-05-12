@@ -87,14 +87,16 @@ export class NewDashboard extends React.Component {
       messageCounter: 0,
       searchBarQuery: '',
       availableTools: [],
-      availableExperiments: []
+      availableExperiments: [],
+      showAvailableTools: false
     }
 
     this.userMenuRef = React.createRef();
     this.notificationsMenuRef = React.createRef();
+    this.searchBarRef = React.createRef();
     this.handleClickOutsideUserMenu = this.handleClickOutsideUserMenu.bind(this);
     this.handleClickOutsideNotificationsMenu = this.handleClickOutsideNotificationsMenu.bind(this);
-
+    this.handleClickOutsideSearchBarDropDown = this.handleClickOutsideSearchBarDropDown.bind(this);
 
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
@@ -116,8 +118,63 @@ export class NewDashboard extends React.Component {
     this.updateAutoRefresh = this.updateAutoRefresh.bind(this);
     this.handleNewNotificationsBell = this.handleNewNotificationsBell.bind(this);
 
+    this.generateAvailableTools = this.generateAvailableTools.bind(this);
+
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    this.onSearchBarBlur = this.onSearchBarBlur.bind(this);
+    this.onSearchBarFocus = this.onSearchBarFocus.bind(this);
     
+  }
+
+  generateAvailableTools(sidebarData) {
+    let availableTools = [];
+    let toolCounter = 0;
+    for (let i = 0; i < sidebarData.length; i++) {
+      let tool = {};
+      sidebarData[i].externalPath ?
+      
+      tool = {
+        id: toolCounter,
+        title: sidebarData[i].title,
+        externalPath: sidebarData[i].externalPath
+      }
+      :
+      tool = {
+        id: toolCounter,
+        title: sidebarData[i].title,
+        path: sidebarData[i].path
+      }
+
+      availableTools.push(tool);
+      toolCounter++;
+
+      if (sidebarData[i].subNav) {
+        for (let j = 0; j < sidebarData[i].subNav.length; j++) {
+
+          let subTool = {};
+
+          sidebarData[i].subNav[j].externalPath ?
+
+          subTool = {
+            id: toolCounter,
+            title: sidebarData[i].subNav[j].title,
+            externalPath: sidebarData[i].subNav[j].externalPath,
+          }
+          :
+          subTool = {
+            id: toolCounter,
+            title: sidebarData[i].subNav[j].title,
+            path: sidebarData[i].subNav[j].path,
+          };
+
+          availableTools.push(subTool);
+        }
+      }
+    }
+
+    return availableTools;
+    
+
   }
 
   componentDidMount() {
@@ -132,32 +189,17 @@ export class NewDashboard extends React.Component {
       this.updateAutoRefresh();
     }
 
-    let availableTools = [];
-    let toolCounter = 0;
-    for (let i = 0; i < AdminSidebarData.length; i++) {
-      const tool = {
-        id: toolCounter,
-        title: AdminSidebarData[i].title,
-        path: AdminSidebarData[i].path
-      }
-      availableTools.push(tool);
-      toolCounter++;
-
-      if (AdminSidebarData[i].subNav) {
-        for (let j = 0; j < AdminSidebarData[i].subNav.length; j++) {
-          const subTool = {
-            id: toolCounter,
-            title: AdminSidebarData[i].subNav[j].title,
-            path: AdminSidebarData[i].subNav[j].path,
-          };
-          availableTools.push(subTool);
-        }
-      }
-    }
+    let availableTools = this.generateAvailableTools(AdminSidebarData);
     console.log('availableTools:', availableTools);
     this.setState({
       availableTools: availableTools
     })
+    let availableExperiments = this.generateAvailableTools(ExperimentsSidebarData);
+    console.log('availableExperiments:', availableExperiments);
+    this.setState({
+      availableExperiments: availableExperiments
+    })
+    
   }
   componentDidUnMount() {
     
@@ -207,8 +249,14 @@ export class NewDashboard extends React.Component {
       this.setState({
         notificationsBellClicked: false
       })  
-    }
-    
+    } 
+  }
+  handleClickOutsideSearchBarDropDown(event) {
+    if (this.searchBarRef && !this.searchBarRef.current.contains(event.target)) {
+      this.setState({
+        showAvailableTools: false
+      })  
+    } 
   }
   
   handleMenuCollapse() {
@@ -294,6 +342,17 @@ export class NewDashboard extends React.Component {
       clearInterval(this.state.timer);
     }
   }
+  onSearchBarBlur() {
+    this.setState({
+      showAvailableTools: false
+    })
+  }
+  onSearchBarFocus() {
+    this.setState({
+      showAvailableTools: true
+    })
+  }
+
   checkIfDataIsLoaded = (dataLoadedStatus) => {
     this.setState( { isDataLoaded: dataLoadedStatus });
   }
@@ -480,6 +539,7 @@ export class NewDashboard extends React.Component {
     this.setState({newNotifications: newNotifications});
   }
 
+
   toggleFullscreen() {
     if (
         !document.fullscreenElement &&
@@ -505,7 +565,7 @@ export class NewDashboard extends React.Component {
             document.webkitCancelFullScreen();
         }
     }
-}
+  }
 
 
   render() {
@@ -533,14 +593,94 @@ export class NewDashboard extends React.Component {
             <S.MenuIconWrap onClick={this.handleMenuCollapse}>
               <HiOutlineMenuAlt1/>
             </S.MenuIconWrap>
-            <S.SearchFieldFormWrap>
+            <OutsideClickHandler onOutsideClick={this.handleClickOutsideSearchBarDropDown}>
+            <S.SearchFieldFormWrap ref={this.searchBarRef}>
               <S.SearchFieldInputWrap>
-                <S.SearchFieldFormInput placeholder='Search' type='text' onChange={event => this.setState({searchBarQuery: event.target.value})}/>
+                <S.SearchFieldFormInput placeholder='Search' type='text' onFocus={this.onSearchBarFocus} onChange={event => this.setState({searchBarQuery: event.target.value})}/>
                   <S.SearchFieldInputSearchIcon>
                     <RiSearchLine/>
                   </S.SearchFieldInputSearchIcon>
               </S.SearchFieldInputWrap>
+              
+              <S.SearchBarDropDownWrapper  style={{display: this.state.showAvailableTools ? 'block' : 'none'}}>
+                <S.SearchBarDropDownHeaderWrapper>
+                  <S.SearchBarDropDownHeader>Tools</S.SearchBarDropDownHeader>
+                </S.SearchBarDropDownHeaderWrapper>
+                <SimpleBar style={{ maxHeight: '300px' }}>
+                {this.state.availableTools.filter(post => {
+                  if (this.state.searchBarQuery === '') {
+                    return post;
+                  } else if (post.title.toLowerCase().includes(this.state.searchBarQuery.toLowerCase())) {
+                    return post;
+                  }
+                  }).map((item, index) => {
+                    return item.externalPath ?
+                
+                    <div key={index}>
+                    <S.SearchBarDropDownSingleWrapperExternalLink href={item.externalPath} target='_blank' onClick={this.onSearchBarBlur}>
+                      <S.SearchBarDropDownSingle>
+                        <S.SearchBarDropDownSingleContentWrapper>
+                          <S.SearchBarSinlgeContentHeader>{item.title}</S.SearchBarSinlgeContentHeader>
+                        </S.SearchBarDropDownSingleContentWrapper>
+                      </S.SearchBarDropDownSingle>
+                    </S.SearchBarDropDownSingleWrapperExternalLink>
+                    </div>
+                    :
+                    
+                    <div key={index}>
+                    <S.SearchBarDropDownSingleWrapper to={item.path} onClick={this.onSearchBarBlur}>
+                      <S.SearchBarDropDownSingle>
+                        <S.SearchBarDropDownSingleContentWrapper>
+                          <S.SearchBarSinlgeContentHeader>{item.title}</S.SearchBarSinlgeContentHeader>
+                        </S.SearchBarDropDownSingleContentWrapper>
+                      </S.SearchBarDropDownSingle>
+                    </S.SearchBarDropDownSingleWrapper>
+                    </div>
+
+
+                })}
+                </SimpleBar>
+                <S.SearchBarDropDownHeaderWrapper>
+                  <S.SearchBarDropDownHeader>Experiments</S.SearchBarDropDownHeader>
+                </S.SearchBarDropDownHeaderWrapper>
+                <SimpleBar style={{ maxHeight: '300px' }}>
+                {this.state.availableExperiments.filter(post => {
+                  if (this.state.searchBarQuery === '') {
+                    return post;
+                  } else if (post.title.toLowerCase().includes(this.state.searchBarQuery.toLowerCase())) {
+                    return post;
+                  }
+                  }).map((item, index) => {
+                    return item.externalPath ?
+                
+                    <div key={index}>
+                    <S.SearchBarDropDownSingleWrapperExternalLink href={item.externalPath} target='_blank' onClick={this.onSearchBarBlur}>
+                      <S.SearchBarDropDownSingle>
+                        <S.SearchBarDropDownSingleContentWrapper>
+                          <S.SearchBarSinlgeContentHeader>{item.title}</S.SearchBarSinlgeContentHeader>
+                        </S.SearchBarDropDownSingleContentWrapper>
+                      </S.SearchBarDropDownSingle>
+                    </S.SearchBarDropDownSingleWrapperExternalLink>
+                    </div>
+                    :
+                    
+                    <div key={index}>
+                    <S.SearchBarDropDownSingleWrapper to={item.path} onClick={this.onSearchBarBlur}>
+                      <S.SearchBarDropDownSingle>
+                        <S.SearchBarDropDownSingleContentWrapper>
+                          <S.SearchBarSinlgeContentHeader>{item.title}</S.SearchBarSinlgeContentHeader>
+                        </S.SearchBarDropDownSingleContentWrapper>
+                      </S.SearchBarDropDownSingle>
+                    </S.SearchBarDropDownSingleWrapper>
+                    </div>
+
+
+                })}
+                </SimpleBar>
+              </S.SearchBarDropDownWrapper>
+              
             </S.SearchFieldFormWrap>
+            </OutsideClickHandler>
           </S.dFlex>
           <S.dFlex>
             <S.IconWrap><RiApps2Line/></S.IconWrap>

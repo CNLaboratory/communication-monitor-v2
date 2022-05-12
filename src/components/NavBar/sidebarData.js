@@ -31,21 +31,25 @@ const visualizationToolset = {
     {
       title: 'Visualize Transactions',
       pageTitle: 'Visualize Transactions',
+      path: '/',
       externalPath: 'https://communicationmonitor.cn.ntua.gr:5000/visualizetransactions'
     },
     {
       title: 'Visualize Drive Tampering',
       pageTitle: 'Visualize Drive Tampering',
+      path: '/',
       externalPath: 'https://communicationmonitor.cn.ntua.gr:5000/visualizedrivertampering'
     },
     {
       title: 'Transactions Graph',
       pageTitle: 'Transactions Graph',
+      path: '/',
       externalPath: 'https://communicationmonitor.cn.ntua.gr:5000/transactionsgraph'
     },
     {
       title: 'Abnormal Graph',
       pageTitle: 'Abnormal Graph',
+      path: '/',
       externalPath: 'https://communicationmonitor.cn.ntua.gr:5000/abnormalgraph'
     },
   ]

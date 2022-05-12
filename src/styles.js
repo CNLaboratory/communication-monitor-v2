@@ -27,7 +27,7 @@ export const PageTopbar = styled.header`
   z-index: 1002;
   background-color: #252b3b;
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
-  cursor: pointer;
+  
 
   ${props => props.collapsed && css`
     left: -240px;
@@ -1310,6 +1310,7 @@ export const NotificationsDropDownWrapper = styled.div `
 `
 export const NotificationsDropDownHeaderWrapper = styled.div`
   padding: 1rem;
+  border-bottom: 1px solid #eff2f7;
 `
 export const NotificatioinsDropDownHeader = styled.h6`
   font-size: .9rem;
@@ -1376,4 +1377,75 @@ export const NotificationsDropDownFooterLink = styled(Link)`
 `
 export const NotificationsDropDownFooterLinkIconWrapper = styled.div`
 
+`
+export const SearchBarDropDownWrapper = styled.div `
+  display:block;
+  font-size: .9rem;
+  color: #505d69;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0 solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 10%);
+  -webkit-animation-name: DropDownSlide;
+  animation-name: DropDownSlide;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  margin: 0;
+  right: auto;
+  top:70px;
+  left: auto;
+  z-index: 1000;
+
+  position: absolute;
+  will-change: transform;
+
+  @media (min-width: 600px){
+   width: 320px;
+  }
+
+  @keyframes DropDownSlide {
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+    0% {
+        -webkit-transform: translateY(10px);
+        transform: translateY(10px);
+        } 
+  }
+`
+export const SearchBarDropDownHeaderWrapper = styled.div`
+  padding: 1rem;
+  border-bottom: 1px solid #eff2f7;
+`
+export const SearchBarDropDownHeader = styled.h6`
+  font-size: .9rem;
+  font-weight: 500;
+  line-height: 1.2;
+`
+export const SearchBarSinlgeContentHeader = styled.div`
+  margin-bottom: 0.25rem;
+  margin-top: 0;
+  color: #343a40;
+  font-family: "Inter",sans-serif;
+  font-weight: 400;
+  line-height: 1;
+`
+export const SearchBarDropDownSingleWrapper = styled(Link)`
+  cursor: pointer;
+`
+export const SearchBarDropDownSingleWrapperExternalLink = styled.a`
+  cursor: pointer;
+`
+export const SearchBarDropDownSingle = styled.div`
+  display: flex;
+  padding: 0.75rem 1rem;
+`
+export const SearchBarDropDownSingleContentWrapper = styled.div`
+  flex: 1 1;
 `
