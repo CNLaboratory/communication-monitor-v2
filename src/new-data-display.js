@@ -152,12 +152,13 @@ export default class NewDataDisplay extends React.Component {
   getProductData = () => {
     console.log('getProductData()');
     const axiosInstance = axios.create();
-    axiosInstance.defaults.timeout = 10000;
+    axiosInstance.defaults.timeout = 20000;
+    
 
     axiosInstance
       .get(this.state.API_URL, {
         headers: { "Access-Control-Allow-Origin": "*" },
-      }, {timeout: 1})
+      })
       .then(
         response => {
           console.log("response:", response);
@@ -166,11 +167,18 @@ export default class NewDataDisplay extends React.Component {
           });
         })
         .catch(error => {
-          console.log(error);
+          console.log('data display error:', error);
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
           this.setState({
-            errorMessage: error,
+            errorMessage: resMessage,
           });
-        })
+        });
   }
 
   refreshData() {
@@ -181,19 +189,24 @@ export default class NewDataDisplay extends React.Component {
 
   render() {
     
-    let toolComponent1;
+    let toolComponent1 = [];
     let buttonComponent;
+    let errorComponent = [];
     let toolCardComponentsArray = [];
     //let getDataComponent = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
     
     
-    
+    if (this.state.errorMessage) {
+      errorComponent.push(
+        <h3>Network error, message: {this.state.errorMessage}.</h3>
+      );
+    }
     if (this.state.isDataLoaded) {
       
       
-      //if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
-      if(this.state.errorMessage) {
-          toolComponent1 = (
+      if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
+      //if(this.state.errorMessage) {
+          toolComponent1.push(
             <h3>No data to display or api error: {this.state.errorMessage}.</h3>
           );
       } else {
@@ -208,7 +221,7 @@ export default class NewDataDisplay extends React.Component {
           </S.Col12></S.Row>
         ]  
         //toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
-        toolComponent1 = <NewDisplayTable columns={this.state.columns} data={this.state.data} refreshData={this.refreshData}/>;
+        toolComponent1.push(<NewDisplayTable columns={this.state.columns} data={this.state.data} refreshData={this.refreshData}/>);
         //toolComponent1 = <div style={{display: 'flex', height: 500, marginTop: 30}}><DataGrid rows={this.state.rows} columns={this.state.columns} components={{ Toolbar: GridToolbar }}/></div>;
         //buttonComponent = <S.StyledButton onClick={this.refreshData} ><IoRefreshOutline /></S.StyledButton>;
       }
@@ -243,6 +256,7 @@ export default class NewDataDisplay extends React.Component {
             {this.state.activeTab === "Table" && (
               <S.Card>
                 <S.CardBody>
+                  {errorComponent}
                   {this.state.isTransfering && (
                     <span className="spinner-border spinner-border-sm"></span>
                   )}

@@ -17,7 +17,7 @@ export default class NewDisplayTable extends React.Component {
     this.state = {
       userMenuClicked: false,
       columnFiltersEnabled: false,
-      columnDensity: props.columnDensity ? props.columnDensity : 'standard',
+      columnDensity: props.columnDensity ? props.columnDensity : 'compact',
       stickyHeaderEnabled: true,
       paginationEnabled: props.paginationEnabled ? props.paginationEnabled : true,
       strippedRows: true,
