@@ -36,7 +36,6 @@ REACT_APP_NODE_SERVER_DOMAIN='localhost'
 REACT_APP_NODE_SERVER_PORT=8080
 REACT_APP_USING_HTTPS=false
           </code></pre>
-
           <h5 class="mt-3">SSL setup (for https)</h5>
           If you setup your client app for https access you need to define some more environmental variables regarding the ssl certificate:
           <ul>
