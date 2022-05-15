@@ -590,7 +590,7 @@ export class NewDashboard extends React.Component {
                 <S.BrandImage src={Logo} alt='logo' className='logo'></S.BrandImage>
               </Link>
             </S.BrandWrapper>
-            <S.MenuIconWrap onClick={this.handleMenuCollapse}>
+            <S.MenuIconWrap onClick={this.handleMenuCollapse} style={{cursor: 'pointer'}}>
               <HiOutlineMenuAlt1/>
             </S.MenuIconWrap>
             <OutsideClickHandler onOutsideClick={this.handleClickOutsideSearchBarDropDown}>
@@ -683,8 +683,8 @@ export class NewDashboard extends React.Component {
             </OutsideClickHandler>
           </S.dFlex>
           <S.dFlex>
-            <S.IconWrap><RiApps2Line/></S.IconWrap>
-            <S.IconWrap><RiFullscreenLine onClick={this.toggleFullscreen}/>
+            <S.IconWrap style={{cursor: 'pointer'}}><RiApps2Line/></S.IconWrap>
+            <S.IconWrap style={{cursor: 'pointer'}}><RiFullscreenLine onClick={this.toggleFullscreen}/>
 
               {/*this.state.isFullScreen 
               ? <RiFullscreenLine onClick={() => {this.setState({isFullScreen: false})}}/> 
@@ -693,7 +693,7 @@ export class NewDashboard extends React.Component {
             </S.IconWrap>
             {/*<Link to='newnotifications'>*/}
             <OutsideClickHandler onOutsideClick={this.handleClickOutsideNotificationsMenu}>
-            <S.IconWrap ref={this.notificationsMenuRef}>
+            <S.IconWrap ref={this.notificationsMenuRef} style={{cursor: 'pointer'}}>
               <RiNotification3Line onClick={this.handleNotificationsBellClicked}/>
               {this.state.newNotifications && <S.NotificationBellRedNotice></S.NotificationBellRedNotice>}
               <S.NotificationsDropDownWrapper  style={{display: this.state.notificationsBellClicked ? 'block' : 'none'}}>
@@ -766,7 +766,7 @@ export class NewDashboard extends React.Component {
               </S.UserDropdown>
             </S.UserWrap>
             </OutsideClickHandler>
-            <S.IconWrap><RiSettings2Line/></S.IconWrap>
+            <S.IconWrap style={{cursor: 'pointer'}}><RiSettings2Line/></S.IconWrap>
           </S.dFlex>
         </S.NavbarHeader>
       </S.PageTopbar>

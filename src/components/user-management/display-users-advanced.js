@@ -8,6 +8,8 @@ export default class DisplayUsersAdvanced extends React.Component {
   constructor(props) {
     super(props);
 
+    this.newFilterTableRef = React.createRef();
+
     this.onEdit = this.onEdit.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.convertRolesToString = this.convertRolesToString.bind(this);
@@ -85,6 +87,7 @@ export default class DisplayUsersAdvanced extends React.Component {
 
     return (
       <NewFilterTable 
+      getFilteredDataFunc={this.newFilterTableRef}
       columns={tableColumns} 
       data={tableData} 
       columnFiltersEnabled={false}
