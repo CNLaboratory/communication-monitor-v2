@@ -43,7 +43,12 @@ import { kafkaMessageTest } from "./kafkatorest";
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const defaultTheme = {
-  sidebarWidth: '262px'
+  sidebarWidth: '262px',
+  sidebarLinkColor: '#696d8c',
+  sidebarLinkColorActive: '#6837ef',
+
+
+  
 }
 const defaultCollapsedTheme = {
   sidebarWidth: '0px'
@@ -194,22 +199,7 @@ export class NewDashboard extends React.Component {
       this.updateAutoRefresh();
     }
 
-    let availableTools = this.state.showAdminBoard 
-      ? this.generateAvailableTools(AdminSidebarData) 
-      : this.state.showModeraborBoard ? this.generateAvailableTools(ModeratorSidebarData) 
-      : this.generateAvailableTools(UserSidebarData);
-    console.log('availableTools:', availableTools);
-    this.setState({
-      availableTools: availableTools
-    })
-    let availableExperiments = this.state.showAdminBoard 
-      ? this.generateAvailableTools(ExperimentsSidebarData)
-      : []
     
-    console.log('availableExperiments:', availableExperiments);
-    this.setState({
-      availableExperiments: availableExperiments
-    })
     
   }
   componentDidUnMount() {
@@ -228,6 +218,22 @@ export class NewDashboard extends React.Component {
         loggedIn:true
       }, () => {
         this.updateAutoRefresh();
+        let availableTools = this.state.showAdminBoard 
+      ? this.generateAvailableTools(AdminSidebarData) 
+      : this.state.showModeraborBoard ? this.generateAvailableTools(ModeratorSidebarData) 
+      : this.generateAvailableTools(UserSidebarData);
+    console.log('availableTools:', availableTools);
+    this.setState({
+      availableTools: availableTools
+    })
+    let availableExperiments = this.state.showAdminBoard 
+      ? this.generateAvailableTools(ExperimentsSidebarData)
+      : []
+    
+    console.log('availableExperiments:', availableExperiments);
+    this.setState({
+      availableExperiments: availableExperiments
+    })
       })
     }
     //document.addEventListener("mousedown", this.handleClickOutsideNotificationsMenu);
