@@ -20,8 +20,9 @@ import {BiChevronDown} from "react-icons/bi";
 import {HiOutlineMenuAlt1} from 'react-icons/hi';
 import {AiOutlineClockCircle} from 'react-icons/ai';
 import {BsArrowRightCircleFill} from 'react-icons/bs';
+import {IoBookOutline} from 'react-icons/io5';
 import SubMenu from "./components/NavBar/subMenu";
-import { AdminSidebarData, ExperimentsSidebarData } from "./components/NavBar/sidebarData";
+import { AdminSidebarData, ModeratorSidebarData, UserSidebarData, ExperimentsSidebarData } from "./components/NavBar/sidebarData";
 
 import Fullscreen from 'react-fullscreen-crossbrowser';
 import { MainContent } from "./main-content";
@@ -88,21 +89,25 @@ export class NewDashboard extends React.Component {
       searchBarQuery: '',
       availableTools: [],
       availableExperiments: [],
-      showAvailableTools: false
+      showAvailableTools: false,
+      showLinksMenu: false,
     }
 
     this.userMenuRef = React.createRef();
     this.notificationsMenuRef = React.createRef();
     this.searchBarRef = React.createRef();
+    this.linksMenuRef = React.createRef();
     this.handleClickOutsideUserMenu = this.handleClickOutsideUserMenu.bind(this);
     this.handleClickOutsideNotificationsMenu = this.handleClickOutsideNotificationsMenu.bind(this);
     this.handleClickOutsideSearchBarDropDown = this.handleClickOutsideSearchBarDropDown.bind(this);
+    this.handleClickOutsideLinksMenuDropDown = this.handleClickOutsideLinksMenuDropDown.bind(this);
 
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
     this.changeIsHovered = this.changeIsHovered.bind(this);
     this.handleUserMenuClicked = this.handleUserMenuClicked.bind(this);
+    this.handleLinksMenuClicked = this.handleLinksMenuClicked.bind(this);
     this.handleNotificationsBellClicked = this.handleNotificationsBellClicked.bind(this);
     this.handleFullScreenEnter = this.handleFullScreenEnter.bind(this);
     this.handleFullScreenExit = this.handleFullScreenExit.bind(this);
@@ -189,12 +194,18 @@ export class NewDashboard extends React.Component {
       this.updateAutoRefresh();
     }
 
-    let availableTools = this.generateAvailableTools(AdminSidebarData);
+    let availableTools = this.state.showAdminBoard 
+      ? this.generateAvailableTools(AdminSidebarData) 
+      : this.state.showModeraborBoard ? this.generateAvailableTools(ModeratorSidebarData) 
+      : this.generateAvailableTools(UserSidebarData);
     console.log('availableTools:', availableTools);
     this.setState({
       availableTools: availableTools
     })
-    let availableExperiments = this.generateAvailableTools(ExperimentsSidebarData);
+    let availableExperiments = this.state.showAdminBoard 
+      ? this.generateAvailableTools(ExperimentsSidebarData)
+      : []
+    
     console.log('availableExperiments:', availableExperiments);
     this.setState({
       availableExperiments: availableExperiments
@@ -258,6 +269,13 @@ export class NewDashboard extends React.Component {
       })  
     } 
   }
+  handleClickOutsideLinksMenuDropDown(event) {
+    if (this.linksMenuRef && !this.linksMenuRef.current.contains(event.target)) {
+      this.setState({
+        showLinksMenu: false
+      })  
+    } 
+  }
   
   handleMenuCollapse() {
     let menuCollapse = this.state.menuCollapse;
@@ -281,6 +299,12 @@ export class NewDashboard extends React.Component {
     let notificationsBellClicked = this.state.notificationsBellClicked;
     this.setState({
       notificationsBellClicked: !notificationsBellClicked
+    })
+  }
+  handleLinksMenuClicked() {
+    let showLinksMenu = this.state.showLinksMenu;
+    this.setState({
+      showLinksMenu: !showLinksMenu
     })
   }
   
@@ -640,9 +664,11 @@ export class NewDashboard extends React.Component {
 
                 })}
                 </SimpleBar>
+                {this.state.showAdminBoard && 
                 <S.SearchBarDropDownHeaderWrapper>
                   <S.SearchBarDropDownHeader>Experiments</S.SearchBarDropDownHeader>
                 </S.SearchBarDropDownHeaderWrapper>
+                }
                 <SimpleBar style={{ maxHeight: '300px' }}>
                 {this.state.availableExperiments.filter(post => {
                   if (this.state.searchBarQuery === '') {
@@ -677,13 +703,28 @@ export class NewDashboard extends React.Component {
 
                 })}
                 </SimpleBar>
+              
               </S.SearchBarDropDownWrapper>
               
             </S.SearchFieldFormWrap>
             </OutsideClickHandler>
           </S.dFlex>
           <S.dFlex>
-            <S.IconWrap style={{cursor: 'pointer'}}><RiApps2Line/></S.IconWrap>
+            <OutsideClickHandler onOutsideClick={this.handleClickOutsideLinksMenuDropDown}>
+            <S.IconWrap ref={this.linksMenuRef} style={{cursor: 'pointer'}}>
+              <RiApps2Line onClick={this.handleLinksMenuClicked}/>
+            <S.LinksMenuDropDownWrapper  style={{display: this.state.showLinksMenu ? 'block' : 'none'}}>
+              <S.LinksMenuContentRow>
+                <S.LinksMenuIconWrapper>
+                  <a href='https://commonitor-docum.codeheaven.gr/' target='_blank' rel="noreferrer">
+                  <S.LinksMenuIcon><IoBookOutline/></S.LinksMenuIcon>
+                  <S.LinksMenuIconDescription>Documentation</S.LinksMenuIconDescription>
+                  </a>
+                </S.LinksMenuIconWrapper>
+              </S.LinksMenuContentRow>
+            </S.LinksMenuDropDownWrapper>
+            </S.IconWrap>
+            </OutsideClickHandler>
             <S.IconWrap style={{cursor: 'pointer'}}><RiFullscreenLine onClick={this.toggleFullscreen}/>
 
               {/*this.state.isFullScreen 
@@ -742,7 +783,12 @@ export class NewDashboard extends React.Component {
             <S.UserWrap ref={this.userMenuRef}>
               <S.UserProfile onClick={this.handleUserMenuClicked}>
                 <S.UserAvatar src={Avatar} alt='user image'/>
-                <S.UserName>Admin</S.UserName>
+                <S.UserName>{this.state.currentUser 
+                  ? this.state.currentUser.firstName 
+                  ? this.state.currentUser.firstName 
+                  : "user" 
+                  : 'user'
+                }</S.UserName>
                 <S.ButtonArrow><BiChevronDown/></S.ButtonArrow>
               </S.UserProfile>
               <S.UserDropdown style={{display: this.state.userMenuClicked ? 'block' : 'none'}}>
@@ -754,10 +800,12 @@ export class NewDashboard extends React.Component {
                   <S.DropdownIcon><RiSettings2Line/></S.DropdownIcon>
                   Settings
                 </S.DropdownItemLink>
+                {this.state.showAdminBoard &&
                 <S.DropdownItemLink to='/usermanagement' >
                   <S.DropdownIcon><RiSettings2Line/></S.DropdownIcon>
                   User Management
                 </S.DropdownItemLink>
+                }
                 <S.DropdownDivider></S.DropdownDivider>
                 <S.DropdownItemLink style={{color: '#ff3d60'}} to='/logout' >
                   <S.DropdownIcon ><RiShutDownLine/></S.DropdownIcon>
@@ -775,12 +823,16 @@ export class NewDashboard extends React.Component {
         <SimpleBar style={{ height: '100%', maxHeight: '100%' }}>
           <S.VerticalMenu>
             <this.MenuGroup title='Toolsets'>
-              <SubMenu sidebarData={AdminSidebarData}/>
+              {this.state.showAdminBoard && <SubMenu sidebarData={AdminSidebarData}/> }
+              {this.state.showModeraborBoard && <SubMenu sidebarData={ModeratorSidebarData}/> }
+              {!this.state.showAdminBoard && !this.state.showModeraborBoard && <SubMenu sidebarData={UserSidebarData}/> }
+              
               {/*AdminSidebarData.map((item, index) => {
                 console.log('adminsidebar created');
                 return <SubMenu item={item} key={index} active={(activeItem===item) ? true : false} handleClick={handleMenuItemClick}/>
               })*/}
             </this.MenuGroup>
+            {this.state.showAdminBoard &&
             <this.MenuGroup title='Experiments'>
             <SubMenu sidebarData={ExperimentsSidebarData}/>
               {/*ExperimentsSidebarData.map((item, index) => {
@@ -788,6 +840,7 @@ export class NewDashboard extends React.Component {
               })*/}
               
             </this.MenuGroup>
+            }
           
           </S.VerticalMenu>
         
@@ -805,7 +858,7 @@ export class NewDashboard extends React.Component {
       <S.MainContent collapsed={this.state.menuCollapse}>
 
       <Routes>
-        <Route path='/' element={<Tools.MainHome/>}/>
+        
         <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor/>}/>
         <Route path="/sensorsdepiction" element={<Tools.SensorsDepiction/>}/>
         <Route path="/abnormaldetection" element={<Tools.AbnormalDetection/>}/>
@@ -853,14 +906,16 @@ export class NewDashboard extends React.Component {
             />}
           />}
         />
+        <Route path='/settings' element = {<Tools.GeneralSettingsTool/>} />
+        <Route path='/' element={<Tools.MainHome/>}/>
+        <Route path='/logout' element={<Logout logOut={this.logOut}/>} />
       </Routes>
+      
       </S.MainContent>
       
     </ThemeProvider>
     
-    <Routes>
-          <Route path='/logout' element={<Logout logOut={this.logOut}/>} />
-        </Routes>
+    
     </S.DashboardWrapper>
     </Fullscreen>
     

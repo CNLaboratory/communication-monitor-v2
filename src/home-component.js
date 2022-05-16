@@ -18,8 +18,8 @@ export default class HomeComponent extends React.Component {
                   <S.MainComponentHeaderLogo src={LogoLight}></S.MainComponentHeaderLogo>
                   <p>Thank you for using our Communication Monitor toolset. <br/>Please select one of the tools from the sidebar.</p>
                   <S.MainComponentLinksWrapper>
-                    <S.MainComponentLink>Documentation</S.MainComponentLink>
-                    <S.MainComponentLink>Contact</S.MainComponentLink>
+                    <S.MainComponentLink href='https://commonitor-docum.codeheaven.gr/' target='_blank'>Documentation</S.MainComponentLink>
+                    <S.MainComponentLink href='mailto:cmpalouk@gmail.com'>Contact</S.MainComponentLink>
                   </S.MainComponentLinksWrapper>
                   
                 </S.FlexCenterDirColumnDiv>

@@ -15,6 +15,7 @@ import NewDynamicAPI from './new-dynamic-api';
 import NotificationsDisplay from './notifications';
 import NewNotificationsDisplay from './new-notifications-display';
 import CustomIFrame from './components/custom-iframe';
+import GeneralSettings from './settings-general';
 
 export function MainHome () {
   return(
@@ -416,5 +417,15 @@ export function CustomIFrameTool () {
     breadcrumpToolLink='/customiframe'
     breadcrumpToolTitle='Custom iFrame'
     mainComponent= {<IFrameTest/>}
+  />
+)};
+
+export function GeneralSettingsTool () {
+  return (
+    <MainContent key='Settings'
+    title='Settings' 
+    breadcrumpToolsetLink='/settings' 
+    breadcrumpToolsetTitle='Settings'
+    mainComponent= {<GeneralSettings/>}
   />
 )};

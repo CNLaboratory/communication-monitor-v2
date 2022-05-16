@@ -1286,7 +1286,7 @@ export const NotificationsDropDownWrapper = styled.div `
   animation-fill-mode: both;
   margin: 0;
   right: 0;
-  top:60px;
+  top: 60px;
   left: auto;
   z-index: 1000;
 
@@ -1449,3 +1449,173 @@ export const SearchBarDropDownSingle = styled.div`
 export const SearchBarDropDownSingleContentWrapper = styled.div`
   flex: 1 1;
 `
+export const LinksMenuDropDownWrapper = styled.div`
+  display: block;
+  position: absolute;
+  will-change: transform;
+  transform: translate3d(0px, 70px, 0px);
+  left: auto;
+  right: 0;
+  top: 60px;
+  width: 320px;
+  box-shadow: 0 5px 12px rgb(0 0 0 / 10%);
+  -webkit-animation-name: DropDownSlide;
+  animation-name: DropDownSlide;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  margin: 0;
+  position: absolute;
+  z-index: 1000;
+  
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  font-size: .9rem;
+  color: #505d69;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 0 solid rgba(0,0,0,.15);
+  border-radius: 0.25rem;
+`
+export const LinksMenuContentWrapper = styled.div`
+  padding-right: 0.5rem!important;
+  padding-left: 0.5rem!important;
+`
+export const LinksMenuContentRow = styled.div`
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y)*-1);
+  margin-right: calc(var(--bs-gutter-x)/-2);
+  margin-left: calc(var(--bs-gutter-x)/-2);
+
+  &>* {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x)/2);
+    padding-left: calc(var(--bs-gutter-x)/2);
+    margin-top: var(--bs-gutter-y);
+  }
+`
+export const LinksMenuIconWrapper = styled.div`
+  flex: 1 0;
+  
+`
+export const LinksMenuIcon = styled.div`
+  font-size: 28px;
+  border-radius: 3px;
+  line-height: 34px;
+  text-align: center;
+  padding: 15px 0 9px;
+  display: block;
+  border: 1px solid transparent;
+  color: #74788d;
+`
+export const LinksMenuIconDescription = styled.p`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+`
+
+export const GeneralSettingsGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+`
+export const DropDownHorizontalWrapper = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+`
+export const DropDownStyledSelect = styled.select`
+  
+  display: block;
+  
+  padding: .47rem 1.75rem .47rem .75rem;
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #505d69;
+  
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  
+  margin: 0;
+  font-family: 'Inter';
+
+`;
+
+export const DropDownStyledOption = styled.option`
+  color: ${(props) => (props.selected ? "lightgrey" : "black")};
+  display: block;
+  width: 100%;
+  padding: .47rem 1.75rem .47rem .75rem;
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #505d69;
+  
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  
+  margin: 0;
+  font-family: 'Inter';
+`;
+
+export const DropDownStyledLabel = styled.label`
+  font-size: 15px;
+  margin: 0 7px;
+  font-weight: 500;
+`;
+export const GeneralSettingWrapper = styled.div`
+  position: relative;
+  text-align: left;
+  padding: 1rem;
+  border-bottom: solid 1px #eff2f7;
+  display: block;
+  min-height: 1.35rem;  
+  cursor: pointer;
+`
+export const GeneralSettingToggleSwitchInput = styled.input.attrs({type: 'checkbox'})`
+  background-position: 0%;
+  background-image: url(${props => props.imageDark});
+  width: 2em;
+  margin-right: 1em;  
+  border-radius: 2em;
+  transition: background-position .15s ease-in-out;
+  cursor: pointer;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: 1px solid rgba(0,0,0,.25);
+  -webkit-appearance: none;
+  appearance: none;
+
+  :checked {
+    background-image: url(${props => props.image});
+    background-position: 100%;
+    background-color: #5664d2;
+    border-color: #5664d2;
+  }
+`
+export const GeneralSettingInput = styled.input`
+
+`
+export const GeneralSettingsToggleSwitchLabel = styled.label`
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: 600;
+`
+

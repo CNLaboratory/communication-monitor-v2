@@ -301,6 +301,24 @@ export const AdminSidebarData = [
   immutableAuditTrailToolset,
   iFrameIntegration
 ];
+export const ModeratorSidebarData = [
+  visualizationToolset,
+  fusionToolset,
+  advancedReasonerToolset,
+  threadAndIncidentToolset,
+  alertLoggerToolset,
+  immutableAuditTrailToolset,
+  iFrameIntegration
+];
+export const UserSidebarData = [
+  visualizationToolset,
+  fusionToolset,
+  advancedReasonerToolset,
+  threadAndIncidentToolset,
+  alertLoggerToolset,
+  immutableAuditTrailToolset,
+  iFrameIntegration
+];
 export const ExperimentsSidebarData = [
   dynamicApiExperiment,
   orderTrackExperiment,
