@@ -29,16 +29,22 @@ export function MainHome () {
       mainComponent= {<HomeComponent/>}
     />);
 }
-export function TransactionsMonitor () { 
+export function TransactionsMonitor (settingsObject) { 
+  console.log('transactionsmonitor tool - settingsObject.settings:', settingsObject.settings);
   return(
-
+    
   <MainContent key='transactionsmonitor'
     title='Transactions Depiction' 
     breadcrumpToolsetLink='/visualizationtoolset' 
     breadcrumpToolsetTitle='Visualization Toolset'
     breadcrumpToolLink='/transactionsmonitor'
     breadcrumpToolTitle='Transactions Monitor'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.transactionsdepiction.url} headerText={ENDPOINTS.transactionsdepiction.pageTitle}/>}
+    mainComponent= 
+    {<NewDataDisplay 
+      API_URL={ENDPOINTS.transactionsdepiction.url} 
+      headerText={ENDPOINTS.transactionsdepiction.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />);
 
 };

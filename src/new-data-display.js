@@ -25,7 +25,7 @@ export default class NewDataDisplay extends React.Component {
       data: [],
       keys: [],
       labels: [],
-      refreshInterval: props.refreshInterval,
+      settings: props.settings,
       API_URL: props.API_URL,
       counter: 0,
       displayTableComponent: [],
@@ -43,6 +43,16 @@ export default class NewDataDisplay extends React.Component {
 
   componentDidMount() {
     console.log('New Data Display, url:', this.props.API_URL);
+    console.log('settings:', this.state.settings);
+
+    if (this.state.settings.tableAutoRefreshEnabled) {
+      this.setState({
+        timer: setInterval(this.getProductData, this.state.settings.tableAutoRefreshInterval)
+      });
+    }
+  }
+  componentWillUnmount() {
+    clearInterval(this.state.timer);
   }
 
   checkIfDataIsLoaded = (dataLoadedStatus) => {
@@ -221,7 +231,14 @@ export default class NewDataDisplay extends React.Component {
           </S.Col12></S.Row>
         ]  
         //toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
-        toolComponent1.push(<NewDisplayTable columns={this.state.columns} data={this.state.data} refreshData={this.refreshData}/>);
+        toolComponent1.push(
+        <NewDisplayTable 
+          columns={this.state.columns} 
+          data={this.state.data} 
+          refreshData={this.refreshData}
+          settings={this.state.settings}
+        />
+        );
         //toolComponent1 = <div style={{display: 'flex', height: 500, marginTop: 30}}><DataGrid rows={this.state.rows} columns={this.state.columns} components={{ Toolbar: GridToolbar }}/></div>;
         //buttonComponent = <S.StyledButton onClick={this.refreshData} ><IoRefreshOutline /></S.StyledButton>;
       }

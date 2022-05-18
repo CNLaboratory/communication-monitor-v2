@@ -15,12 +15,13 @@ export default class NewDisplayTable extends React.Component {
     super(props);
     
     this.state = {
+      settings: props.settings,
+      columnFiltersEnabled: props.settings.tableColumnFiltersEnabled,
+      columnDensity: props.settings.tableDensity,
+      stickyHeaderEnabled: props.settings.tableStickyHeaderEnabled,
+      paginationEnabled: props.settings.tablePaginationEnabled,
+      strippedRows: props.settings.tableStrippedRows,
       userMenuClicked: false,
-      columnFiltersEnabled: false,
-      columnDensity: props.columnDensity ? props.columnDensity : 'compact',
-      stickyHeaderEnabled: true,
-      paginationEnabled: props.paginationEnabled ? props.paginationEnabled : true,
-      strippedRows: true,
       exportMenuClicked: false,
     }
 
@@ -34,11 +35,19 @@ export default class NewDisplayTable extends React.Component {
     this.handlePaginationEnabledClicked = this.handlePaginationEnabledClicked.bind(this);
     this.handleStrippedRowsEnabledClicked = this.handleStrippedRowsEnabledClicked.bind(this);
     this.hanldeOutsideSettingsButtonClicked = this.hanldeOutsideSettingsButtonClicked.bind(this);
+    this.hanldeOutsideExportButtonClicked = this.hanldeOutsideExportButtonClicked.bind(this);
     this.makeCsv = this.makeCsv.bind(this);
     this.getTableDataForExport = this.getTableDataForExport.bind(this);
     this.handleExportMenuClicked = this.handleExportMenuClicked.bind(this);
     this.makeJson = this.makeJson.bind(this);
     
+  }
+
+  componentDidMount() {
+    console.log('this.state.settings:', this.state.settings);
+    console.log('this.state.settings.tableStrippedRows:', this.state.settings.tableStrippedRows);
+    console.log('this.state.strippedRows:', this.state.strippedRows);
+    console.log('props.settings.tableStrippedRows:', this.props.settings.tableStrippedRows);
   }
 
   refreshData() {
@@ -89,6 +98,12 @@ export default class NewDisplayTable extends React.Component {
     const userMenuClicked = false;
     this.setState({
       userMenuClicked: userMenuClicked
+    });
+  }
+  hanldeOutsideExportButtonClicked() {
+    const exportMenuClicked = false;
+    this.setState({
+      exportMenuClicked: exportMenuClicked
     });
   }
   handleExportMenuClicked() {
@@ -162,6 +177,7 @@ export default class NewDisplayTable extends React.Component {
     return (
       <S.DisplayTableWrapper>
         <S.MultipleButtonsWrapper>
+        <OutsideClickHandler onOutsideClick={this.hanldeOutsideExportButtonClicked}>
           <S.ButtonWrapper onClick={this.handleExportMenuClicked}>
             <S.StyledButtonGrey><FiDownload/></S.StyledButtonGrey>
             <S.TableSettingsPanel style={{display: this.state.exportMenuClicked ? 'flex' : 'none'}}>
@@ -173,6 +189,7 @@ export default class NewDisplayTable extends React.Component {
               </S.SettingWrapper>
             </S.TableSettingsPanel>
           </S.ButtonWrapper>
+          </OutsideClickHandler>
           <S.ButtonWrapper onClick={this.refreshData}>
             <S.StyledButtonGrey><IoRefreshOutline /></S.StyledButtonGrey>
           </S.ButtonWrapper>

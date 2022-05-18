@@ -13,7 +13,10 @@ import NewDataDisplay from "./new-data-display";
 import { ENDPOINTS } from "./constants";
 import { ThemeProvider } from "styled-components";
 
+import GeneralSettings from "./settings-general";
+
 import Logo from "./assets/images/comm-monitor-logo-dark.png";
+import LogoLight from "./assets/images/comm-monitor-logo-light.png";
 import Avatar from "./assets/images/white-gray-circle-avatar-png-transparent-png.png";
 import {RiApps2Line, RiFullscreenLine, RiSearchLine, RiNotification3Line, RiSettings2Line, RiUserLine, RiShutDownLine} from "react-icons/ri"
 import {BiChevronDown} from "react-icons/bi";
@@ -36,23 +39,16 @@ import { LoginOne } from "./login";
 import ComplexDataVisualization from "./complex-data";
 import NotificationsBackgroundService from "./notifications-background-service";
 import NewNotificationsDisplay from "./new-notifications-display";
+import BackgroundMain10 from './assets/images/324-23-blue-tech-geom-HUD-gear.jpg'
 
 import { kafkatorest } from "./kafkatorest";
 import { kafkaMessageTest } from "./kafkatorest";
 
 import OutsideClickHandler from 'react-outside-click-handler';
-
-const defaultTheme = {
-  sidebarWidth: '262px',
-  sidebarLinkColor: '#696d8c',
-  sidebarLinkColorActive: '#6837ef',
+import { defaultTheme, lightTheme } from "./theme";
 
 
-  
-}
-const defaultCollapsedTheme = {
-  sidebarWidth: '0px'
-}
+
 
 export class NewDashboard extends React.Component {
   constructor(props) {
@@ -96,6 +92,23 @@ export class NewDashboard extends React.Component {
       availableExperiments: [],
       showAvailableTools: false,
       showLinksMenu: false,
+
+      settings: {
+        theme: 'dark',    //accepts 'dark' or 'light'
+        notificationsFetchInterval: 30000, //for notifications refresh in milliseconds
+        tableAutoRefreshInterval: 10000, //for axios operations in milliseconds 
+        tableAutoRefreshEnabled: false,
+        tableDensity: 'compact', //the default density for tables
+        tableColumnFiltersEnabled: false, //are column filters enabled by default in tables?
+        tableStickyHeaderEnabled: true, //sticky header in tables
+        tablePaginationEnabled: true, //pagination enabled in tables
+        tableStrippedRows: true, //stripped rows in tables
+        connectionTimeOut: 20000, //timeout value for axios operations
+        endpoints: {
+
+        }
+      }
+      
     }
 
     this.userMenuRef = React.createRef();
@@ -133,6 +146,8 @@ export class NewDashboard extends React.Component {
     this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.onSearchBarBlur = this.onSearchBarBlur.bind(this);
     this.onSearchBarFocus = this.onSearchBarFocus.bind(this);
+    
+    this.handleSettingsUpdate = this.handleSettingsUpdate.bind(this);
     
   }
 
@@ -189,7 +204,7 @@ export class NewDashboard extends React.Component {
 
   componentDidMount() {
     
-    
+    console.log('dashboard - this.state.settings:', this.state.settings);
 
     if (!this.state.loggedIn) {
       console.log('not logged in');
@@ -289,6 +304,12 @@ export class NewDashboard extends React.Component {
       menuCollapse: !menuCollapse
     })
   }
+  handleSettingsUpdate(settings) {
+    this.setState({
+      settings: settings
+    })
+  }
+
   changeIsHovered() {
     let isHovered = this.state.isHovered;
     this.setState({
@@ -602,6 +623,7 @@ export class NewDashboard extends React.Component {
 
   return (
     <>
+    <ThemeProvider theme={this.state.settings.theme === 'light' ? lightTheme : defaultTheme}>
     { !this.state.loggedIn && <S.LogInScreenWrapper>
       <LoginOne logIn={this.logIn}/>
       </S.LogInScreenWrapper>}
@@ -611,13 +633,13 @@ export class NewDashboard extends React.Component {
             onChange={(isFullScreen) => this.setState({ isFullScreen })}
           >
       <S.DashboardWrapper>
-    <ThemeProvider theme={this.isCollapsed ? defaultCollapsedTheme : defaultTheme }>
+    
       <S.PageTopbar collapsed={this.state.menuCollapse}>
         <S.NavbarHeader>
           <S.dFlex>
             <S.BrandWrapper>
               <Link to='/'>
-                <S.BrandImage src={Logo} alt='logo' className='logo'></S.BrandImage>
+                <S.BrandImage src={this.state.settings.theme === 'light' ? LogoLight : Logo} alt='logo' className='logo'></S.BrandImage>
               </Link>
             </S.BrandWrapper>
             <S.MenuIconWrap onClick={this.handleMenuCollapse} style={{cursor: 'pointer'}}>
@@ -865,7 +887,7 @@ export class NewDashboard extends React.Component {
 
       <Routes>
         
-        <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor/>}/>
+        <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor settings={this.state.settings}/>}/>
         <Route path="/sensorsdepiction" element={<Tools.SensorsDepiction/>}/>
         <Route path="/abnormaldetection" element={<Tools.AbnormalDetection/>}/>
         <Route path="/drivertampering" element={<Tools.DriverTampering/>}/>
@@ -886,7 +908,7 @@ export class NewDashboard extends React.Component {
         <Route path='/uploadfiletest' element={<Tools.UploadFileTestExperiment />}/>
         <Route path='/datavisualization' element={<Tools.DataVisualizationExperiment/>}/>
         <Route path='/iframetest' element={<Tools.IFrameTestExperiment/>}/>
-        <Route path='/usermanagement' element = {<Tools.UserManagementTool />}/>
+        
         <Route path='/complexdatavisualization' element = {<Tools.ComplexDataVisualizationTool/>} />
         <Route path='/leafletexample' element = {<Tools.LeafleftExampleTool/>} />
         <Route path='/notifications' element = {<Tools.NotificationsDisplayTool/>} />
@@ -912,20 +934,43 @@ export class NewDashboard extends React.Component {
             />}
           />}
         />
-        <Route path='/settings' element = {<Tools.GeneralSettingsTool/>} />
+        {this.state.showAdminBoard && <Route path='/usermanagement' element = {<Tools.UserManagementTool />}/>}
+        {this.state.showAdminBoard && 
+        <Route path='/settings' element = 
+            {<MainContent 
+              key='Settings'
+              title='Settings' 
+              breadcrumpToolsetLink='/settings' 
+              breadcrumpToolsetTitle='Settings'
+              mainComponent= 
+                {<GeneralSettings 
+                  handleSettingsUpdate={this.handleSettingsUpdate}
+                  settings={this.state.settings}
+                />}
+            />} 
+          />}
         <Route path='/' element={<Tools.MainHome/>}/>
         <Route path='/logout' element={<Logout logOut={this.logOut}/>} />
       </Routes>
       
       </S.MainContent>
-      
-    </ThemeProvider>
+      <S.Footer collapsed={this.state.menuCollapse}>
+          <S.ContainerFluid>
+            <S.Row>
+              Communication Monitor - Developed by NTUA
+            </S.Row>
+          </S.ContainerFluid>
+        </S.Footer>
+    
     
     
     </S.DashboardWrapper>
     </Fullscreen>
     
+    
+    
     }
+    </ThemeProvider>
     </>
   )};
 }

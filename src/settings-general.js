@@ -2,7 +2,7 @@ import React from 'react'
 import * as S from './styles'
 import Circle from "./assets/images/circle.svg"
 import CircleDark from "./assets/images/circle-dark.svg"
-import { DropdownHorizontal, Option } from "./components/ntua/dropdown";
+import { DropdownHorizontal, DropdownHorizontalWithButton, Option } from "./components/ntua/dropdown";
 
 export default class GeneralSettings extends React.Component {
 
@@ -10,12 +10,7 @@ export default class GeneralSettings extends React.Component {
     super(props);
 
     this.state = {
-      columnFiltersEnabled: false,
-      columnDensity: props.columnDensity ? props.columnDensity : 'compact',
-      stickyHeaderEnabled: true,
-      paginationEnabled: props.paginationEnabled ? props.paginationEnabled : true,
-      strippedRows: true,
-      autoRefreshInterval: 30000,
+      settings: props.settings
     }
 
     this.handleColumnFiltersClicked = this.handleColumnFiltersClicked.bind(this);
@@ -24,45 +19,87 @@ export default class GeneralSettings extends React.Component {
     this.handlePaginationEnabledClicked = this.handlePaginationEnabledClicked.bind(this);
     this.handleStrippedRowsEnabledClicked = this.handleStrippedRowsEnabledClicked.bind(this);
     this.handleAutoRefreshInputChanged = this.handleAutoRefreshInputChanged.bind(this);
+    this.handleThemeChange = this.handleThemeChange.bind(this);
+    this.settingsChanged = this.settingsChanged.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('this.state.settings:', this.state.settings);
+    console.log('this.props.settings:', this.props.settings);
+  }
+
+  settingsChanged() {
+    this.props.handleSettingsUpdate(this.state.settings);
   }
 
   handleColumnFiltersClicked() {
-    const columnFiltersEnabled = !this.state.columnFiltersEnabled;
+    let settings = this.state.settings;
+    settings.tableColumnFiltersEnabled = !settings.tableColumnFiltersEnabled;
     console.log('columnFiltersEnabled');
     this.setState({
-      columnFiltersEnabled: columnFiltersEnabled
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
   }
   handleColumnDensitySelection(event) {
+    let settings = this.state.settings;
+    settings.tableDensity = event.target.value;
+    console.log('tableDensity changed, new value:', event.target.value);
     this.setState({
-      columnDensity: event.target.value
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
+    
   }
   handleStickyHeaderEnabledClicked() {
-    const stickyHeaderEnabled = !this.state.stickyHeaderEnabled;
-    console.log('stickyHeaderEnabled:', stickyHeaderEnabled);
+    let settings = this.state.settings;
+    settings.tableStickyHeaderEnabled = !settings.tableStickyHeaderEnabled;
+    console.log('tableStickyHeaderEnabled:', settings.tableStickyHeaderEnabled);
     this.setState({
-      stickyHeaderEnabled: stickyHeaderEnabled
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
   }
   handlePaginationEnabledClicked() {
-    const paginationEnabled = !this.state.paginationEnabled;
-    console.log('paginationEnabled:', paginationEnabled);
+    let settings = this.state.settings;
+    settings.tablePaginationEnabled = !settings.tablePaginationEnabled;
+    console.log('tablePaginationEnabled:', settings.tablePaginationEnabled);
     this.setState({
-      paginationEnabled: paginationEnabled
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
   }
   handleStrippedRowsEnabledClicked() {
-    const strippedRows = !this.state.strippedRows;
+    let settings = this.state.settings;
+    settings.tableStrippedRows = !settings.tableStrippedRows;
+    console.log('tableStrippedRows:', settings.tableStrippedRows);
     this.setState({
-      strippedRows: strippedRows
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
   }
   handleAutoRefreshInputChanged(event) {
-    //const autoRefreshInterval = !this.state.autoRefreshInterval;
-    console.log('event.target.value:', event.target.value);
+    let settings = this.state.settings;
+    settings.tableAutoRefreshInterval = event.target.value;
+    console.log('tableAutoRefreshInterval:', settings.tableAutoRefreshInterval);
     this.setState({
-      autoRefreshInterval: event.target.value
+      settings: settings
+    }, () => {
+      this.settingsChanged();
+    })
+  }
+  handleThemeChange(event) {
+    let settings = this.state.settings;
+    settings.theme = event.target.value;
+    this.setState({
+      settings: settings
+    }, () => {
+      this.settingsChanged();
     })
   }
 
@@ -87,19 +124,19 @@ export default class GeneralSettings extends React.Component {
               </S.GeneralSettingWrapper>
               <S.GeneralSettingWrapper onClick={this.handleColumnFiltersClicked}>
                 <S.GeneralSettingsToggleSwitchLabel>Column Filters</S.GeneralSettingsToggleSwitchLabel>
-                <S.GeneralSettingToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.columnFiltersEnabled}/>
+                <S.GeneralSettingToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.settings.tableColumnFiltersEnabled}/>
               </S.GeneralSettingWrapper>
               <S.GeneralSettingWrapper onClick={this.handleStickyHeaderEnabledClicked}>
                 <S.GeneralSettingsToggleSwitchLabel>Sticky Header</S.GeneralSettingsToggleSwitchLabel>
-                <S.GeneralSettingToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.stickyHeaderEnabled}/>
+                <S.GeneralSettingToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.settings.tableStickyHeaderEnabled}/>
               </S.GeneralSettingWrapper>
               <S.GeneralSettingWrapper onClick={this.handlePaginationEnabledClicked}>
                 <S.GeneralSettingsToggleSwitchLabel>Pagination</S.GeneralSettingsToggleSwitchLabel>
-                <S.GeneralSettingToggleSwitchInput  image={Circle} imageDark={CircleDark} checked={this.state.paginationEnabled}/>
+                <S.GeneralSettingToggleSwitchInput  image={Circle} imageDark={CircleDark} checked={this.state.settings.tablePaginationEnabled}/>
               </S.GeneralSettingWrapper>
               <S.GeneralSettingWrapper onClick={this.handleStrippedRowsEnabledClicked}>
                 <S.GeneralSettingsToggleSwitchLabel>Stripped</S.GeneralSettingsToggleSwitchLabel>
-                <S.GeneralSettingToggleSwitchInput  image={Circle} imageDark={CircleDark} checked={this.state.strippedRows}/>
+                <S.GeneralSettingToggleSwitchInput  image={Circle} imageDark={CircleDark} checked={this.state.settings.tableStrippedRows}/>
               </S.GeneralSettingWrapper>
               <S.GeneralSettingWrapper >
                 <S.GeneralSettingsToggleSwitchLabel>Auto Refresh Interval</S.GeneralSettingsToggleSwitchLabel>
@@ -130,10 +167,10 @@ export default class GeneralSettings extends React.Component {
                   key='theme'
                   formLabel='Choose Theme'
                   buttonText='Apply'
-                  onChange={this.handleColumnDensitySelection} >
-                  <Option key='light' value='light'/>
-                  <Option key='dark' value='dark' selected/>
-                  
+                  onChange={this.handleThemeChange}
+                  >
+                  <Option key='light' value='light' selected={this.props.settings.theme === 'light' ? true : false}/>
+                  <Option key='dark' value='dark' selected={this.props.settings.theme === 'dark' ? true : false}/>
                 </DropdownHorizontal>
               </S.GeneralSettingWrapper>
               </S.GeneralSettingsGroup>

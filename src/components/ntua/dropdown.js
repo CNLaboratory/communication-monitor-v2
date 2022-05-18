@@ -31,13 +31,29 @@ export function DropdownHorizontal(props) {
       action={props.action}
       onChange={props.onChange}
     >
+      <S.DropDownStyledLabel>
+        {props.formLabel}
+      </S.DropDownStyledLabel>
+      <S.DropDownStyledSelect>
+        {props.children}
+      </S.DropDownStyledSelect>
+      {/*<StyledButton type="submit" value={props.buttonText} />*/}
+    </S.DropDownHorizontalWrapper>
+  );
+}
+export function DropdownHorizontalWithButton(props) {
+  return (
+    <S.DropDownHorizontalWrapper
+      action={props.action}
+      onChange={props.onChange}
+    >
       <S.DropDownStyledLabel htmlFor="services">
         {props.formLabel}
       </S.DropDownStyledLabel>
       <S.DropDownStyledSelect id="services" name="services">
         {props.children}
       </S.DropDownStyledSelect>
-      {/*<StyledButton type="submit" value={props.buttonText} />*/}
+      {<S.StyledButtonPrimary type="submit">{props.buttonText} </S.StyledButtonPrimary>}
     </S.DropDownHorizontalWrapper>
   );
 }

@@ -65,13 +65,7 @@ export class MainContent extends React.Component {
             
           </S.ContainerFluid>
         </S.PageContent>
-        <S.Footer>
-          <S.ContainerFluid>
-            <S.Row>
-              Communication Monitor - Developed by NTUA
-            </S.Row>
-          </S.ContainerFluid>
-        </S.Footer>
+        
       
     </>
 

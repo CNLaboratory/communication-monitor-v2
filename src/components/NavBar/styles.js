@@ -47,7 +47,11 @@ export const List = styled.ul`
 export const ListHeader = styled.span`
   display: block;
   text-transform: uppercase;
+  font-family: "Inter", -apple-system, "Segoe UI", "Roboto";
   font-size:12px;
+  font-weight: 600;
+  letter-spacing: 0.55px;
+  color: ${props => props.theme.sidebarLinkHeaderColor};
 `;
 export const ListItem = styled.li`
   display: flex;
@@ -63,11 +67,11 @@ export const Item = styled.a`
   display: flex;
   align-items: center;
   width: 100%;
-  color: #696d8c;
-
+  color: ${props => props.theme.sidebarLinkColor};
+  font-weight: 500;
   &.active {
     font-family: "Inter", -apple-system, "Segoe UI", "Roboto";
-    color: #6837ef;
+    color: ${props => props.theme.sidebarLinkColorActive};
     font-weight: 500;
   }
 `;
@@ -96,47 +100,41 @@ export const SubListItem = styled.li`
 `;
 export const SubItem = styled.a`
   display: block;
-  color: #696d8c;
+  color: ${props => props.theme.sidebarLinkColor};
   padding-left: 18px;
-
+  font-weight: 500;
+  letter-spacing: -0.02rem;
   &.active {
     font-family: "Inter", -apple-system, "Segoe UI", "Roboto";
-    color: #060213;
+    color: ${props => props.theme.sidebarLinkColorActive};
     font-weight: 500;
     position: relative;
 
-    :before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background: #ecebf5;
-    }
   }
 `;
 export const SidebarItem = styled.a`
   display: flex;
   align-items: center;
   width: 100%;
-  color: #8590a5;
-
+  color: ${props => props.theme.sidebarLinkColor};
+  font-weight: 500;
+  letter-spacing: -0.02rem;
   &.active {
     font-family: "Inter", -apple-system, "Segoe UI", "Roboto";
-    color: #6837ef;
+    color: ${props => props.theme.sidebarLinkColorActive};
     font-weight: 500;
   }
 `;
 export const SidebarLink = styled(Link)`
   display: flex;
   
-  color: #8590a5;
+  color: ${props => props.theme.sidebarLinkColor};
   position: relative;
   font-size: 14px;
   
   font-family: "Inter",-apple-system, "Segoe UI", "Roboto";
   font-weight: 500;
+  letter-spacing: -0.02rem;
   justify-content: space-between;
   text-decoration: none;
   width: 100%;
@@ -144,22 +142,23 @@ export const SidebarLink = styled(Link)`
   padding: 0.625rem 1.5rem;
   
   &:hover {  
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorHover};
     cursor:pointer;
   }
   &:active {
-    color: #8590a5;
+    color: ${props => props.theme.sidebarLinkColorActive};
   }
 `;
 export const SidebarAnchorLink = styled.a`
   display: flex;
   
-  color: #8590a5;
+  color: ${props => props.theme.sidebarLinkColor};
   position: relative;
   font-size: 14px;
   
   font-family: "Inter",-apple-system, "Segoe UI", "Roboto";
   font-weight: 500;
+  letter-spacing: -0.02rem;
   justify-content: space-between;
   text-decoration: none;
   width: 100%;
@@ -167,11 +166,11 @@ export const SidebarAnchorLink = styled.a`
   padding: 0.625rem 1.5rem;
   
   &:hover {  
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorHover};
     cursor:pointer;
   }
   &:active {
-    color: #8590a5;
+    color: ${props => props.theme.sidebarLinkColorActive};
   }
 `;
 export const SidebarLabel = styled.span`
@@ -183,19 +182,22 @@ export const SidebarLabel = styled.span`
 export const DropdownLink = styled(Link)`
   padding: 0.4rem 1.5rem 0.4rem 2.3rem;
   font-size: 13px;
+  font-family: 'Inter',-apple-system, 'Segoe UI', 'Roboto';
+  font-weight: 500;
   display: flex;
+
   align-items: center;
   text-decoration: none;
-  color: #8590a5;
-  
+  color: ${props => props.theme.sidebarLinkColor};
+  letter-spacing: -0.02rem;
   -webkit-font-smoothing: antialiased;
   
   &:hover {
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorHover};
     cursor: pointer;
   }
   &.active {
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorActive};
   }
 `;
 export const DropdownAnchorLink = styled.a`
@@ -204,16 +206,18 @@ export const DropdownAnchorLink = styled.a`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #8590a5;
-  
+  color: ${props => props.theme.sidebarLinkColor};
+  font-family: 'Inter',-apple-system, 'Segoe UI', 'Roboto';
+  font-weight: 500;
+  letter-spacing: -0.02rem;
   -webkit-font-smoothing: antialiased;
   
   &:hover {
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorHover};
     cursor: pointer;
   }
   &.active {
-    color: #D7E6ED;
+    color: ${props => props.theme.sidebarLinkColorActive};
   }
 `;
 export const SidebarLinkArrow = styled.img`

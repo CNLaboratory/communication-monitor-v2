@@ -41,7 +41,7 @@ const Styles = createGlobalStyle`
       outline: none;
    }
    body {
-      font-family: 'Nunito',-apple-system, 'Segoe UI', 'Roboto';
+      font-family: 'Nunito', sans-serif;;
       border: 0;
       outline: 0;
       overflow-x: hidden;
@@ -66,19 +66,19 @@ const Styles = createGlobalStyle`
    h2{
       font-size: 24px;
       line-height: 38.4px;
-       font-family: 'Inter',-apple-system, 'Segoe UI', 'Roboto';
+       font-family: 'Inter', sans-serif;
        font-weight: 500;
    }
    h4{
       font-size: 20px;
       line-height: 32px;
-       font-family: 'Inter',-apple-system, 'Segoe UI', 'Roboto';
+       font-family: 'Inter', sans-serif;
        font-weight: 600;
    }
    h6{
       font-size: 18px;
       line-height: 26px;
-       font-family: 'Inter',-apple-system, 'Segoe UI', 'Roboto';
+       font-family: 'Inter', sans-serif;
        font-weight: 500;
    }
    h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {

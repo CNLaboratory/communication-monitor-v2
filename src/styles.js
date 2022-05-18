@@ -25,9 +25,8 @@ export const PageTopbar = styled.header`
   right: 0;
   left: 0;
   z-index: 1002;
-  background-color: #252b3b;
+  background-color: ${props => props.theme.topNavBackgroundColor};
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
-  
 
   ${props => props.collapsed && css`
     left: -240px;
@@ -71,7 +70,7 @@ export const MenuIconWrap = styled.div`
   left: 0px;
   position: relative;
   
-  color: #EAECEF;
+  color: ${props => props.theme.topNavIconColor};
   font-size: 28px;
   padding-right: 2rem;
   padding-left: 1rem;
@@ -82,7 +81,7 @@ export const MenuIconWrap = styled.div`
 `;
 export const MenuIconLine = styled.span`
   width: 22px;
-  background: #e9ecef;
+  background: ${props => props.theme.topNavIconColor};
   display: block;
   height: 2px;
   border-radius: 3px;
@@ -95,7 +94,7 @@ export const IconWrap = styled.div`
   position:relative;
   margin-left: 0.25rem!important;
   font-size: 22px;
-  color: #e9ecef;
+  color: ${props => props.theme.topNavIconColor};
   font-weight: 400;
   line-height: 1.5;
   padding: 0.47rem 0.75rem;
@@ -112,8 +111,8 @@ export const SearchFieldFormInput = styled.input`
   height: 38px;
   padding-left: 40px;
   padding-right: 20px;
-  background-color: rgba(241,245,247,.07);
-  color: #fff;
+  background-color: ${props => props.theme.topNavSearchFieldBackgroundColor};
+  color: ${props => props.theme.topNavSearchFieldColor};
   
   box-shadow: none;
   border-radius: 30px;
@@ -127,15 +126,15 @@ export const SearchFieldFormInput = styled.input`
 
   &::placeholder {
     
-    color: #9A9CA4;
+    color: ${props => props.theme.topNavSearchPlaceholderColor};
   }
 `;
 export const SearchFieldInputSearchIcon = styled.span`
   position: absolute;
-  color: #9A9CA4;
+  color: ${props => props.theme.topNavSearchPlaceholderColor};
   z-index: 10;
   font-size: 16px;
-  line-height: 38px;
+  line-height: 2;
   left: 13px;
   top: 2px;
   
@@ -152,7 +151,7 @@ export const UserProfile = styled.button`
   font-weight: 400;
   font-size: .9rem;
 
-  color: #505d69;
+  color: ${props => props.theme.topNavUserProfileColor};
   background-color: transparent;
 
   text-align: center;
@@ -178,7 +177,7 @@ export const UserAvatar = styled.img`
   
   height: 36px;
   width: 36px;
-  background-color: #f1f5f7;
+  background-color: ${props => props.theme.topNavUserProfileColor};
   padding: 3px;
   
   border-radius: 50%;
@@ -189,21 +188,21 @@ export const UserName = styled.span`
   margin-left: 0.25rem;
   line-height: 16px;
   
-  color: #e9ecef;
+  color: ${props => props.theme.topNavIconColor};
 `;
 export const ButtonArrow = styled.span`
   
-  color: #e9ecef;
+  color: ${props => props.theme.topNavIconColor};
 `;
 export const UserDropdown = styled.div`
     display:none;
     min-width: 10rem;
     padding: 0.5rem 0;
     font-size: .9rem;
-    color: #505d69;
+    
     text-align: left;
     list-style: none;
-    background-color: #fff;
+    background-color: ${props => props.theme.topNavDropDownBackgroundColor};
     background-clip: padding-box;
     border: 0 solid rgba(0,0,0,.15);
     border-radius: 0.25rem;
@@ -243,7 +242,7 @@ export const DropdownItem = styled.a`
   clear: both;
   display: block;
   font-weight: 400;
-  color: #212529;
+  color: ${props => props.theme.topNavDropDownTextColor};
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
@@ -256,18 +255,18 @@ export const DropdownItemLink = styled(Link)`
   clear: both;
   display: block;
   font-weight: 400;
-  color: #212529;
+  color: ${props => props.theme.topNavDropDownTextColor};
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;
   border: 0;
 `;
 export const DropdownDivider = styled.div`
-  border-top-color: #eff2f7;
+  border-top-color: ${props => props.theme.topNavDropDownDividerColor};
   height: 0;
   margin: 0.5rem 0;
   overflow: hidden;
-  border-top: 1px solid #eff2f7;
+  border-top: 1px solid ${props => props.theme.topNavDropDownDividerColor};
 `;
 export const DropdownIcon = styled.span`
   display: inline-block;
@@ -283,10 +282,10 @@ export const TableSettingsPanel = styled.div`
   
   
   font-size: .9rem;
-  color: #505d69;
+  color: ${props => props.theme.tableSettingsPanelColor};
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: ${props => props.theme.tableSettingsPanelBackgroundColor};
   background-clip: padding-box;
   border: 0 solid rgba(0,0,0,.15);
   border-radius: 0.25rem;
@@ -337,7 +336,7 @@ export const ToggleSwitchInput = styled.input.attrs({type: 'checkbox'})`
   height: 1em;
   margin-top: 0.25em;
   vertical-align: top;
-  background-color: #fff;
+  background-color: ${props => props.theme.toggleSwitchBackgroundColor};
   background-repeat: no-repeat;
   background-size: contain;
   border: 1px solid rgba(0,0,0,.25);
@@ -347,8 +346,8 @@ export const ToggleSwitchInput = styled.input.attrs({type: 'checkbox'})`
   :checked {
     background-image: url(${props => props.image});
     background-position: 100%;
-    background-color: #5664d2;
-    border-color: #5664d2;
+    background-color: ${props => props.theme.toggleSwitchBackgroundColorChecked};
+    border-color: ${props => props.theme.toggleSwitchBackgroundColorBorderColorChecked};
   }
 `
 export const ToggleSwitchLabel = styled.label`
@@ -361,7 +360,7 @@ export const ToggleSwitchLabel = styled.label`
 export const VerticalMenuWrapper = styled.div`
   width: 240px;
   z-index: 1001;
-  background: #252b3b;
+  background: ${props => props.theme.sidebarBackgroundColor};
   bottom: 0;
   margin-top: 0;
   position: fixed;
@@ -406,10 +405,10 @@ export const ListHeader = styled.li`
   cursor: default;
   font-size: 11px;
   text-transform: uppercase;
-  color: #8590a5;
+  color: ${props => props.theme.sidebarLinkHeaderColor};
   font-weight: 600;
   font-family: "Inter",sans-serif;
-  opacity: .5;
+  opacity: .7;
   
 `;
 
@@ -433,11 +432,16 @@ display: block;
   font-size: 13px;
   position: fixed;
   right: 0;
-  color: #74788d;
+  color: ${props => props.theme.footerColor};
   left: 240px;
   height: 60px;
   box-shadow: 0 2px 4px rgb(0 0 0 / 8%);
-  background-color: #fff;
+  background-color: ${props => props.theme.footerBackgroundColor};
+
+  ${props => props.collapsed && css`
+    left: 0px;
+  `}
+  transition: left .15s ease-in-out;
 `;
 export const ContainerFluid = styled.div`
   width: 100%;
@@ -512,11 +516,11 @@ export const BreadCrumpItem = styled.li`
 `;
 export const BreadCrumpLink = styled(Link)`
   font-size: 13px;
-  color: #505d69;
+  color: ${props => props.theme.breadcrumpLinkColor};
 `;
 export const BreadCrumpIcon = styled.span`
   font-size: 13px;
-  color: #505d69;
+  color: ${props => props.theme.breadcrumpLinkColor};
 `;
 export const Card = styled.div`
   margin-bottom: 24px;
@@ -528,7 +532,7 @@ export const Card = styled.div`
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
-    background-color: #fff;
+    background-color: ${props => props.theme.cardBackgroundColor};
     background-clip: border-box;
     border: 0 solid #f1f5f7;
     border-radius: 0.25rem;
@@ -556,14 +560,14 @@ export const MainContentTab = styled.div`
 `;
 export const MainContentTabLink = styled.div`
   font-size: 18px;
-  color: #696D8C;
+  color: ${props => props.theme.mainContentTabColor};
   font-weight: 500;
   padding-bottom: 10px;
   cursor: pointer;
   
   &.active {
-    color: #252B3B;
-    border-bottom: 2px solid #252B3B;
+    color: ${props => props.theme.mainContentTabColorActive};
+    border-bottom: 2px solid ${props => props.theme.mainComainContentTabColorActivententTabColor};
   }
   
 `;
@@ -575,12 +579,11 @@ export const UserManagementWrapper = styled.div`
 export const StyledOutlineButton = styled.button`
   margin-bottom: 12px;
   margin-left: 8px;
-  color: #5664d2;
-  border-color: #5664d2;
+  color: ${props => props.theme.outlineButtonColor};
+  border-color: ${props => props.theme.outlineButtonBorderColor};
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
@@ -596,9 +599,9 @@ export const StyledOutlineButton = styled.button`
 `;
 
 export const StyledButtonPrimary = styled.button`
-  color: #fff;
-  background-color: #5664d2;
-  border-color: #5664d2;
+  color: ${props => props.theme.primaryButtonColor};
+  background-color: ${props => props.theme.primaryButtonBackgroundColor};
+  border-color: ${props => props.theme.primaryButtonBorderColor};
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -618,10 +621,10 @@ export const StyledButtonPrimary = styled.button`
 `;
 export const StyledButtonLight = styled.button`
   
-  color: #000;
-  background-color: #eff2f7;
-  border-color: #eff2f7;
-  border: 1px solid #e8ecf4;
+  color: ${props => props.theme.lightButtonColor};
+  background-color: ${props => props.theme.lightButtonBackgroundColor};
+  border-color: ${props => props.theme.lightButtonBorderColor};
+  border: 1px solid ${props => props.theme.lightButtonBorderColor};
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -640,24 +643,20 @@ export const StyledButtonLight = styled.button`
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 `;
 export const StyledButtonGrey = styled.button`
-  
-  color: #fff;
-  background-color: #74788d;
-  border-color: #74788d;
-  border: 1px solid #74788d;
+  color: ${props => props.theme.greyButtonColor};
+  background-color: ${props => props.theme.greyButtonBackgroundColor};
+  border-color: ${props => props.theme.greyButtonBorderColor};
+  border: 1px solid ${props => props.theme.greyButtonBorderColor};
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
-  
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  
   padding: 0.3rem 0.4rem;
-  padding-bottom: 0;
   font-size: 1.2rem;
   border-radius: 0.25rem;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -695,19 +694,19 @@ export const GlobalFilterInput = styled.input`
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
-  background-color: #fff;
+  color: ${props => props.theme.globalFilterInputColor};
+  background-color: ${props => props.theme.globalFilterBackgroundColor};
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid ${props => props.theme.globalFilterBorderColor};
   border-radius: 30px;
 
   padding-left: 40px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   
   &:focus {
-    color: #505d69;
-    background-color: #fff;
-    border-color: #b1bbc4;
+    color: ${props => props.theme.globalFilterInputColorFocus};
+    background-color: ${props => props.theme.globalFilterBackgroundColorFocus};
+    border-color: ${props => props.theme.globalFilterBorderColorFocus};
     outline: 0;
     box-shadow: none;
   }
@@ -717,10 +716,10 @@ export const ResponsiveTableWrapper = styled.div `
   overflow-x: auto;
 `;
 export const TableResponsive = styled.table `
-  border: 1px solid #eff2f7;
+  border: 1px solid ${props => props.theme.tableResponsiveBorderColor};
   width: 100%;
-  color: #505d69;
-  border-color: #eff2f7;
+  color: ${props => props.theme.tableResponsiveColor};
+  border-color: ${props => props.theme.tableResponsiveBorderColor};
   font-size: 14.4px;
   text-align: left;
   border-collapse: collapse;
@@ -736,19 +735,19 @@ export const TableResponsiveTRow = styled.tr`
 export const TableResponsiveTRowStripped = styled.tr`
   border-width: 1px 0;
   &:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: ${props => props.theme.tableResponsiveStrippedColor};
   }
 `;
 export const TableResponsiveTHeaderColumn = styled.th`
   
   font-weight: 600;
   padding: 0.75rem;
-  border: 1px solid #eff2f7;
+  border: 1px solid ${props => props.theme.tableResponsiveBorderColor};
   
   
 `
 export const TableResponsiveTColumn = styled.th`
-  border: 1px solid #eff2f7;
+  border: 1px solid ${props => props.theme.tableResponsiveBorderColor};
   font-weight: 400;
   padding: 0.75rem;
   white-space: nowrap;
@@ -769,19 +768,12 @@ export const ReactTableWrapper = styled.div `
   `}
 `;
 export const ReactTable = styled.table `
-  --bs-table-bg: transparent;
-    --bs-table-accent-bg: transparent;
-    --bs-table-striped-color: #505d69;
-    --bs-table-striped-bg: #f8f9fa;
-    --bs-table-active-color: #505d69;
-    --bs-table-active-bg: #f8f9fa;
-    --bs-table-hover-color: #505d69;
-    --bs-table-hover-bg: #f8f9fa;
+  
     width: 100%;
     margin-bottom: 1rem;
-    color: #505d69;
+    color: ${props => props.theme.tableColor};
     vertical-align: top;
-    border-color: #eff2f7;
+    border-color: ${props => props.theme.tableBorderColor};
     border-collapse: collapse;
 `;
 export const ReactTableTHead = styled.thead `
@@ -795,7 +787,7 @@ export const ReactTableTHeaderRow = styled.tr`
     position: sticky;
     top: 0;
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-    background-color: #fff;
+    background-color: ${props => props.theme.tableStickyHeaderBackgroundColor};
   `}
 `;
 export const ReactTableTHeaderRowSticky = styled.tr`
@@ -804,7 +796,7 @@ export const ReactTableTHeaderRowSticky = styled.tr`
     position: sticky;
     top: 0;
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-    background-color: #fff;
+    background-color: ${props => props.theme.tableStickyHeaderBackgroundColor};
   `}
 `
 export const ReactTableTHeaderColumn = styled.th`
@@ -823,10 +815,10 @@ export const ReactTableTHeaderColumn = styled.th`
   border: 0 solid;
   border-color: inherit;
   text-align: left;
-  border-bottom-color: #eff2f7;
-  background-color: var(--bs-table-bg);
+  border-bottom-color: ${props => props.theme.tableBorderColor};
+  background-color: ${props => props.theme.tableHeaderBackgroundColor};
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg); 
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor}; 
 `;
 export const ReactTableTHeaderColumnCompact = styled.th`
   white-space: nowrap;
@@ -835,11 +827,11 @@ export const ReactTableTHeaderColumnCompact = styled.th`
   border: 0 solid;
   border-color: inherit;
   text-align: left;
-  border-bottom-color: #eff2f7;
+  border-bottom-color: ${props => props.theme.tableBorderColor};
   
-  background-color: var(--bs-table-bg);
+  background-color: ${props => props.theme.tableHeaderBackgroundColor};
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg); 
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor}; 
 `;
 export const ReactTableTHeaderColumnComfortable = styled.th`
   white-space: nowrap;
@@ -848,25 +840,25 @@ export const ReactTableTHeaderColumnComfortable = styled.th`
   border: 0 solid;
   border-color: inherit;
   text-align: left;
-  border-bottom-color: #eff2f7;
+  border-bottom-color: ${props => props.theme.tableBorderColor};
   
-  background-color: var(--bs-table-bg);
+  background-color: ${props => props.theme.tableHeaderBackgroundColor};
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg); 
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor};
 `;
 export const ReactTableTRow = styled.tr`
   border-width: 1px 0;
-
+  background-color: ${props => props.theme.tableBackgroundColor};
   ${ props => props.stripped 
   && css`
     &:nth-child(even) {
-      background-color: #f2f2f2;
+      background-color: ${props => props.theme.tableStrippedColor};
     }`
   }
   ${ props => props.unread
   && css`
-    background-color: #8590A5;
-    color: white;
+    background-color: ${props => props.theme.tableUnreadBackgroundColor};
+    color: ${props => props.theme.tableUnreadColor};
   `}
 `;
 export const ReactTableTColumn = styled.th`
@@ -886,13 +878,11 @@ export const ReactTableTColumn = styled.th`
   `}
   white-space: nowrap;
   text-align: left;
-  border-bottom-color: #eff2f7;
-
-  
+  border-bottom-color: ${props => props.theme.tableBorderColor};
   overflow-x: auto;
-  background-color: var(--bs-table-bg);
+  
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor};
 `
 export const ReactTableTColumnCompact = styled.th`
   border: 0 solid;
@@ -902,11 +892,11 @@ export const ReactTableTColumnCompact = styled.th`
   padding: 0.15rem 2rem 0.15rem 0.2rem;
   white-space: nowrap;
   text-align: left;
-  border-bottom-color: #eff2f7;
+  border-bottom-color: ${props => props.theme.tableBorderColor};
   overflow-x: auto;
-  background-color: var(--bs-table-bg);
+  
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor};
 `
 export const ReactTableTColumnComfortable = styled.th`
   border: 0 solid;
@@ -916,11 +906,11 @@ export const ReactTableTColumnComfortable = styled.th`
   padding: 1.75rem 2rem 1.75rem 0.2rem;
   white-space: nowrap;
   text-align: left;
-  border-bottom-color: #eff2f7;
+  border-bottom-color: ${props => props.theme.tableBorderColor};
   overflow-x: auto;
-  background-color: var(--bs-table-bg);
+  
   border-bottom-width: 1px;
-  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+  box-shadow: inset 0 0 0 9999px ${props => props.theme.tableBoxShadowInsetColor};
 `
 export const ReactTableTBody = styled.tbody`
   
@@ -937,19 +927,19 @@ export const ColumnFilterInput = styled.input`
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
-  background-color: #fff;
+  color: ${props => props.theme.tableColumnFilterInputColor};
+  background-color: ${props => props.theme.tableColumnFilterInputBackgroundColor};
   background-clip: padding-box;
-  border: 1px solid #D5DBE2;
+  border: 1px solid ${props => props.theme.tableColumnFilterInputBorderColor};
   
 
   padding-left: 10px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   
   &:focus {
-    color: #505d69;
-    background-color: #fff;
-    border-color: #b1bbc4;
+    color: ${props => props.theme.tableColumnFilterInputColorFocus};
+    background-color: ${props => props.theme.tableColumnFilterInputBackgroundColorFocus};
+    border-color: ${props => props.theme.tableColumnFilterInputBorderColorFocus};
     outline: 0;
     box-shadow: none;
   }
@@ -977,19 +967,19 @@ export const PaginationGoToPageInput = styled.input`
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
-  background-color: #fff;
+  color: ${props => props.theme.paginationGoToPageColor};
+  background-color: ${props => props.theme.paginationGoToPageBackgroundColor};
   background-clip: padding-box;
-  border: 1px solid #D5DBE2;
+  border: 1px solid ${props => props.theme.paginationGoToPageBorderColor};
   
 
   padding-left: 10px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   
   &:focus {
-    color: #505d69;
-    background-color: #fff;
-    border-color: #b1bbc4;
+    color: ${props => props.theme.paginationGoToPageColorFocus};
+    background-color: ${props => props.theme.paginationGoToPageBackgroundColorFocus};
+    border-color: ${props => props.theme.paginationGoToPageBorderColorFocus};
     outline: 0;
     box-shadow: none;
   }
@@ -1060,7 +1050,7 @@ export const LogInOneLoginColumnWrapper = styled.div`
   padding: 1.5rem;
   align-items: center;
   min-height: 100vh;
-  background-color: white;
+  background-color: ${props => props.theme.loginFormBackgroundColor};
   justify-content: center;
 
   @media (min-width: 992px) {
@@ -1072,7 +1062,7 @@ export const LogInOneLoginColumnWrapper = styled.div`
   }
 `
 export const LoginOneBannerWrapper = styled.div`
-  background-color: white;
+  background-color: ${props => props.theme.loginImageBackgroundColor};
   background-image: url(${props => props.backgroundImage});
   background-position: center;
   background-size: cover;
@@ -1102,7 +1092,7 @@ export const LoginOneHeaderTitle = styled.h4`
   margin-top: 1.5rem;
 `
 export const LoginOneHeaderSubTitle = styled.p`
-  color: #74788d;
+  color: ${props => props.theme.loginHeaderSubTitleColor};
   margin-top: 0;
   margin-bottom: 1rem;
 `
@@ -1126,7 +1116,7 @@ export const LoginOneFormFieldIconWrap = styled.div`
   transform: translateY(-50%);
   left: 19px;
   font-size: 24px;
-  color: #5664d2;
+  color: ${props => props.theme.loginIconColor};
 `
 export const LoginOneFormFieldLabel = styled.label`
   position: absolute;
@@ -1146,10 +1136,10 @@ export const LoginOneFormFieldInput = styled.input`
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
-  background-color: #fff;
+  color: ${props => props.theme.loginFormInputColor};
+  background-color: ${props => props.theme.loginFormInputBackgroundColor};
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid ${props => props.theme.loginFormInputBorderColor};
   -webkit-appearance: none;
   appearance: none;
   border-radius: .25rem;
@@ -1161,9 +1151,9 @@ export const LoginOneFormSubmitButtonWrapper = styled.div`
 `
 export const LoginOneFormSubmitButton = styled.button`
   min-width: 110px;
-  color: #fff;
-  background-color: #5664d2;
-  border-color: #5664d2;
+  color: ${props => props.theme.loginButtonColor};
+  background-color: ${props => props.theme.loginButtonBackgroundColor};
+  border-color: ${props => props.theme.loginButtonBorderColor};
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -1185,7 +1175,7 @@ export const LoginOneFooterWrapper = styled.div`
 
 `
 export const PrimaryLink = styled.a`
-  color: #5664d2;
+  color: ${props => props.theme.primaryLinkColor};
 `
 export const FlexContainer = styled.div`
   display: flex;
@@ -1223,15 +1213,15 @@ export const MainComponentLinksWrapper = styled.div`
   justify-content: space-evenly;
 `
 export const MainComponentLink = styled.a`
-  color: #5664d2;
+  color: ${props => props.theme.primaryLinkColor};
 `
 export const RoundCheckBoxInput = styled.input`
   width: 1.3em;
   height: 1.3em;
-  background-color: white;
+  background-color: ${props => props.theme.checkBoxBackgroundColor};
   border-radius: 50%;
   vertical-align: middle;
-  border: 1px solid #ddd;
+  border: 1px solid ${props => props.theme.checkBoxBorderColor};
   appearance: none;
   -webkit-appearance: none;
   outline: none;
@@ -1239,11 +1229,11 @@ export const RoundCheckBoxInput = styled.input`
 
   &:checked {
     padding: 2px;
-    background-color: #8590A5;
+    background-color: ${props => props.theme.checkBoxBackgroundColorChecked};
   }
 `
 export const ConcentricCircle = styled.div`
-  background-color: white;
+  background-color: ${props => props.theme.concentricCircleBackgroundColor};
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -1252,7 +1242,7 @@ export const ConcentricCircle = styled.div`
   cursor: pointer;
   
   ${props => props.isChecked && css`
-    background-color: grey;
+    background-color: ${props => props.theme.concentricCircleBackgroundColorChecked};
   `}
 `
 export const NotificationBellRedNotice = styled.span`
@@ -1260,7 +1250,7 @@ export const NotificationBellRedNotice = styled.span`
   display: inline-block;
   height: 6px;
   width: 6px;
-  background-color: #ff3d60;
+  background-color: ${props => props.theme.notificationBellRedPinBackgroundColor};
   border-radius: 50%;
   top: -15px;
   right: 4px;
@@ -1270,14 +1260,14 @@ export const NotificationBellRedNotice = styled.span`
 export const NotificationsDropDownWrapper = styled.div `
   display:block;
   font-size: .9rem;
-  color: #505d69;
+  color: ${props => props.theme.topNavDropDownColor};
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: ${props => props.theme.topNavDropDownBackgroundColor};
   background-clip: padding-box;
-  border: 0 solid rgba(0,0,0,.15);
+  border: 0 solid ${props => props.theme.topNavDropDownBorderColor};
   border-radius: 0.25rem;
-  box-shadow: 0 5px 12px rgb(0 0 0 / 10%);
+  box-shadow: 0 5px 12px ${props => props.theme.topNavDropDownBoxShadow};
   -webkit-animation-name: DropDownSlide;
   animation-name: DropDownSlide;
   -webkit-animation-duration: .3s;
@@ -1331,8 +1321,8 @@ export const NotificationDropDownSingleIconWrapper = styled.div`
   padding-top: 0.3rem;
   border-radius: 50%;
   margin-right: 1rem!important;
-  background-color: #8590A5;
-  color: white;
+  background-color: ${props => props.theme.topNavDropDownIconBackgroundColor};
+  color: ${props => props.theme.topNavDropDownIconColor};
 `
 export const NotificationDropDownSingleContentWrapper = styled.div`
   flex: 1 1;
@@ -1340,14 +1330,14 @@ export const NotificationDropDownSingleContentWrapper = styled.div`
 export const NotificationDropDownSingleContentHeader = styled.div`
   margin-bottom: 0.25rem;
   margin-top: 0;
-  color: #343a40;
+  color: ${props => props.theme.topNavDropDownHeaderColor};
   font-family: "Inter",sans-serif;
   font-weight: 500;
   line-height: 1.2;
 `
 export const NotificationDropDownSingleContentMain = styled.div`
   font-size: 12px;
-  color: #74788d;
+  color: ${props => props.theme.topNavDropDownTextColor};
 `
 export const NotificationDropDownSingleContentMainMessage = styled.p`
   margin-bottom: 0.25rem;
@@ -1369,7 +1359,7 @@ export const NotificationsDropDownFooterWrapper = styled.div`
   border-top: 1px solid #eff2f7;
 `
 export const NotificationsDropDownFooterLink = styled(Link)`
-  color: #5664d2;
+  color: ${props => props.theme.primaryLinkColor};
   font-size: 14px;
   font-weight: bold;
   text-align: center;
@@ -1381,14 +1371,14 @@ export const NotificationsDropDownFooterLinkIconWrapper = styled.div`
 export const SearchBarDropDownWrapper = styled.div `
   display:block;
   font-size: .9rem;
-  color: #505d69;
+  color: ${props => props.theme.topNavDropDownColor};
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: ${props => props.theme.topNavDropDownBackgroundColor};
   background-clip: padding-box;
-  border: 0 solid rgba(0,0,0,.15);
+  border: 0 solid ${props => props.theme.topNavDropDownBorderColor};
   border-radius: 0.25rem;
-  box-shadow: 0 5px 12px rgb(0 0 0 / 10%);
+  box-shadow: 0 5px 12px ${props => props.theme.topNavDropDownBoxShadow};
   -webkit-animation-name: DropDownSlide;
   animation-name: DropDownSlide;
   -webkit-animation-duration: .3s;
@@ -1431,7 +1421,7 @@ export const SearchBarDropDownHeader = styled.h6`
 export const SearchBarSinlgeContentHeader = styled.div`
   margin-bottom: 0.25rem;
   margin-top: 0;
-  color: #343a40;
+  color: ${props => props.theme.topNavDropDownHeaderColor};
   font-family: "Inter",sans-serif;
   font-weight: 400;
   line-height: 1;
@@ -1472,12 +1462,12 @@ export const LinksMenuDropDownWrapper = styled.div`
   min-width: 10rem;
   padding: 0.5rem 0;
   font-size: .9rem;
-  color: #505d69;
+  color: ${props => props.theme.topNavDropDownColor};
   text-align: left;
   list-style: none;
-  background-color: #fff;
+  background-color: ${props => props.theme.topNavDropDownBackgroundColor};
   background-clip: padding-box;
-  border: 0 solid rgba(0,0,0,.15);
+  border: 0 solid ${props => props.theme.topNavDropDownBorderColor};
   border-radius: 0.25rem;
 `
 export const LinksMenuContentWrapper = styled.div`
@@ -1516,7 +1506,7 @@ export const LinksMenuIcon = styled.div`
   padding: 15px 0 9px;
   display: block;
   border: 1px solid transparent;
-  color: #74788d;
+  color: ${props => props.theme.topNavDropDownTextColor};
 `
 export const LinksMenuIconDescription = styled.p`
   display: block;
@@ -1541,30 +1531,30 @@ export const DropDownStyledSelect = styled.select`
   display: block;
   
   padding: .47rem 1.75rem .47rem .75rem;
+  margin-right: 1rem;
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.2;
-  color: #505d69;
+  color: ${props => props.theme.dropDownColor};
   
-  border: 1px solid #ced4da;
+  border: 1px solid ${props => props.theme.dropDownBorderColor};
   border-radius: .25rem;
   
-  margin: 0;
+  
   font-family: 'Inter';
 
 `;
 
 export const DropDownStyledOption = styled.option`
-  color: ${(props) => (props.selected ? "lightgrey" : "black")};
+  color: ${(props) => (props.selected ? props.theme.dropDownOptionColorSelected : props.theme.dropDownOptionColor)};
   display: block;
   width: 100%;
   padding: .47rem 1.75rem .47rem .75rem;
   font-size: .9rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #505d69;
   
-  border: 1px solid #ced4da;
+  border: 1px solid ${props => props.theme.dropDownBorderColor};
   border-radius: .25rem;
   
   margin: 0;
@@ -1580,7 +1570,6 @@ export const GeneralSettingWrapper = styled.div`
   position: relative;
   text-align: left;
   padding: 1rem;
-  border-bottom: solid 1px #eff2f7;
   display: block;
   min-height: 1.35rem;  
   cursor: pointer;
@@ -1596,18 +1585,18 @@ export const GeneralSettingToggleSwitchInput = styled.input.attrs({type: 'checkb
   height: 1em;
   margin-top: 0.25em;
   vertical-align: top;
-  background-color: #fff;
+  background-color: ${props => props.theme.toggleSwitchBackgroundColor};
   background-repeat: no-repeat;
   background-size: contain;
-  border: 1px solid rgba(0,0,0,.25);
+  border: 1px solid ${props => props.theme.toggleSwitchBorderColor};
   -webkit-appearance: none;
   appearance: none;
 
   :checked {
     background-image: url(${props => props.image});
     background-position: 100%;
-    background-color: #5664d2;
-    border-color: #5664d2;
+    background-color: ${props => props.theme.toggleSwitchBackgroundColorChecked};
+    border-color: ${props => props.theme.toggleSwitchBackgroundColorBorderColorChecked};
   }
 `
 export const GeneralSettingInput = styled.input`
