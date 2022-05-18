@@ -49,7 +49,7 @@ export function TransactionsMonitor (settingsObject) {
 
 };
 
-export function SensorsDepiction () { 
+export function SensorsDepiction (settingsObject) { 
   return (
   <MainContent key='SensorsDepiction'
     title='Sensors Depiction' 
@@ -57,11 +57,14 @@ export function SensorsDepiction () {
     breadcrumpToolsetTitle='Visualization Toolset'
     breadcrumpToolLink='/sensorsdepiction'
     breadcrumpToolTitle='Sensors Depiction'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.sensorsdepiction.url} headerText={ENDPOINTS.sensorsdepiction.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.sensorsdepiction.url} 
+      headerText={ENDPOINTS.sensorsdepiction.pageTitle}
+      settings={settingsObject.settings}/>}
   />);
 };
 
-export function AbnormalDetection () { 
+export function AbnormalDetection (settingsObject) { 
 return (
 
   <MainContent key='AbnormalDetection'
@@ -70,12 +73,16 @@ return (
     breadcrumpToolsetTitle='Fusion Toolset'
     breadcrumpToolLink='/abnormaldetection'
     breadcrumpToolTitle='Abnormal Detection'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.abnormaldetection.url} headerText={ENDPOINTS.abnormaldetection.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.abnormaldetection.url} 
+      headerText={ENDPOINTS.abnormaldetection.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />
 );
 }
 
-export function DriverTampering () {
+export function DriverTampering (settingsObject) {
   return (
   <MainContent key='DriverTampering'
     title='Driver Tampering' 
@@ -83,11 +90,15 @@ export function DriverTampering () {
     breadcrumpToolsetTitle='Fusion Toolset'
     breadcrumpToolLink='/drivertampering'
     breadcrumpToolTitle='Driver Tampering'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.drivertampering.url} headerText={ENDPOINTS.drivertampering.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.drivertampering.url} 
+      headerText={ENDPOINTS.drivertampering.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />);
 };
 
-export function DriverTamperingDetails () {
+export function DriverTamperingDetails (settingsObject) {
   return(
   <MainContent key='DriverTamperingDetails'
     title='Driver ID Tampering Details' 
@@ -95,11 +106,15 @@ export function DriverTamperingDetails () {
     breadcrumpToolsetTitle='Fusion Toolset'
     breadcrumpToolLink='/drivertamperingdetails'
     breadcrumpToolTitle='Driver Tampering Details'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.drivertamperingdetails.url} headerText={ENDPOINTS.drivertamperingdetails.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.drivertamperingdetails.url} 
+      headerText={ENDPOINTS.drivertamperingdetails.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />)
 };
 
-export function Reasoning1 () { 
+export function Reasoning1 (settingsObject) { 
   return (
   <MainContent key='Reasoning1'
     title='Suspicious Transactions' 
@@ -107,10 +122,14 @@ export function Reasoning1 () {
     breadcrumpToolsetTitle='Advanced Reasoner Toolset'
     breadcrumpToolLink='/reasoning1'
     breadcrumpToolTitle='Suspicious Transactions'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.reasoning1.url} headerText={ENDPOINTS.reasoning1.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.reasoning1.url} 
+      headerText={ENDPOINTS.reasoning1.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />);};
 
-export function Reasoning2 () {
+export function Reasoning2 (settingsObject) {
   return (
   <MainContent key='Reasoning2'
     title='Suspicious Transacations in Combinations with Unknown Sources' 
@@ -118,10 +137,14 @@ export function Reasoning2 () {
     breadcrumpToolsetTitle='Advanced Reasoner Toolset'
     breadcrumpToolLink='/reasoning2'
     breadcrumpToolTitle='Suspicious Combinations'
-    mainComponent= {<NewDataDisplay API_URL={ENDPOINTS.reasoning2.url} headerText={ENDPOINTS.reasoning2.pageTitle}/>}
+    mainComponent= {<NewDataDisplay 
+      API_URL={ENDPOINTS.reasoning2.url} 
+      headerText={ENDPOINTS.reasoning2.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />);};
 
-export function Reasoning3 () {
+export function Reasoning3 (settingsObject) {
   return (
 
   <MainContent key='Reasoning3'
@@ -133,11 +156,13 @@ export function Reasoning3 () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning3.url} 
-        headerText={ENDPOINTS.reasoning3.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning3.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function Reasoning4 () {
+export function Reasoning4 (settingsObject) {
   return (
 
   <MainContent key='Reasoning4'
@@ -149,10 +174,12 @@ export function Reasoning4 () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning4.url} 
-        headerText={ENDPOINTS.reasoning4.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning4.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
-export function Reasoning4b () {
+export function Reasoning4b (settingsObject) {
   return (
 
   <MainContent key='Reasoning4b'
@@ -164,12 +191,14 @@ export function Reasoning4b () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning4b.url} 
-        headerText={ENDPOINTS.reasoning4b.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning4b.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
 
-export function Reasoning5 () {
+export function Reasoning5 (settingsObject) {
   return (
 
   <MainContent key='Reasoning5'
@@ -181,11 +210,13 @@ export function Reasoning5 () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning5.url} 
-        headerText={ENDPOINTS.reasoning5.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning5.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function Reasoning5b () {
+export function Reasoning5b (settingsObject) {
   return (
 
   <MainContent key='Reasoning5b'
@@ -197,11 +228,13 @@ export function Reasoning5b () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning5b.url} 
-        headerText={ENDPOINTS.reasoning5b.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning5b.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function Reasoning6 () {
+export function Reasoning6 (settingsObject) {
   return (
 
   <MainContent key='Reasoning6'
@@ -213,11 +246,13 @@ export function Reasoning6 () {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning6.url} 
-        headerText={ENDPOINTS.reasoning6.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning6.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function Reasoning7() {
+export function Reasoning7(settingsObject) {
   return (
 
   <MainContent key='Reasoning7'
@@ -229,11 +264,13 @@ export function Reasoning7() {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning7.url} 
-        headerText={ENDPOINTS.reasoning7.pageTitle}/>}
+        headerText={ENDPOINTS.reasoning7.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function ThreatAndIncidentToolset() {
+export function ThreatAndIncidentToolset(settingsObject) {
   return (
 
   <MainContent key='ThreatAndIncidentToolset'
@@ -243,11 +280,13 @@ export function ThreatAndIncidentToolset() {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.threatandincident.url} 
-        headerText={ENDPOINTS.threatandincident.pageTitle}/>}
+        headerText={ENDPOINTS.threatandincident.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function AlertLoggerToolset() {
+export function AlertLoggerToolset(settingsObject) {
   return (
 
   <MainContent key='AlertLoggerToolset'
@@ -257,11 +296,13 @@ export function AlertLoggerToolset() {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.alertlogger.url} 
-        headerText={ENDPOINTS.alertlogger.pageTitle}/>}
+        headerText={ENDPOINTS.alertlogger.pageTitle}
+        settings={settingsObject.settings}
+        />}
   />
 )};
 
-export function DynamicApiExperiment() {
+export function DynamicApiExperiment(settingsObject) {
   return (
 
   <MainContent key='DynamicApiExperiment'
@@ -269,11 +310,11 @@ export function DynamicApiExperiment() {
     breadcrumpToolsetLink='/dynamicapi' 
     breadcrumpToolsetTitle='Dynamic API'
     mainComponent= 
-    {<NewDynamicAPI />}
+    {<NewDynamicAPI settings={settingsObject.settings}/>}
   />
 )};
 
-export function OrderTrackExperiment() {
+export function OrderTrackExperiment(settingsObject) {
   return (
 
   <MainContent key='OrderTrackExperiment'
@@ -281,11 +322,11 @@ export function OrderTrackExperiment() {
     breadcrumpToolsetLink='/ordertrack' 
     breadcrumpToolsetTitle='Order Track'
     mainComponent= 
-    {<OrderTrack />}
+    {<OrderTrack settings={settingsObject.settings}/>}
   />
 )};
 
-export function UploadFileTestExperiment() {
+export function UploadFileTestExperiment(settingsObject) {
   return (
 
   <MainContent key='UploadFileTestExperiment'
@@ -293,12 +334,12 @@ export function UploadFileTestExperiment() {
     breadcrumpToolsetLink='/dynamicapi' 
     breadcrumpToolsetTitle='Dynamic API'
     mainComponent= 
-    {<UploadFile />}
+    {<UploadFile settings={settingsObject.settings}/>}
   />
 )};
 
 
-export function DataVisualizationExperiment () {
+export function DataVisualizationExperiment (settingsObject) {
   return (
 
   <MainContent key='DataVisualizationExperiment'
@@ -306,12 +347,12 @@ export function DataVisualizationExperiment () {
     breadcrumpToolsetLink='/datavisualization' 
     breadcrumpToolsetTitle='Data Visualization'
     mainComponent= 
-    {<DataVisualization />}
+    {<DataVisualization settings={settingsObject.settings}/>}
   />
 )};
 
 
-export function IFrameTestExperiment () {
+export function IFrameTestExperiment (settingsObject) {
   return (
 
   <MainContent key='IFrameTestExperiment'
@@ -319,11 +360,11 @@ export function IFrameTestExperiment () {
     breadcrumpToolsetLink='/iframetest' 
     breadcrumpToolsetTitle='iFrame Test'
     mainComponent= 
-    {<IFrameTest />}
+    {<IFrameTest settings={settingsObject.settings}/>}
   />
 )};
 
-export function UserManagementTool () {
+export function UserManagementTool (settingsObject) {
   return (
 
   <MainContent key='UserManagementTool'
@@ -331,11 +372,11 @@ export function UserManagementTool () {
     breadcrumpToolsetLink='/usermanagement' 
     breadcrumpToolsetTitle='User Management'
     mainComponent= 
-    {<UserManagement />}
+    {<UserManagement settings={settingsObject.settings}/>}
   />
 )};
 
-export function ComplexDataVisualizationTool () {
+export function ComplexDataVisualizationTool (settingsObject) {
   return (
 
   <MainContent key='ComplexDataVisualizationTool'
@@ -343,11 +384,11 @@ export function ComplexDataVisualizationTool () {
     breadcrumpToolsetLink='/complexdatavisualization' 
     breadcrumpToolsetTitle='Complex Data Visualization'
     mainComponent= 
-    {<ComplexDataVisualization />}
+    {<ComplexDataVisualization settings={settingsObject.settings}/>}
   />
 )};
 
-export function LeafleftExampleTool () {
+export function LeafleftExampleTool (settingsObject) {
   return (
 
   <MainContent key='LeafleftExampleTool'
@@ -355,10 +396,10 @@ export function LeafleftExampleTool () {
     breadcrumpToolsetLink='/leafletexample' 
     breadcrumpToolsetTitle='Leaflet Example Tool'
     mainComponent= 
-    {<LeafletExample />}
+    {<LeafletExample settings={settingsObject.settings}/>}
   />
 )};
-export function NotificationsDisplayTool () {
+export function NotificationsDisplayTool (settingsObject) {
   return (
 
   <MainContent key='NotificationsDisplayTool'
@@ -369,11 +410,13 @@ export function NotificationsDisplayTool () {
     {<NotificationsDisplay 
       API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
       autoRefreshEnabled={false} 
-      refreshInterval={10000}/>}
+      refreshInterval={10000}
+      settings={settingsObject.settings}
+      />}
   />
 )};
 
-export function NewNotificationsDisplayTool (autoRefreshEnabled) {
+export function NewNotificationsDisplayTool (autoRefreshEnabled, settingsObject) {
   return (
 
   <MainContent key='NewNotificationsDisplayTool'
@@ -384,11 +427,12 @@ export function NewNotificationsDisplayTool (autoRefreshEnabled) {
     {<NewNotificationsDisplay 
       API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
       autoRefreshEnabled={autoRefreshEnabled} 
+      settings={settingsObject.settings}
     />}
   />
 )};
 
-export function TotalOrdersTool () {
+export function TotalOrdersTool (settingsObject) {
   return (
 
   <MainContent key='TotalOrdersTool'
@@ -398,11 +442,15 @@ export function TotalOrdersTool () {
     breadcrumpToolLink='/totalorders'
     breadcrumpToolTitle='Total Orders Tool'
     mainComponent= 
-    {<NewDataDisplay API_URL={ENDPOINTS.totalorders.url} headerText={ENDPOINTS.totalorders.pageTitle}/>}
+    {<NewDataDisplay 
+      API_URL={ENDPOINTS.totalorders.url} 
+      headerText={ENDPOINTS.totalorders.pageTitle}
+      settings={settingsObject.settings}
+      />}
   />
 )};
 
-export function ETLComponentTool () {
+export function ETLComponentTool (settingsObject) {
   return (
     <MainContent key='ETLComponentTool'
     title='ETL Component Tool' 
@@ -410,11 +458,14 @@ export function ETLComponentTool () {
     breadcrumpToolsetTitle='iFrame Integration'
     breadcrumpToolLink='/etlcomponent'
     breadcrumpToolTitle='ETL Component Tool'
-    mainComponent= {<CustomIFrame API_URL='https://cndevs.cn.ntua.gr:9000'/>}
+    mainComponent= {<CustomIFrame 
+      API_URL='https://cndevs.cn.ntua.gr:9000'
+      settings={settingsObject.settings}
+      />}
   />
 )};
 
-export function CustomIFrameTool () {
+export function CustomIFrameTool (settingsObject) {
   return (
     <MainContent key='CustomIFrameTool'
     title='Custom IFrame' 
@@ -422,16 +473,16 @@ export function CustomIFrameTool () {
     breadcrumpToolsetTitle='iFrame Integration'
     breadcrumpToolLink='/customiframe'
     breadcrumpToolTitle='Custom iFrame'
-    mainComponent= {<IFrameTest/>}
+    mainComponent= {<IFrameTest settings={settingsObject.settings}/>}
   />
 )};
 
-export function GeneralSettingsTool () {
+export function GeneralSettingsTool (settingsObject) {
   return (
     <MainContent key='Settings'
     title='Settings' 
     breadcrumpToolsetLink='/settings' 
     breadcrumpToolsetTitle='Settings'
-    mainComponent= {<GeneralSettings/>}
+    mainComponent= {<GeneralSettings settings={settingsObject.settings}/>}
   />
 )};

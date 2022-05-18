@@ -888,33 +888,33 @@ export class NewDashboard extends React.Component {
       <Routes>
         
         <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor settings={this.state.settings}/>}/>
-        <Route path="/sensorsdepiction" element={<Tools.SensorsDepiction/>}/>
-        <Route path="/abnormaldetection" element={<Tools.AbnormalDetection/>}/>
-        <Route path="/drivertampering" element={<Tools.DriverTampering/>}/>
-        <Route path="/drivertamperingdetails" element={<Tools.DriverTamperingDetails/>}/>
-        <Route path="/reasoning1" element={<Tools.Reasoning1/>}/>
-        <Route path="/reasoning2" element={<Tools.Reasoning2/>}/>
-        <Route path="/reasoning3" element={<Tools.Reasoning3/>}/>
-        <Route path="/reasoning4" element={<Tools.Reasoning4/>}/>
-        <Route path="/reasoning4b" element={<Tools.Reasoning4b/>}/>
-        <Route path="/reasoning5" element={<Tools.Reasoning5/>}/>
-        <Route path="/reasoning5b" element={<Tools.Reasoning5b/>}/>
-        <Route path="/reasoning6" element={<Tools.Reasoning6/>}/>
-        <Route path="/reasoning7" element={<Tools.Reasoning7/>}/>
-        <Route path="/threatandincident" element={<Tools.ThreatAndIncidentToolset/>}/>
-        <Route path="/alertlogger" element={<Tools.AlertLoggerToolset/>}/>
-        <Route path="/dynamicapi" element={<Tools.DynamicApiExperiment/>}/>
-        <Route path='/ordertrack' element = {<Tools.OrderTrackExperiment />}/>
-        <Route path='/uploadfiletest' element={<Tools.UploadFileTestExperiment />}/>
-        <Route path='/datavisualization' element={<Tools.DataVisualizationExperiment/>}/>
-        <Route path='/iframetest' element={<Tools.IFrameTestExperiment/>}/>
+        <Route path="/sensorsdepiction" element={<Tools.SensorsDepiction settings={this.state.settings}/> }/>
+        <Route path="/abnormaldetection" element={<Tools.AbnormalDetection settings={this.state.settings}/>}/>
+        <Route path="/drivertampering" element={<Tools.DriverTampering settings={this.state.settings}/>}/>
+        <Route path="/drivertamperingdetails" element={<Tools.DriverTamperingDetails settings={this.state.settings}/>}/>
+        <Route path="/reasoning1" element={<Tools.Reasoning1 settings={this.state.settings}/>}/>
+        <Route path="/reasoning2" element={<Tools.Reasoning2 settings={this.state.settings}/>}/>
+        <Route path="/reasoning3" element={<Tools.Reasoning3 settings={this.state.settings}/>}/>
+        <Route path="/reasoning4" element={<Tools.Reasoning4 settings={this.state.settings}/>}/>
+        <Route path="/reasoning4b" element={<Tools.Reasoning4b settings={this.state.settings}/>}/>
+        <Route path="/reasoning5" element={<Tools.Reasoning5 settings={this.state.settings}/>}/>
+        <Route path="/reasoning5b" element={<Tools.Reasoning5b settings={this.state.settings}/>}/>
+        <Route path="/reasoning6" element={<Tools.Reasoning6 settings={this.state.settings}/>}/>
+        <Route path="/reasoning7" element={<Tools.Reasoning7 settings={this.state.settings}/>}/>
+        <Route path="/threatandincident" element={<Tools.ThreatAndIncidentToolset settings={this.state.settings}/>}/>
+        <Route path="/alertlogger" element={<Tools.AlertLoggerToolset settings={this.state.settings}/>}/>
+        <Route path="/dynamicapi" element={<Tools.DynamicApiExperiment settings={this.state.settings}/>}/>
+        <Route path='/ordertrack' element = {<Tools.OrderTrackExperiment settings={this.state.settings}/>}/>
+        <Route path='/uploadfiletest' element={<Tools.UploadFileTestExperiment settings={this.state.settings}/>}/>
+        <Route path='/datavisualization' element={<Tools.DataVisualizationExperiment settings={this.state.settings}/>}/>
+        <Route path='/iframetest' element={<Tools.IFrameTestExperiment settings={this.state.settings}/>}/>
         
-        <Route path='/complexdatavisualization' element = {<Tools.ComplexDataVisualizationTool/>} />
-        <Route path='/leafletexample' element = {<Tools.LeafleftExampleTool/>} />
-        <Route path='/notifications' element = {<Tools.NotificationsDisplayTool/>} />
-        <Route path='/totalorders' element = {<Tools.TotalOrdersTool/>} />
-        <Route path='/etlcomponent' element = {<Tools.ETLComponentTool/>} />
-        <Route path='/customiframe' element = {<Tools.CustomIFrameTool/>} />
+        <Route path='/complexdatavisualization' element = {<Tools.ComplexDataVisualizationTool settings={this.state.settings}/>} />
+        <Route path='/leafletexample' element = {<Tools.LeafleftExampleTool settings={this.state.settings}/>} />
+        <Route path='/notifications' element = {<Tools.NotificationsDisplayTool settings={this.state.settings}/>} />
+        <Route path='/totalorders' element = {<Tools.TotalOrdersTool settings={this.state.settings}/>} />
+        <Route path='/etlcomponent' element = {<Tools.ETLComponentTool settings={this.state.settings}/>} />
+        <Route path='/customiframe' element = {<Tools.CustomIFrameTool settings={this.state.settings}/>} />
 
         <Route path='/newnotifications' element = 
           {<MainContent key='NewNotificationsDisplayTool'
@@ -931,6 +931,7 @@ export class NewDashboard extends React.Component {
               markAsRead={this.markAsRead}
               markAllAsRead={this.markAllAsRead}
               refreshData={this.refreshData}
+              settings={this.state.settings}
             />}
           />}
         />
@@ -949,8 +950,8 @@ export class NewDashboard extends React.Component {
                 />}
             />} 
           />}
-        <Route path='/' element={<Tools.MainHome/>}/>
-        <Route path='/logout' element={<Logout logOut={this.logOut}/>} />
+        <Route path='/' element={<Tools.MainHome settings={this.state.settings}/>}/>
+        <Route path='/logout' element={<Logout logOut={this.logOut} settings={this.state.settings}/>} />
       </Routes>
       
       </S.MainContent>
