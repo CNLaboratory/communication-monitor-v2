@@ -1,3 +1,4 @@
+<h3>Find the full documentation here: https://cndevs.cn.ntua.gr/docs/commonitor/ </h3>
 <h3 id="client-app-setup">Client Application (React) Setup</h3>
       <ol>
         <li>Clone the react app repository from github with the following command:</li>
