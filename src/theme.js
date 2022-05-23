@@ -127,6 +127,8 @@ export const defaultTheme = {
   dropDownBorderColor: '#ced4da',
   dropDownOptionColor: 'black',
   dropDownOptionColorSelected: 'lightgrey',
+  //settings
+  settingsGroupBorderColor: '#efefef'
 }
 export const lightTheme = {
   //sidebar
@@ -237,4 +239,6 @@ export const lightTheme = {
   dropDownBorderColor: '#ced4da',
   dropDownOptionColor: 'black',
   dropDownOptionColorSelected: 'lightgrey',
+  //settings
+  settingsGroupBorderColor: '#efefef'
 }

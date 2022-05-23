@@ -1207,12 +1207,21 @@ export const FlexCenterDirColumnDiv = styled.div`
   justify-content: center;
   text-align: center;
 `
+export const FlexCenterDiv = styled.div`
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+`
 export const MainComponentLinksWrapper = styled.div`
   margin-top: 50px;
   display: flex;
   justify-content: space-evenly;
 `
 export const MainComponentLink = styled.a`
+  color: ${props => props.theme.primaryLinkColor};
+`
+export const MainComponentRouteLink = styled(Link)`
   color: ${props => props.theme.primaryLinkColor};
 `
 export const RoundCheckBoxInput = styled.input`
@@ -1529,18 +1538,13 @@ export const DropDownHorizontalWrapper = styled.form`
 export const DropDownStyledSelect = styled.select`
   
   display: block;
-  
   padding: .47rem 1.75rem .47rem .75rem;
   margin-right: 1rem;
   font-size: .9rem;
   font-weight: 400;
-  line-height: 1.2;
   color: ${props => props.theme.dropDownColor};
-  
   border: 1px solid ${props => props.theme.dropDownBorderColor};
   border-radius: .25rem;
-  
-  
   font-family: 'Inter';
 
 `;
@@ -1562,9 +1566,8 @@ export const DropDownStyledOption = styled.option`
 `;
 
 export const DropDownStyledLabel = styled.label`
-  font-size: 15px;
-  margin: 0 7px;
-  font-weight: 500;
+  padding-top: .47rem;
+  margin-right: 1rem;
 `;
 export const GeneralSettingWrapper = styled.div`
   position: relative;
@@ -1600,11 +1603,34 @@ export const GeneralSettingToggleSwitchInput = styled.input.attrs({type: 'checkb
   }
 `
 export const GeneralSettingInput = styled.input`
+  
+  padding: 0.47rem ;
+  margin-right: 1rem;
+  width: 5rem;
+  font-size: .9rem;
+  font-weight: 400;
+  text-align: right;
+  line-height: 1.5;
+  color: #505d69;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
+  &:focus {
+    border-color: ${props => props.theme.primaryLinkColor};
+  }
+  &::placeholder {
+    
+    color: ${props => props.theme.topNavSearchPlaceholderColor};
+  }
 `
 export const GeneralSettingsToggleSwitchLabel = styled.label`
   cursor: pointer;
   margin-right: 10px;
-  font-weight: 600;
+  
 `
 

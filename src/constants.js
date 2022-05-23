@@ -6,11 +6,23 @@ export const COLORS = {
   total: "#D97706",
 };
 
+export const defaultSettings = {
+  theme: 'dark',    //accepts 'dark' or 'light'
+  notificationsFetchInterval: 30000, //for notifications refresh in milliseconds
+  tableAutoRefreshInterval: 10000, //for axios operations in milliseconds 
+  tableAutoRefreshEnabled: false,
+  tableDensity: 'compact', //the default density for tables
+  tableColumnFiltersEnabled: false, //are column filters enabled by default in tables?
+  tableStickyHeaderEnabled: true, //sticky header in tables
+  tablePaginationEnabled: true, //pagination enabled in tables
+  tableStrippedRows: true, //stripped rows in tables
+  operationTimeOut: 20000, //timeout value for axios operations
+}
+
+
 export const ENDPOINTS = {
   transactionsdepiction: { 
     url: "https://communicationmonitor.cn.ntua.gr:5000/transactionsdepiction",
-    pageTitle: "Transactions Depiction",
-    menuTitle: "Transactions Depiction"
   },
   sensorsdepiction: { 
     url: "https://communicationmonitor.cn.ntua.gr:5000/sensorsdepiction",

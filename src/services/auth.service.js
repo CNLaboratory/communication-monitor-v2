@@ -67,7 +67,10 @@ class AuthService {
   }
 
   getAllUsers() {
-    return axios.get(this.API_URL + "getallusers");
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    return axiosInstance.get(this.API_URL + "getallusers");
   }
   updateUser(updatedUser) {
     const username = updatedUser.username;

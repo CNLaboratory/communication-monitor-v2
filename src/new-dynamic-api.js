@@ -8,7 +8,8 @@ export default class NewDynamicAPI extends React.Component {
     super(props)
     this.state = { 
        formValues: [{ url: "" }],
-       API_URL: props.API_URL,
+       API_URL: '',
+       settings: props.settings
      };
     
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,13 +39,11 @@ export default class NewDynamicAPI extends React.Component {
     event.preventDefault();
     let formValues = this.state.formValues;
     var url;
-    
-    
 
     for (url in formValues) {
       console.log('url', formValues[url]['url']);
-      this.setState({API_URL: formValues[url]['url']})}
-
+      this.setState({API_URL: formValues[url]['url']})
+    }
   }
 
   readFile = async (e) => {
@@ -57,7 +56,9 @@ export default class NewDynamicAPI extends React.Component {
       const text = (e.target.result)
       //console.log(text)
       console.log('readFile, JSON.parse(reader.result)', JSON.parse(reader.result));
-      this.setState({data: JSON.parse(reader.result)});
+      this.setState({
+        data: JSON.parse(reader.result)
+      });
     };
   }
 
@@ -97,7 +98,9 @@ export default class NewDynamicAPI extends React.Component {
       <div><input type="file" onChange={(e) => this.readFile(e)} /></div>
       
     </div>
-     {this.state.API_URL && <NewDataDisplay API_URL={this.state.API_URL} key={this.state.API_URL}/> }
+    
+     {this.state.API_URL && <NewDataDisplay API_URL={this.state.API_URL} key={this.state.API_URL} settings={this.state.settings}/> }
+     {this.state.data && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
     </div>
     
     );

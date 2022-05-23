@@ -88,7 +88,10 @@ class DynamicAPI extends React.Component {
         });
   }
   getProductData = () => {
-    axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    axiosInstance.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
     .then((response) => {
       console.log('response.data:', response.data);
       this.setState({data:response.data}, () => {

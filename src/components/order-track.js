@@ -25,7 +25,8 @@ class OrderTrack extends React.Component {
        refreshInterval: props.refreshInterval,
        API_URL: '',
        counter: 0,
-       displayTableComponent: []
+       displayTableComponent: [],
+       settings: props.settings
      };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkIfDataIsLoaded = this.checkIfDataIsLoaded.bind(this);
@@ -46,7 +47,10 @@ class OrderTrack extends React.Component {
     this.setState( { isDataLoaded: true });
   }*/
   getProductData = () => {
-    axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    axiosInstance.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
     .then((response) => {
         let localKeys=[];
         let localColumns=[];

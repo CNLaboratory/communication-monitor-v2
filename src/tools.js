@@ -1,7 +1,6 @@
 import React from 'react';
 import { MainContent } from './main-content';
 import NewDataDisplay from './new-data-display';
-import DynamicAPI from './components/dynamic-api';
 import { ENDPOINTS } from './constants';
 import OrderTrack from './components/order-track';
 import UploadFile from './components/upload-file-test';
@@ -16,6 +15,9 @@ import NotificationsDisplay from './notifications';
 import NewNotificationsDisplay from './new-notifications-display';
 import CustomIFrame from './components/custom-iframe';
 import GeneralSettings from './settings-general';
+import { Container, Row, Col } from 'react-bootstrap';
+import { visualizationToolset, fusionToolset, advancedReasonerToolset, threadAndIncidentToolset, immutableAuditTrailToolset, iFrameIntegration } from './components/NavBar/sidebarData';
+import * as S from './styles';
 
 export function MainHome () {
   return(
@@ -37,12 +39,11 @@ export function TransactionsMonitor (settingsObject) {
     title='Transactions Depiction' 
     breadcrumpToolsetLink='/visualizationtoolset' 
     breadcrumpToolsetTitle='Visualization Toolset'
-    breadcrumpToolLink='/transactionsmonitor'
+    breadcrumpToolLink='/transactionsdepiction'
     breadcrumpToolTitle='Transactions Monitor'
     mainComponent= 
     {<NewDataDisplay 
       API_URL={ENDPOINTS.transactionsdepiction.url} 
-      headerText={ENDPOINTS.transactionsdepiction.pageTitle}
       settings={settingsObject.settings}
       />}
   />);
@@ -58,8 +59,7 @@ export function SensorsDepiction (settingsObject) {
     breadcrumpToolLink='/sensorsdepiction'
     breadcrumpToolTitle='Sensors Depiction'
     mainComponent= {<NewDataDisplay 
-      API_URL={ENDPOINTS.sensorsdepiction.url} 
-      headerText={ENDPOINTS.sensorsdepiction.pageTitle}
+      API_URL={ENDPOINTS.sensorsdepiction.url}
       settings={settingsObject.settings}/>}
   />);
 };
@@ -75,7 +75,6 @@ return (
     breadcrumpToolTitle='Abnormal Detection'
     mainComponent= {<NewDataDisplay 
       API_URL={ENDPOINTS.abnormaldetection.url} 
-      headerText={ENDPOINTS.abnormaldetection.pageTitle}
       settings={settingsObject.settings}
       />}
   />
@@ -92,7 +91,6 @@ export function DriverTampering (settingsObject) {
     breadcrumpToolTitle='Driver Tampering'
     mainComponent= {<NewDataDisplay 
       API_URL={ENDPOINTS.drivertampering.url} 
-      headerText={ENDPOINTS.drivertampering.pageTitle}
       settings={settingsObject.settings}
       />}
   />);
@@ -108,7 +106,6 @@ export function DriverTamperingDetails (settingsObject) {
     breadcrumpToolTitle='Driver Tampering Details'
     mainComponent= {<NewDataDisplay 
       API_URL={ENDPOINTS.drivertamperingdetails.url} 
-      headerText={ENDPOINTS.drivertamperingdetails.pageTitle}
       settings={settingsObject.settings}
       />}
   />)
@@ -124,7 +121,6 @@ export function Reasoning1 (settingsObject) {
     breadcrumpToolTitle='Suspicious Transactions'
     mainComponent= {<NewDataDisplay 
       API_URL={ENDPOINTS.reasoning1.url} 
-      headerText={ENDPOINTS.reasoning1.pageTitle}
       settings={settingsObject.settings}
       />}
   />);};
@@ -139,7 +135,6 @@ export function Reasoning2 (settingsObject) {
     breadcrumpToolTitle='Suspicious Combinations'
     mainComponent= {<NewDataDisplay 
       API_URL={ENDPOINTS.reasoning2.url} 
-      headerText={ENDPOINTS.reasoning2.pageTitle}
       settings={settingsObject.settings}
       />}
   />);};
@@ -156,7 +151,6 @@ export function Reasoning3 (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning3.url} 
-        headerText={ENDPOINTS.reasoning3.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -174,7 +168,6 @@ export function Reasoning4 (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning4.url} 
-        headerText={ENDPOINTS.reasoning4.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -191,7 +184,6 @@ export function Reasoning4b (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning4b.url} 
-        headerText={ENDPOINTS.reasoning4b.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -210,7 +202,6 @@ export function Reasoning5 (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning5.url} 
-        headerText={ENDPOINTS.reasoning5.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -228,7 +219,6 @@ export function Reasoning5b (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning5b.url} 
-        headerText={ENDPOINTS.reasoning5b.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -246,7 +236,6 @@ export function Reasoning6 (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning6.url} 
-        headerText={ENDPOINTS.reasoning6.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -264,7 +253,6 @@ export function Reasoning7(settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.reasoning7.url} 
-        headerText={ENDPOINTS.reasoning7.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -280,7 +268,6 @@ export function ThreatAndIncidentToolset(settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.threatandincident.url} 
-        headerText={ENDPOINTS.threatandincident.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -296,7 +283,6 @@ export function AlertLoggerToolset(settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
         API_URL={ENDPOINTS.alertlogger.url} 
-        headerText={ENDPOINTS.alertlogger.pageTitle}
         settings={settingsObject.settings}
         />}
   />
@@ -444,7 +430,6 @@ export function TotalOrdersTool (settingsObject) {
     mainComponent= 
     {<NewDataDisplay 
       API_URL={ENDPOINTS.totalorders.url} 
-      headerText={ENDPOINTS.totalorders.pageTitle}
       settings={settingsObject.settings}
       />}
   />
@@ -486,3 +471,118 @@ export function GeneralSettingsTool (settingsObject) {
     mainComponent= {<GeneralSettings settings={settingsObject.settings}/>}
   />
 )};
+export function VisualizationToolset () {
+  return(
+    <MainContent key='visualizationtoolset'
+    title='Visualization Toolset'
+    breadcrumpToolsetLink='/visualizationtoolset'
+    breadcrumpToolsetTitle='Visualization Toolset'
+    mainComponent= {
+      <S.Card>
+        <S.CardBody>
+          <S.MediumWidthDiv>
+            <h4 style={{textAlign:'center'}}>Tools from the {visualizationToolset.title}</h4>
+            <S.FlexCenterDirColumnDiv>  
+              {visualizationToolset.subNav.map((tool, index) => (
+                <S.MainComponentRouteLink to={tool.path}>{tool.pageTitle}</S.MainComponentRouteLink>
+              ))}
+            </S.FlexCenterDirColumnDiv>
+          </S.MediumWidthDiv>
+        </S.CardBody>
+      </S.Card>
+    }
+  />        
+  )
+}
+export function FusionToolset () {
+  return(
+    <MainContent key='fusiontoolset'
+    title='Fusion Toolset'
+    breadcrumpToolsetLink='/fusiontoolset'
+    breadcrumpToolsetTitle='Fusion Toolset'
+    mainComponent= {
+      <S.Card>
+        <S.CardBody>
+          <S.MediumWidthDiv>
+            <h4 style={{textAlign:'center'}}>Tools from the {fusionToolset.title}</h4>
+            <S.FlexCenterDirColumnDiv>  
+              {fusionToolset.subNav.map((tool, index) => (
+                <S.MainComponentRouteLink to={tool.path}>{tool.pageTitle}</S.MainComponentRouteLink>
+              ))}
+            </S.FlexCenterDirColumnDiv>
+          </S.MediumWidthDiv>
+        </S.CardBody>
+      </S.Card>
+    }
+  />        
+  )
+}
+export function AdvancedReasonerToolset () {
+  return(
+    <MainContent key='advancedreasonertoolset'
+    title='Advanced Reasoner Toolset'
+    breadcrumpToolsetLink='/advancedreasonertoolset'
+    breadcrumpToolsetTitle='Advanced Reasoner Toolset'
+    mainComponent= {
+      <S.Card>
+        <S.CardBody>
+          <S.MediumWidthDiv>
+            <h4 style={{textAlign:'center'}}>Tools from the {advancedReasonerToolset.title}</h4>
+            <S.FlexCenterDirColumnDiv>  
+              {advancedReasonerToolset.subNav.map((tool, index) => (
+                <S.MainComponentRouteLink to={tool.path}>{tool.pageTitle}</S.MainComponentRouteLink>
+              ))}
+            </S.FlexCenterDirColumnDiv>
+          </S.MediumWidthDiv>
+        </S.CardBody>
+      </S.Card>
+    }
+  />        
+  )
+}
+export function ImmutableAuditTrailToolset () {
+  return(
+    <MainContent key='immutableaudittrail'
+    title='Immutable Audit Trail Toolset'
+    breadcrumpToolsetLink='/immutableaudittrail'
+    breadcrumpToolsetTitle='Immutable Audit Trail Toolset'
+    mainComponent= {
+      <S.Card>
+        <S.CardBody>
+          <S.MediumWidthDiv>
+            <h4 style={{textAlign:'center'}}>Tools from the {immutableAuditTrailToolset.title}</h4>
+            <S.FlexCenterDirColumnDiv>  
+              {immutableAuditTrailToolset.subNav.map((tool, index) => (
+                <S.MainComponentRouteLink to={tool.path}>{tool.pageTitle}</S.MainComponentRouteLink>
+              ))}
+            </S.FlexCenterDirColumnDiv>
+          </S.MediumWidthDiv>
+        </S.CardBody>
+      </S.Card>
+    }
+  />        
+  )
+}
+export function IFrameIntegrationToolset () {
+  return(
+    <MainContent key='iframeintegration'
+    title='iFrame Integration Toolset'
+    breadcrumpToolsetLink='/iframeintegration'
+    breadcrumpToolsetTitle='iFrame Integration Toolset'
+    mainComponent= {
+      <S.Card>
+        <S.CardBody>
+          <S.MediumWidthDiv>
+            <h4 style={{textAlign:'center'}}>Tools from the {iFrameIntegration.title}</h4>
+            <S.FlexCenterDirColumnDiv>  
+              {iFrameIntegration.subNav.map((tool, index) => (
+                <S.MainComponentRouteLink to={tool.path}>{tool.pageTitle}</S.MainComponentRouteLink>
+              ))}
+            </S.FlexCenterDirColumnDiv>
+          </S.MediumWidthDiv>
+        </S.CardBody>
+      </S.Card>
+    }
+  />        
+  )
+}

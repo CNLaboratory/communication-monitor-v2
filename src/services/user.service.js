@@ -16,19 +16,31 @@ class UserService {
   }
 
   getPublicContent() {
-    return axios.get(this.API_URL + 'all');
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+    
+    return axiosInstance.get(this.API_URL + 'all');
   }
 
   getUserBoard() {
-    return axios.get(this.API_URL + 'user', { headers: authHeader() });
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    return axiosInstance.get(this.API_URL + 'user', { headers: authHeader() });
   }
 
   getModeratorBoard() {
-    return axios.get(this.API_URL + 'mod', { headers: authHeader() });
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    return axiosInstance.get(this.API_URL + 'mod', { headers: authHeader() });
   }
 
   getAdminBoard() {
-    return axios.get(this.API_URL + 'admin', { headers: authHeader() });
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    return axiosInstance.get(this.API_URL + 'admin', { headers: authHeader() });
   }
 }
 

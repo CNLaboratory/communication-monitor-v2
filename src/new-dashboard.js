@@ -46,9 +46,8 @@ import { kafkaMessageTest } from "./kafkatorest";
 
 import OutsideClickHandler from 'react-outside-click-handler';
 import { defaultTheme, lightTheme } from "./theme";
-
-
-
+import { defaultSettings } from "./constants";
+import * as toolset from './toolset';
 
 export class NewDashboard extends React.Component {
   constructor(props) {
@@ -93,21 +92,7 @@ export class NewDashboard extends React.Component {
       showAvailableTools: false,
       showLinksMenu: false,
 
-      settings: {
-        theme: 'dark',    //accepts 'dark' or 'light'
-        notificationsFetchInterval: 30000, //for notifications refresh in milliseconds
-        tableAutoRefreshInterval: 10000, //for axios operations in milliseconds 
-        tableAutoRefreshEnabled: false,
-        tableDensity: 'compact', //the default density for tables
-        tableColumnFiltersEnabled: false, //are column filters enabled by default in tables?
-        tableStickyHeaderEnabled: true, //sticky header in tables
-        tablePaginationEnabled: true, //pagination enabled in tables
-        tableStrippedRows: true, //stripped rows in tables
-        connectionTimeOut: 20000, //timeout value for axios operations
-        endpoints: {
-
-        }
-      }
+      settings: JSON.parse(localStorage.getItem('settings')) ? JSON.parse(localStorage.getItem('settings')) : defaultSettings
       
     }
 
@@ -214,7 +199,7 @@ export class NewDashboard extends React.Component {
       this.updateAutoRefresh();
     }
 
-    
+    localStorage.setItem('settings', JSON.stringify(this.state.settings));
     
   }
   componentDidUnMount() {
@@ -307,6 +292,8 @@ export class NewDashboard extends React.Component {
   handleSettingsUpdate(settings) {
     this.setState({
       settings: settings
+    }, () => {
+      localStorage.setItem('settings', JSON.stringify(this.state.settings));
     })
   }
 
@@ -527,7 +514,10 @@ export class NewDashboard extends React.Component {
     };
 
   getNotificationData() {
-    axios.get(this.state.notifications_API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    axiosInstance.get(this.state.notifications_API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
     .then((response) => {
       
       this.setState({data:response.data}, () => {
@@ -744,7 +734,7 @@ export class NewDashboard extends React.Component {
             <S.LinksMenuDropDownWrapper  style={{display: this.state.showLinksMenu ? 'block' : 'none'}}>
               <S.LinksMenuContentRow>
                 <S.LinksMenuIconWrapper>
-                  <a href='https://commonitor-docum.codeheaven.gr/' target='_blank' rel="noreferrer">
+                  <a href='https://cndevs.cn.ntua.gr/docs/commonitor/' target='_blank' rel="noreferrer">
                   <S.LinksMenuIcon><IoBookOutline/></S.LinksMenuIcon>
                   <S.LinksMenuIconDescription>Documentation</S.LinksMenuIconDescription>
                   </a>
@@ -842,7 +832,9 @@ export class NewDashboard extends React.Component {
               </S.UserDropdown>
             </S.UserWrap>
             </OutsideClickHandler>
-            <S.IconWrap style={{cursor: 'pointer'}}><RiSettings2Line/></S.IconWrap>
+            <Link to='/settings'>
+              <S.IconWrap style={{cursor: 'pointer'}}><RiSettings2Line/></S.IconWrap>
+            </Link>
           </S.dFlex>
         </S.NavbarHeader>
       </S.PageTopbar>
@@ -877,16 +869,15 @@ export class NewDashboard extends React.Component {
       </S.VerticalMenuWrapper>
 
       {<NotificationContainer/>}
-      {/*<NotificationsBackgroundService
-        API_URL={'https://communicationmonitor.cn.ntua.gr:5000/kafkatorest'} 
-        autoRefreshEnabled={true} 
-        refreshInterval={10000}
-            />
-            */}
+      
       <S.MainContent collapsed={this.state.menuCollapse}>
 
       <Routes>
-        
+        <Route path="/visualizationtoolset" element={<Tools.VisualizationToolset settings={this.state.settings}/>}/>
+        <Route path="/fusiontoolset" element={<Tools.FusionToolset settings={this.state.settings}/>}/>
+        <Route path="/advancedreasonertoolset" element={<Tools.AdvancedReasonerToolset settings={this.state.settings}/>}/>
+        <Route path="/immutableaudittrail" element={<Tools.ImmutableAuditTrailToolset settings={this.state.settings}/>}/>
+        <Route path="/iframeintegration" element={<Tools.IFrameIntegrationToolset settings={this.state.settings}/>}/>
         <Route path="/transactionsdepiction" element={<Tools.TransactionsMonitor settings={this.state.settings}/>}/>
         <Route path="/sensorsdepiction" element={<Tools.SensorsDepiction settings={this.state.settings}/> }/>
         <Route path="/abnormaldetection" element={<Tools.AbnormalDetection settings={this.state.settings}/>}/>

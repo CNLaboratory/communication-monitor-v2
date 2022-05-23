@@ -3,7 +3,7 @@ import * as RiIcons from 'react-icons/ri';
 import { FaBezierCurve, FaCog, FaQuestion, FaUpload, FaWindowRestore, FaBug, FaExclamationTriangle, FaChromecast} from "react-icons/fa";
 import { SiDynamics365 } from 'react-icons/si';
 
-const visualizationToolset = {
+export const visualizationToolset = {
   title: 'Visualization Toolset',
   icon: <FaBezierCurve />,
   iconAlt: "visualization toolset",
@@ -13,7 +13,7 @@ const visualizationToolset = {
 
   subNav: [
     {
-      title: 'Transactions Depiction',
+      title: 'Transactions Monitor',
       pageTitle: 'Transactions Depiction',
       path: '/transactionsdepiction'
     },
@@ -55,7 +55,7 @@ const visualizationToolset = {
   ]
 };
 
-const fusionToolset = {
+export const fusionToolset = {
   title: 'Fusion Toolset',
   icon: <FaCog />,
   iconAlt: "fusion toolset",
@@ -82,7 +82,7 @@ const fusionToolset = {
   ]
 };
 
-const advancedReasonerToolset = {
+export const advancedReasonerToolset = {
   title: 'Advanced Reasoner Toolset',
   icon: <FaQuestion />,
   iconAlt: "Advanced Reasoner Toolset",
@@ -139,7 +139,7 @@ const advancedReasonerToolset = {
   ]
 };
 
-const threadAndIncidentToolset = {
+export const threatAndIncidentToolset = {
   title: 'Threat and Incident Complex Event Toolset',
   icon: <FaBug />,
   iconAlt: "Threat and Incident Complex Event Toolset",
@@ -149,7 +149,7 @@ const threadAndIncidentToolset = {
   pageTitle: 'Threat and Incident Complex Event Toolset'
 };
 
-const alertLoggerToolset = {
+export const alertLoggerToolset = {
   title: 'Alert Logger',
   icon: <FaExclamationTriangle />,
   iconAlt: "Alert Logger",
@@ -159,7 +159,7 @@ const alertLoggerToolset = {
   pageTitle: 'Alert Logger'
 };
 
-const immutableAuditTrailToolset = {
+export const immutableAuditTrailToolset = {
   title: 'Immutable Audit Trail',
   icon: <SiDynamics365/>,
   iconAlt: 'Immutable Audio Trail',
@@ -182,7 +182,7 @@ const immutableAuditTrailToolset = {
   ]
 };
 
-const iFrameIntegration = {
+export const iFrameIntegration = {
   title: 'iFrame Integration',
   icon: <FaChromecast/>,
   iconAlt: 'iFrame Integration',
@@ -207,7 +207,7 @@ const iFrameIntegration = {
   ]
 }
 
-const dynamicApiExperiment = {
+export const dynamicApiExperiment = {
   title: 'Dynamic API',
   icon: <SiDynamics365 />,
   iconAlt: "Dynamic API",
@@ -217,7 +217,7 @@ const dynamicApiExperiment = {
   pageTitle: 'Dynamic API'
 };
 
-const orderTrackExperiment = {
+export const orderTrackExperiment = {
   title: 'Order Track',
   icon: <SiDynamics365 />,
   iconAlt: "Order Track",
@@ -229,7 +229,7 @@ const orderTrackExperiment = {
 
 
 
-const uploadFileTestExperiment = {
+export const uploadFileTestExperiment = {
   title: 'Upload File Test',
   icon: <SiDynamics365 />,
   iconAlt: "Upload File Test",
@@ -238,7 +238,7 @@ const uploadFileTestExperiment = {
   path: '/uploadfiletest',
   pageTitle: 'Upload File Test'
 };
-const dataVisualizationExperiment = {
+export const dataVisualizationExperiment = {
   title: 'Data Visualization',
   icon: <SiDynamics365 />,
   iconAlt: "Data Visualization",
@@ -247,7 +247,7 @@ const dataVisualizationExperiment = {
   path: '/datavisualization',
   pageTitle: 'Data Visualization'
 };
-const iFrameTestExperiment = {
+export const iFrameTestExperiment = {
   title: 'iFrame Test',
   icon: <SiDynamics365 />,
   iconAlt: "iFrame Test",
@@ -256,7 +256,7 @@ const iFrameTestExperiment = {
   path: '/iframetest',
   pageTitle: 'iFrame Test'
 };
-const complexDataVisualizationExperiment = {
+export const complexDataVisualizationExperiment = {
   title: 'Complex Data Visualization',
   icon: <SiDynamics365 />,
   iconAlt: "Complex Data Visualization",
@@ -265,7 +265,7 @@ const complexDataVisualizationExperiment = {
   path: '/complexdatavisualization',
   pageTitle: 'Complex Data Visualization'
 };
-const LeafletExampleExperiment = {
+export const LeafletExampleExperiment = {
   title: 'Leaflet Example',
   icon: <SiDynamics365 />,
   iconAlt: "Leaflet Example",
@@ -274,7 +274,7 @@ const LeafletExampleExperiment = {
   path: '/leafletexample',
   pageTitle: 'Leaflet Example'
 }
-const NotificationsDisplay = {
+export const NotificationsDisplay = {
   title: 'Notifications Display',
   icon: <SiDynamics365 />,
   iconAlt: "Notifications Display",
@@ -283,7 +283,7 @@ const NotificationsDisplay = {
   path: '/notifications',
   pageTitle: 'Notifications Display'
 }
-const NewNotificationsDisplay = {
+export const NewNotificationsDisplay = {
   title: 'New Notifications Display',
   icon: <SiDynamics365 />,
   iconAlt: "New Notifications Display",
@@ -296,7 +296,7 @@ export const AdminSidebarData = [
   visualizationToolset,
   fusionToolset,
   advancedReasonerToolset,
-  threadAndIncidentToolset,
+  threatAndIncidentToolset,
   alertLoggerToolset,
   immutableAuditTrailToolset,
   iFrameIntegration
@@ -305,7 +305,7 @@ export const ModeratorSidebarData = [
   visualizationToolset,
   fusionToolset,
   advancedReasonerToolset,
-  threadAndIncidentToolset,
+  threatAndIncidentToolset,
   alertLoggerToolset,
   immutableAuditTrailToolset,
   iFrameIntegration
@@ -314,7 +314,7 @@ export const UserSidebarData = [
   visualizationToolset,
   fusionToolset,
   advancedReasonerToolset,
-  threadAndIncidentToolset,
+  threatAndIncidentToolset,
   alertLoggerToolset,
   immutableAuditTrailToolset,
   iFrameIntegration
@@ -322,11 +322,8 @@ export const UserSidebarData = [
 export const ExperimentsSidebarData = [
   dynamicApiExperiment,
   orderTrackExperiment,
-  uploadFileTestExperiment,
   dataVisualizationExperiment,
   iFrameTestExperiment,
   complexDataVisualizationExperiment,
-  LeafletExampleExperiment,
-  NotificationsDisplay,
   NewNotificationsDisplay
 ];

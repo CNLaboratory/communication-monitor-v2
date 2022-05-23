@@ -6,7 +6,7 @@ import ToolCard from './ntua/toolCard';
 import DisplayTable from './ntua/displayTable';
 import Button from 'react-bootstrap/Button'
 import { IoRefreshOutline } from 'react-icons/io5';
-
+import * as S from '../styles'
 import { DataGrid } from '@mui/x-data-grid';
 import { GridToolbar} from '@mui/x-data-grid';
 import '@fontsource/roboto/300.css';
@@ -34,7 +34,8 @@ export default class DataVisualization extends React.Component {
        refreshInterval: props.refreshInterval,
        API_URL: props.API_URL,
        counter: 0,
-       displayTableComponent: []
+       displayTableComponent: [],
+       settings: props.settings
      };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.checkIfDataIsLoaded = this.checkIfDataIsLoaded.bind(this);
@@ -109,7 +110,10 @@ export default class DataVisualization extends React.Component {
         });
   }
   getProductData = () => {
-    axios.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
+    const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
+
+    axiosInstance.get(this.state.API_URL,  {headers: {"Access-Control-Allow-Origin":"*"}})
     .then((response) => {
       console.log('response.data:', response.data);
       this.setState({data:response.data}, () => {
@@ -249,17 +253,27 @@ export default class DataVisualization extends React.Component {
           
         </div>
         {/*<div className="divider" style={{borderTop: '3px dotted #bbb'}}></div>*/}
+       
+
         <div className="tool-card-wrapper">
-        
+        <S.Card>
+          <S.CardBody> 
           <div className="tool-card-wrapper-array">
             {buttonComponent}
             
             {toolComponent1}
             
           </div>
+
+          </S.CardBody>
+        </S.Card>
+        <S.Card>
+          <S.CardBody> 
           <div className="tool-card-wrapper-inner">
             {toolCardComponentsArray}
           </div>
+          </S.CardBody>
+        </S.Card>
         </div>
         <div className="section-charts">
 

@@ -22,11 +22,11 @@ export default class NewDataDisplay extends React.Component {
       isTransfering: true,
       isTool1: false,
       columns: [],
-      data: [],
+      data: props.data ? props.data : [],
       keys: [],
       labels: [],
       settings: props.settings,
-      API_URL: props.API_URL,
+      API_URL: props.API_URL ? props.API_URL : '',
       counter: 0,
       displayTableComponent: [],
       activeTab: "Table",
@@ -38,12 +38,14 @@ export default class NewDataDisplay extends React.Component {
     this.refreshData = this.refreshData.bind(this);
     this.getProductData = this.getProductData.bind(this);
     //this.handleAddButton = this.handleAddButton.bind(this);
-    this.getProductData();
+    
   }
 
   componentDidMount() {
     console.log('New Data Display, url:', this.props.API_URL);
     console.log('settings:', this.state.settings);
+
+    this.props.data ? this.processData() : this.getProductData()
 
     if (this.state.settings.tableAutoRefreshEnabled) {
       this.setState({
@@ -63,106 +65,45 @@ export default class NewDataDisplay extends React.Component {
 
   //process data for the react-table
   processData() {
+    console.log('processData()');
     let localKeys=[];
-        let localColumns=[];
-        let itemData=[];
-        let localLabels=[];
-        let localRows=[];
+    let localColumns=[];
+    let itemData=[];
+    let localLabels=[];
 
-        
-        //this.state.data = response.data;
-
-        const firstItem = this.state.data[0];
-        for (let key in firstItem) {
-            if (firstItem.hasOwnProperty(key)) {
-                localKeys.push(key);
-            }
+    const firstItem = this.state.data[0];
+    for (let key in firstItem) {
+      if (firstItem.hasOwnProperty(key)) {
+        localKeys.push(key);
+      }
+    }
+    for (let key in localKeys) {
+      localColumns.push(
+        {
+          Header: localKeys[key],
+          accessor: localKeys[key]
         }
-        for (let key in localKeys) {
-            localColumns.push(
-                {
-                    Header: localKeys[key],
-                    accessor: localKeys[key]
-                }
-            )
-        }
-        
-        for (let item in this.state.data) {
-            itemData.push(this.state.data[item]);
-        }
-        
-        this.setState({ 
-            data: this.state.data,
-            isTransfering: false,
-            columns:localColumns,
-            keys:localKeys,
-            labels:localLabels,
-            isDataLoaded: true
-        });
+      )
+    }
+    
+    for (let item in this.state.data) {
+      itemData.push(this.state.data[item]);
+    }
+    
+    this.setState({ 
+      isTransfering: false,
+      columns:localColumns,
+      keys:localKeys,
+      labels:localLabels,
+      isDataLoaded: true
+    });
   }
 
-
-  //process data for the mui table
-  /*processData() {
-    let localKeys=[];
-        let localColumns=[];
-        let itemData=[];
-        let localLabels=[];
-        let localRows=[];
-
-        
-        //this.state.data = response.data;
-
-        const firstItem = this.state.data[0];
-        
-        
-        for (let key in firstItem) {
-            if (firstItem.hasOwnProperty(key)) {
-                localKeys.push(key);
-            }
-        }
-        localColumns.push({field: 'id'});
-        for (let key in localKeys) {
-            localColumns.push(
-                {
-                    field: localKeys[key]
-                }
-            )
-        }
-        let i = 0;
-        for (const item of this.state.data) {
-            let row = {};
-            itemData.push(this.state.data[item]);
-            row['id'] = i;
-            
-            
-            for (const key of localKeys) {
-                row[key] = item[key];
-            }
-            localRows.push(row);
-            
-
-            // Get the label for each car like Car0, Car1 etc
-            const label = this.state.labelPreFix ? this.state.labelPreFix : 'Item';            
-            localLabels.push(label + i++);
-        }
-        
-        
-        this.setState({ 
-            
-            isTransfering: false,
-            columns:localColumns,
-            rows: localRows,
-            keys:localKeys,
-            labels:localLabels,
-            isDataLoaded: true
-        });
-  }*/
 
   getProductData = () => {
     console.log('getProductData()');
     const axiosInstance = axios.create();
-    axiosInstance.defaults.timeout = 20000;
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
     
 
     axiosInstance
@@ -205,15 +146,13 @@ export default class NewDataDisplay extends React.Component {
     let toolCardComponentsArray = [];
     //let getDataComponent = <GetDataFromAPI API_URL={this.state.API_URL} checkInterval={this.state.refreshInterval} responseData = {this.getDataFromComponent} />;
     
-    
     if (this.state.errorMessage) {
       errorComponent.push(
-        <h3>Network error, message: {this.state.errorMessage}.</h3>
+        <h4>Network error, reason: {this.state.errorMessage}.</h4>
       );
     }
+    console.log('isdataloaded:', this.state.isDataLoaded);
     if (this.state.isDataLoaded) {
-      
-      
       if (!Array.isArray(this.state.data) || this.state.data.length === 0) {
       //if(this.state.errorMessage) {
           toolComponent1.push(
@@ -231,6 +170,7 @@ export default class NewDataDisplay extends React.Component {
           </S.Col12></S.Row>
         ]  
         //toolComponent1 = <DisplayTable columns={this.state.columns} data={this.state.data} />;
+        console.log('columns= ', this.state.columns);
         toolComponent1.push(
         <NewDisplayTable 
           columns={this.state.columns} 
@@ -274,6 +214,7 @@ export default class NewDataDisplay extends React.Component {
               <S.Card>
                 <S.CardBody>
                   {errorComponent}
+                  {console.log('this.state.isTransfering:', this.state.isTransfering)}
                   {this.state.isTransfering && (
                     <span className="spinner-border spinner-border-sm"></span>
                   )}

@@ -72,9 +72,10 @@ export default class ProductData extends React.Component {
         var dropMenuOptions = [];
         var selectMenuItems = [];
 
-
+        const axiosInstance = axios.create();
+    axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
         
-        axios.get(this.state.API_URL, {headers: {"Access-Control-Allow-Origin":"*"}})
+        axiosInstance.get(this.state.API_URL, {headers: {"Access-Control-Allow-Origin":"*"}})
         .then((response) => {
             console.log("check");
             /*this.parseData(response.data);*/
