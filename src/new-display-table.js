@@ -203,9 +203,9 @@ export default class NewDisplayTable extends React.Component {
                   formLabel='Column Density'
                   buttonText='Apply'
                   onChange={this.handleColumnDensitySelection} >
-                  <Option key='compact' value='compact'/>
-                  <Option key='standard' value='standard' selected/>
-                  <Option key='comfortable' value='comfortable'/>
+                  <Option key='compact' value='compact' selected={this.state.columnDensity==='compact'}/>
+                  <Option key='standard' value='standard' selected={this.state.columnDensity==='standard'}/>
+                  <Option key='comfortable' value='comfortable' selected={this.state.columnDensity==='comfortable'}/>
                 </Dropdown>
               </S.SettingWrapper>
               <S.SettingWrapper onClick={this.handleColumnFiltersClicked}>

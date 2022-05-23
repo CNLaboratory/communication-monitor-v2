@@ -142,7 +142,7 @@ export const lightTheme = {
   topNavBackgroundColor: lightThemeColors.navigationBackground,
   topNavIconColor: '#636E75',
   topNavSearchFieldBackgroundColor: '#F1F5F7', 
-  topNavSearchFieldColor: '#fff',
+  topNavSearchFieldColor: '#636E75',
   topNavSearchPlaceholderColor: '#74788D',
   topNavUserProfileColor: lightThemeColors.text,
   topNavUserAvatarBackgroundColor: '#f1f5f7',
