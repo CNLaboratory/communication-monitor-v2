@@ -1,4 +1,9 @@
 <h3>Find the full documentation here: https://cndevs.cn.ntua.gr/docs/commonitor/ </h3>
+<h3>Walkthrough videos</h3>
+<ul>
+<li>Dashboard Overview: https://youtu.be/6Urr_BgFp1A</li>
+<li>Extending Development: https://youtu.be/AzjL5EdV69I</li>
+</ul>
 <h3 id="client-app-setup">Client Application (React) Setup</h3>
       <ol>
         <li>Clone the react app repository from github with the following command:</li>
