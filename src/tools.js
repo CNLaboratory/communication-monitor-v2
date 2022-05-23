@@ -31,6 +31,7 @@ export function MainHome () {
       mainComponent= {<HomeComponent/>}
     />);
 }
+
 export function TransactionsMonitor (settingsObject) { 
   console.log('transactionsmonitor tool - settingsObject.settings:', settingsObject.settings);
   return(

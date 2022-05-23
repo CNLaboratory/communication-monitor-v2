@@ -83,7 +83,7 @@ export default function NewFilterTable({ columns, data, columnFiltersEnabled, co
               {/*console.log(columns)*/}
                 { stickyHeaderEnabled ?
                 headerGroups.map((headerGroup, index) => (
-                  <S.ReactTableTHeaderRowSticky key={'headergroup' + index} {...headerGroup.getHeaderGroupProps()}>
+                  <S.ReactTableTHeaderRowSticky key={'headergroup' + index} sticky={stickyHeaderEnabled} {...headerGroup.getHeaderGroupProps()}>
                   {/*console.log("test2")*/}
                     { 
                       columnDensity==='comfortable' ? 

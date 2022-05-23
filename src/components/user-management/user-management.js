@@ -27,7 +27,8 @@ export default class UserManagement extends React.Component {
             userForEditing: {},
             showNotification: true,
             notificationsArray: [],
-            currentUser: authService.getCurrentUser().username
+            currentUser: authService.getCurrentUser().username,
+            settings: props.settings
         }
 
         this.onEdit = this.onEdit.bind(this);
@@ -263,7 +264,7 @@ export default class UserManagement extends React.Component {
                     }
                 </S.UserManagementHeaderToolsWrapper>
                 
-                {!this.state.isEditing && !this.state.isCreating && <DisplayUsersAdvanced users={this.state.usersArray} onEdit={this.onEdit} onDelete={this.onDelete} /> }
+                {!this.state.isEditing && !this.state.isCreating && <DisplayUsersAdvanced users={this.state.usersArray} onEdit={this.onEdit} onDelete={this.onDelete} settings={this.state.settings}/> }
                 {this.state.isEditing && <UserEdit user={this.state.userForEditing} isCurrentUser={this.state.userForEditing.username === this.state.currentUser} saveUser={this.saveUser} onCancel={this.onEditCancel}/>}
                 {this.state.isCreating && <CreateUser saveUser={this.register} onCancel={this.onCreateCancel}/>}
                 {
