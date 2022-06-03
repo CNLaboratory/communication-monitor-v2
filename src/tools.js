@@ -1,6 +1,8 @@
 import React from 'react';
 import { MainContent } from './main-content';
 import NewDataDisplay from './new-data-display';
+import ChartsDisplay from './charts-display';
+import ChartsDisplayForm from './charts-display-form'
 import { ENDPOINTS } from './constants';
 import OrderTrack from './components/order-track';
 import UploadFile from './components/upload-file-test';
@@ -585,5 +587,32 @@ export function IFrameIntegrationToolset () {
       </S.Card>
     }
   />        
+  )
+}
+export function ChartsDisplayTool (settingsObject) {
+  return(
+    <MainContent key='ChartsDisplayTool'
+      title='Charts Display Tool' 
+      breadcrumpToolsetLink='/chartsdisplay' 
+      breadcrumpToolsetTitle='Charts Display Tool'
+      mainComponent= 
+      {<ChartsDisplay 
+        API_URL={ENDPOINTS.transactionsdepiction.url} 
+        settings={settingsObject.settings}
+      />}
+    />
+  )
+}
+export function ChartsDisplayFormTool (settingsObject) {
+  return(
+    <MainContent key='ChartsDisplayFormTool'
+      title='Charts Display Form Tool' 
+      breadcrumpToolsetLink='/chartsdisplayform' 
+      breadcrumpToolsetTitle='Charts Display Form Tool'
+      mainComponent= 
+      {<ChartsDisplayForm  
+        settings={settingsObject.settings}
+      />}
+    />
   )
 }

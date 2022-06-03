@@ -15,7 +15,7 @@ export default class ToolCard extends React.Component {
     render() {
         return (
             <>
-            {/*<S.CardTitle>Add a new graph</S.CardTitle>*/}
+            {this.props.cardTitle && <S.CardTitle>{this.props.cardTitle}</S.CardTitle>}
             <CreateCharts data={this.state.itemData} />
             </>
         )

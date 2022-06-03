@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RiIcons from 'react-icons/ri';
-import { FaBezierCurve, FaCog, FaQuestion, FaUpload, FaWindowRestore, FaBug, FaExclamationTriangle, FaChromecast} from "react-icons/fa";
+import { FaBezierCurve, FaCog, FaQuestion, FaUpload, FaWindowRestore, FaBug, FaExclamationTriangle, FaChromecast, FaChartPie} from "react-icons/fa";
 import { SiDynamics365 } from 'react-icons/si';
 
 export const visualizationToolset = {
@@ -292,6 +292,24 @@ export const NewNotificationsDisplay = {
   path: '/newnotifications',
   pageTitle: 'New Notifications Display'
 }
+export const ChartDisplay = {
+  title: 'Charts Display',
+  icon: <FaChartPie/>,
+  iconAlt: "Charts Display",
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/chartsdisplay',
+  pageTitle: 'Charts Display'
+}
+export const ChartDisplayForm = {
+  title: 'Charts Display Form',
+  icon: <FaChartPie/>,
+  iconAlt: "Charts Display Form",
+  iconClosed: <RiIcons.RiArrowDownSFill />,
+  iconOpened: <RiIcons.RiArrowUpSFill />,
+  path: '/chartsdisplayform',
+  pageTitle: 'Charts Display Form'
+}
 export const AdminSidebarData = [
   visualizationToolset,
   fusionToolset,
@@ -321,6 +339,8 @@ export const UserSidebarData = [
 ];
 export const ExperimentsSidebarData = [
   dynamicApiExperiment,
+  ChartDisplay,
+  ChartDisplayForm,
   orderTrackExperiment,
   dataVisualizationExperiment,
   iFrameTestExperiment,

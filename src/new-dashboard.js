@@ -873,6 +873,8 @@ export class NewDashboard extends React.Component {
       <S.MainContent collapsed={this.state.menuCollapse}>
 
       <Routes>
+        <Route path="/chartsdisplayform" element={<Tools.ChartsDisplayFormTool settings={this.state.settings}/>}/>
+        <Route path="/chartsdisplay" element={<Tools.ChartsDisplayTool settings={this.state.settings}/>}/>
         <Route path="/visualizationtoolset" element={<Tools.VisualizationToolset settings={this.state.settings}/>}/>
         <Route path="/fusiontoolset" element={<Tools.FusionToolset settings={this.state.settings}/>}/>
         <Route path="/advancedreasonertoolset" element={<Tools.AdvancedReasonerToolset settings={this.state.settings}/>}/>
