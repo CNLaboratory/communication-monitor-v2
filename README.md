@@ -8,7 +8,7 @@
       <ol>
         <li>Clone the react app repository from github with the following command:</li>
         <ul>
-          <li><code>git clone https://github.com/cmpalouk/communication-monitor-v2.git</code></li>
+          <li><code>git clone https://github.com/CNLaboratory/communication-monitor-v2.git</code></li>
         </ul>
         <li>Move to the root of the repository with:
           <ul>
