@@ -17,6 +17,7 @@ export default class NewDisplayTable extends React.Component {
     this.state = {
       settings: props.settings,
       columnFiltersEnabled: props.settings.tableColumnFiltersEnabled,
+      rangeFiltersEnabled: props.settings.tableRangeFiltersEnabled,
       columnDensity: props.settings.tableDensity,
       stickyHeaderEnabled: props.settings.tableStickyHeaderEnabled,
       paginationEnabled: props.settings.tablePaginationEnabled,
@@ -30,6 +31,7 @@ export default class NewDisplayTable extends React.Component {
     this.refreshData = this.refreshData.bind(this);
     this.handleSettingsMenuClicked = this.handleSettingsMenuClicked.bind(this);
     this.handleColumnFiltersClicked = this.handleColumnFiltersClicked.bind(this);
+    this.handleRangeFiltersClicked = this.handleRangeFiltersClicked.bind(this);
     this.handleColumnDensitySelection = this.handleColumnDensitySelection.bind(this);
     this.handleStickyHeaderEnabledClicked = this.handleStickyHeaderEnabledClicked.bind(this);
     this.handlePaginationEnabledClicked = this.handlePaginationEnabledClicked.bind(this);
@@ -67,6 +69,13 @@ export default class NewDisplayTable extends React.Component {
     console.log('columnFiltersEnabled');
     this.setState({
       columnFiltersEnabled: columnFiltersEnabled
+    })
+  }
+  handleRangeFiltersClicked() {
+    const rangeFiltersEnabled = !this.state.rangeFiltersEnabled;
+    console.log('rangeFiltersEnabled');
+    this.setState({
+      rangeFiltersEnabled: rangeFiltersEnabled
     })
   }
   handleColumnDensitySelection(event) {
@@ -212,6 +221,10 @@ export default class NewDisplayTable extends React.Component {
                 <S.ToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.columnFiltersEnabled}/>
                 <S.ToggleSwitchLabel>Column Filters</S.ToggleSwitchLabel>
               </S.SettingWrapper>
+              <S.SettingWrapper onClick={this.handleRangeFiltersClicked}>
+                <S.ToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.rangeFiltersEnabled}/>
+                <S.ToggleSwitchLabel>Range Filters</S.ToggleSwitchLabel>
+              </S.SettingWrapper>
               <S.SettingWrapper onClick={this.handleStickyHeaderEnabledClicked}>
                 <S.ToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.stickyHeaderEnabled}/>
                 <S.ToggleSwitchLabel>Sticky Header</S.ToggleSwitchLabel>
@@ -233,6 +246,7 @@ export default class NewDisplayTable extends React.Component {
           columns={this.props.columns} 
           data={this.props.data} 
           columnFiltersEnabled={this.state.columnFiltersEnabled}
+          rangeFiltersEnabled={this.state.rangeFiltersEnabled}
           columnDensity={this.state.columnDensity}
           stickyHeaderEnabled={this.state.stickyHeaderEnabled}
           paginationEnabled={this.state.paginationEnabled}

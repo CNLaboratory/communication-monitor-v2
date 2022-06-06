@@ -88,9 +88,9 @@ export default class NewDynamicAPI extends React.Component {
     return(
     <div className='data-display'>
     <div className='header'>
-      <h1>Dynamic API Input</h1>
       
-      <div className='dynamic-api-form'>
+      
+      <div >
         <p>This component accepts an array of similar objects.<br/> Please input an address in the form below or upload a file</p> 
         {customFormComponent}            
         {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}

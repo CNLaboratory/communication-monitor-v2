@@ -2,12 +2,43 @@ import React, {useRef} from "react";
 import { useGlobalFilter, useTable, useFilters, useSortBy} from "react-table";
 import GlobalFilter from "./components/ntua/globaFilter";
 import ColumnFilter from "./components/ntua/columnFilter";
+import RangeFilter from "./components/ntua/range-filter";
 import * as S from "./styles"
 import { usePagination } from 'react-table'
 import { Dropdown } from "./components/ntua/dropdown";
 
 
-export default function NewFilterTable({ columns, data, columnFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped, getFilteredDataFunc}) {
+function customBetweenFilterForStrings(rows, id, filterValue) {
+  return rows.filter(row => {
+    const rowValue = row.values[id]
+    console.log('rowValue: ', rowValue);
+    const min = filterValue[0] ? filterValue[0] : undefined
+    const max = filterValue[1] ? filterValue[1] : undefined
+    let returnValue;
+    if (min === undefined && max === undefined) {
+      return true;
+    }
+    if (min === undefined) {
+      returnValue = rowValue <= filterValue[1];
+    } else if (max === undefined) {
+      returnValue = rowValue >= filterValue[0];
+    } else {
+      returnValue = rowValue >= filterValue[0] && rowValue <= filterValue[1];
+    }
+      
+    console.log('returnValue: ', returnValue);
+    return returnValue
+  })
+}
+
+// This is an autoRemove method on the filter function that
+// when given the new filter value and returns true, the filter
+// will be automatically removed. Normally this is just an undefined
+// check, but here, we want to remove the filter if it's not a number
+//customBetweenFilterForStrings.autoRemove = val => val === undefined
+
+
+export default function NewFilterTable({ columns, data, rangeFiltersEnabled, columnFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped, getFilteredDataFunc}) {
     const defaultColumn = React.useMemo(
       () => ({
         // Let's set up our default Filter UI
@@ -81,80 +112,47 @@ export default function NewFilterTable({ columns, data, columnFiltersEnabled, co
               <S.ReactTableTHead >
               
               {/*console.log(columns)*/}
-                { stickyHeaderEnabled ?
+                { 
+                
                 headerGroups.map((headerGroup, index) => (
-                  <S.ReactTableTHeaderRowSticky key={'headergroup' + index} sticky={stickyHeaderEnabled} {...headerGroup.getHeaderGroupProps()}>
+                  <S.ReactTableTHeaderRow 
+                    key={'headergroup' + index} 
+                    sticky={stickyHeaderEnabled}
+                    {...headerGroup.getHeaderGroupProps()}>
                   {/*console.log("test2")*/}
                     { 
-                      columnDensity==='comfortable' ? 
-                        headerGroup.headers.map((column, index) => (
-                          <div style={{display: 'table-cell'}}>
-                        <S.ReactTableTHeaderColumnComfortable key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
-                          {column.render("Header")}
-                          <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
-                        </S.ReactTableTHeaderColumnComfortable>
-                        {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
-                        </div>
-                        ))
-                      :
-                      columnDensity==='compact' ? 
-                        headerGroup.headers.map((column, index) => (
-                          <div style={{display: 'table-cell'}}>
-                          <S.ReactTableTHeaderColumnCompact key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
-                            {column.render("Header")}
-                            <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
-                          </S.ReactTableTHeaderColumnCompact>
-                          {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
-                          </div>
-                          ))
-                      :
-                      headerGroup.headers.map((column, index) => (
-                        <div style={{display: 'table-cell'}}>
-                        <S.ReactTableTHeaderColumn key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
-                          {column.render("Header")}
-                          <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>
-                        </S.ReactTableTHeaderColumn>
-                        {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
-                        </div>
-                        ))
-                    }
-                  </S.ReactTableTHeaderRowSticky>
-                ))
-                :
-                headerGroups.map((headerGroup, index) => (
-                  <S.ReactTableTHeaderRow key={'headergroup' + index} {...headerGroup.getHeaderGroupProps()}>
-                  {/*console.log("test2")*/}
-                    { 
-                      columnDensity==='comfortable' ? 
                       
                       headerGroup.headers.map((column, index) => (
                         <div style={{display: 'table-cell'}}>
-                      <S.ReactTableTHeaderColumnComfortable key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
-                        {column.render("Header")}
-                        <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
-                      </S.ReactTableTHeaderColumnComfortable>
-                      {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
-                      </div>
-                      ))
-                      :
-                      columnDensity==='compact' ? 
-                      headerGroup.headers.map((column, index) => (
-                        <div style={{display: 'table-cell'}}>
-                        <S.ReactTableTHeaderColumnCompact key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
-                          {column.render("Header")}
-                          <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
-                        </S.ReactTableTHeaderColumnCompact>
-                        {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
-                        </div>
-                        ))
-                      :
-                      headerGroup.headers.map((column, index) => (
-                        <div style={{display: 'table-cell'}}>
-                        <S.ReactTableTHeaderColumn key={'column'+index} {...column.getHeaderProps(column.getSortByToggleProps())} >
+                        {rangeFiltersEnabled ?
+
+                          <S.ReactTableTHeaderColumn 
+                          key={'column'+index} 
+                          density={columnDensity}
+                          {...column.Filter = RangeFilter}
+                          {...column.filter = customBetweenFilterForStrings}
+                          {...column.getHeaderProps(column.getSortByToggleProps())} 
+                          >
                           {column.render("Header")}
                           <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>
                         </S.ReactTableTHeaderColumn>
+                        
+                          :
+
+                          <S.ReactTableTHeaderColumn 
+                          key={'column'+index} 
+                          density={columnDensity}
+                          {...column.getHeaderProps(column.getSortByToggleProps())} 
+                          >
+                          {column.render("Header")}
+                          <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>
+                        </S.ReactTableTHeaderColumn>
+
+                          
+                        }
+                        
                         {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
+                        {rangeFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
                         </div>
                         ))
                     }

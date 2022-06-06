@@ -13,6 +13,7 @@ export const defaultSettings = {
   tableAutoRefreshEnabled: false,
   tableDensity: 'compact', //the default density for tables
   tableColumnFiltersEnabled: false, //are column filters enabled by default in tables?
+  tableRangeFiltersEnabled: false, //are range filters enabled by default in tables?
   tableStickyHeaderEnabled: true, //sticky header in tables
   tablePaginationEnabled: true, //pagination enabled in tables
   tableStrippedRows: true, //stripped rows in tables

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { useGlobalFilter, useTable, useFilters, useSortBy, useRowSelect} from "react-table";
 import GlobalFilter from "./components/ntua/globaFilter";
 import ColumnFilter from "./components/ntua/columnFilter";
+import RangeFilter from "./components/ntua/range-filter";
 import * as S from "./styles"
 import { usePagination } from 'react-table'
 import { Dropdown } from "./components/ntua/dropdown";
@@ -24,7 +25,30 @@ const RoundCheckBox = React.forwardRef(
   }
 )
 
-export default function NotificationsTable({ columns, data, columnFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped, readTable, markAsRead}) {
+function customBetweenFilterForStrings(rows, id, filterValue) {
+  return rows.filter(row => {
+    const rowValue = row.values[id]
+    console.log('rowValue: ', rowValue);
+    const min = filterValue[0] ? filterValue[0] : undefined
+    const max = filterValue[1] ? filterValue[1] : undefined
+    let returnValue;
+    if (min === undefined && max === undefined) {
+      return true;
+    }
+    if (min === undefined) {
+      returnValue = rowValue <= filterValue[1];
+    } else if (max === undefined) {
+      returnValue = rowValue >= filterValue[0];
+    } else {
+      returnValue = rowValue >= filterValue[0] && rowValue <= filterValue[1];
+    }
+      
+    console.log('returnValue: ', returnValue);
+    return returnValue
+  })
+}
+
+export default function NotificationsTable({ columns, data, columnFiltersEnabled, rangeFiltersEnabled, columnDensity, stickyHeaderEnabled, paginationEnabled, stripped, readTable, markAsRead}) {
     const defaultColumn = React.useMemo(
       () => ({
         // Let's set up our default Filter UI
@@ -136,11 +160,32 @@ export default function NotificationsTable({ columns, data, columnFiltersEnabled
                          
                         headerGroup.headers.map((column, index) => (
                           <div style={{display: 'table-cell'}}>
-                        <S.ReactTableTHeaderColumn key={'column'+index} density={columnDensity==='comfortable' ? 'comfortable' : columnDensity==='compact' ? 'compact' : 'standard'} {...column.getHeaderProps(column.getSortByToggleProps())} >
+
+                        {rangeFiltersEnabled ?
+
+                        <S.ReactTableTHeaderColumn 
+                          key={'column'+index} 
+                          density={columnDensity==='comfortable' ? 'comfortable' : columnDensity==='compact' ? 'compact' : 'standard'} 
+                          {...column.Filter = RangeFilter}
+                          {...column.filter = customBetweenFilterForStrings}
+                          {...column.getHeaderProps(column.getSortByToggleProps())} >
                           {column.render("Header")}
                           <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
                         </S.ReactTableTHeaderColumn>
+
+                        :
+                        <S.ReactTableTHeaderColumn 
+                          key={'column'+index} 
+                          density={columnDensity==='comfortable' ? 'comfortable' : columnDensity==='compact' ? 'compact' : 'standard'} 
+                          
+                          {...column.getHeaderProps(column.getSortByToggleProps())} >
+                          {column.render("Header")}
+                          <span>{column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}</span>  
+                        </S.ReactTableTHeaderColumn>
+
+                        } 
                         {columnFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
+                        {rangeFiltersEnabled && <div style={{marginBottom: '10px', marginTop: '10px', paddingRight: '20px'}}>{column.canFilter ? column.render("Filter") : null}</div>}  
                         </div>
                         ))
                     }

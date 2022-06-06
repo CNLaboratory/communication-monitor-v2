@@ -163,7 +163,6 @@ export default class ChartsDisplay extends React.Component {
         toolCardComponentsArray = [
           <S.Row key='row1'><S.Col12>
             <S.Card><S.CardBody><ToolCard 
-              cardTitle= {cardTitle}
               data={this.state.data} />
             </S.CardBody></S.Card>
           </S.Col12></S.Row>

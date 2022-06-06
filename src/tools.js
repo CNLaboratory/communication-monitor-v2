@@ -597,7 +597,7 @@ export function ChartsDisplayTool (settingsObject) {
       breadcrumpToolsetTitle='Charts Display Tool'
       mainComponent= 
       {<ChartsDisplay 
-        API_URL={ENDPOINTS.transactionsdepiction.url} 
+        API_URL={ENDPOINTS.sensorsdepiction.url} 
         settings={settingsObject.settings}
       />}
     />
