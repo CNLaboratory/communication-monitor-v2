@@ -24,13 +24,16 @@ export default function RangeFilter({
   }, [id, preFilteredRows]);
 
   return (
-    <div
+    <S.ColumnFilterWrapper
       style={{
         display: "flex",
         flexWrap: "wrap"
       }}
     >
-      <input
+      <S.ColumnFilterInput 
+        style={{
+          width: '100%'
+        }}
         value={filterValue[0] || ""}
         onChange={(e) => {
           const val = e.target.value;
@@ -44,7 +47,7 @@ export default function RangeFilter({
         
       />
       to
-      <input
+      <S.ColumnFilterInput
         value={filterValue[1] || ""}
         onChange={(e) => {
           const val = e.target.value;
@@ -57,6 +60,6 @@ export default function RangeFilter({
         placeholder={`Max (${max})`}
         
       />
-    </div>
+    </S.ColumnFilterWrapper>
   );
   }

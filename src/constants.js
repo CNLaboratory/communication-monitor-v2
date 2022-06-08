@@ -11,7 +11,7 @@ export const defaultSettings = {
   notificationsFetchInterval: 30000, //for notifications refresh in milliseconds
   tableAutoRefreshInterval: 10000, //for axios operations in milliseconds 
   tableAutoRefreshEnabled: false,
-  tableDensity: 'compact', //the default density for tables
+  tableDensity: 'compact', //the default density for tables - compact/standard/comfortable
   tableColumnFiltersEnabled: false, //are column filters enabled by default in tables?
   tableRangeFiltersEnabled: false, //are range filters enabled by default in tables?
   tableStickyHeaderEnabled: true, //sticky header in tables
