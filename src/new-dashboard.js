@@ -842,7 +842,7 @@ export class NewDashboard extends React.Component {
       <S.VerticalMenuWrapper collapsed={this.state.menuCollapse}>
         <SimpleBar style={{ height: '100%', maxHeight: '100%' }}>
           <S.VerticalMenu>
-            <this.MenuGroup title='Toolsets'>
+            <this.MenuGroup title='Communication Monitor Toolsets'>
               {this.state.showAdminBoard && <SubMenu sidebarData={AdminSidebarData}/> }
               {this.state.showModeraborBoard && <SubMenu sidebarData={ModeratorSidebarData}/> }
               {!this.state.showAdminBoard && !this.state.showModeraborBoard && <SubMenu sidebarData={UserSidebarData}/> }
