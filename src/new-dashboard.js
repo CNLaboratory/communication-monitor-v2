@@ -852,15 +852,11 @@ export class NewDashboard extends React.Component {
                 return <SubMenu item={item} key={index} active={(activeItem===item) ? true : false} handleClick={handleMenuItemClick}/>
               })*/}
             </this.MenuGroup>
-            {this.state.showAdminBoard &&
-            <this.MenuGroup title='Experiments'>
-            <SubMenu sidebarData={ExperimentsSidebarData}/>
-              {/*ExperimentsSidebarData.map((item, index) => {
-                return <SubMenu item={item} key={index}/>;
-              })*/}
-              
-            </this.MenuGroup>
-            }
+            {/*this.state.showAdminBoard &&
+              <this.MenuGroup title='Experiments'>
+              <SubMenu sidebarData={ExperimentsSidebarData}/>
+              </this.MenuGroup>
+            */}
           
           </S.VerticalMenu>
         
