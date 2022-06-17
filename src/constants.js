@@ -18,6 +18,7 @@ export const defaultSettings = {
   tablePaginationEnabled: true, //pagination enabled in tables
   tableStrippedRows: true, //stripped rows in tables
   operationTimeOut: 20000, //timeout value for axios operations
+  showExperiments: false //show experiments in sidebar or not
 }
 
 

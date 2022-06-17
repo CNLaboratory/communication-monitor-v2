@@ -682,12 +682,12 @@ export class NewDashboard extends React.Component {
 
                 })}
                 </SimpleBar>
-                {this.state.showAdminBoard && 
+                {this.state.settings.showExperiments && this.state.showAdminBoard && 
                 <S.SearchBarDropDownHeaderWrapper>
                   <S.SearchBarDropDownHeader>Experiments</S.SearchBarDropDownHeader>
                 </S.SearchBarDropDownHeaderWrapper>
                 }
-                <SimpleBar style={{ maxHeight: '300px' }}>
+                {this.state.settings.showExperiments && <SimpleBar style={{ maxHeight: '300px' }}>
                 {this.state.availableExperiments.filter(post => {
                   if (this.state.searchBarQuery === '') {
                     return post;
@@ -721,6 +721,7 @@ export class NewDashboard extends React.Component {
 
                 })}
                 </SimpleBar>
+                }
               
               </S.SearchBarDropDownWrapper>
               
@@ -853,11 +854,11 @@ export class NewDashboard extends React.Component {
               })*/}
             </this.MenuGroup>
 
-            {/*this.state.showAdminBoard &&
+            {this.state.settings.showExperiments && this.state.showAdminBoard &&
               <this.MenuGroup title='Experiments'>
               <SubMenu sidebarData={ExperimentsSidebarData}/>
               </this.MenuGroup>
-            */}
+            }
           
           </S.VerticalMenu>
         

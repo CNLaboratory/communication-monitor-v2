@@ -34,6 +34,7 @@ export default class GeneralSettings extends React.Component {
     this.handleOperationTimetoutChanged = this.handleOperationTimetoutChanged.bind(this);
     this.handleApplyOperationTimeoutClicked = this.handleApplyOperationTimeoutClicked.bind(this);
     this.resetSettingsClicked = this.resetSettingsClicked.bind(this);
+    this.handleShowExperimentsClicked = this.handleShowExperimentsClicked.bind(this);
   }
 
   componentDidMount() {
@@ -170,6 +171,18 @@ export default class GeneralSettings extends React.Component {
       this.settingsChanged();
     })
   }
+  handleShowExperimentsClicked() {
+    let settings = this.state.settings;
+    settings.showExperiments = !settings.showExperiments;
+    console.log('showExperiments:', settings.showExperiments);
+    this.setState({
+      settings: settings
+    }, () => {
+      this.settingsChanged();
+    })
+  }
+
+
   resetSettingsClicked() {
     let settings = {
       theme: defaultSettings.theme,
@@ -282,6 +295,12 @@ export default class GeneralSettings extends React.Component {
                 <S.GeneralSettingInput value={this.state.operationTimeoutTemp} placeholder={this.state.settings.operationTimeOut} onChange={this.handleOperationTimetoutChanged}/>
                 <S.StyledButtonPrimary onClick={this.handleApplyOperationTimeoutClicked}>Apply</S.StyledButtonPrimary>
               </S.GeneralSettingWrapper>
+              </S.GeneralSettingsGroup>
+              <S.GeneralSettingsGroup>
+                <S.GeneralSettingWrapper onClick={this.handleShowExperimentsClicked}>
+                  <S.GeneralSettingsToggleSwitchLabel>Show Experiments</S.GeneralSettingsToggleSwitchLabel>
+                  <S.GeneralSettingToggleSwitchInput image={Circle} imageDark={CircleDark} checked={this.state.settings.showExperiments}/>
+                </S.GeneralSettingWrapper>
               </S.GeneralSettingsGroup>
               <S.GeneralSettingsGroup>
               <S.GeneralSettingWrapper >
