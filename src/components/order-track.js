@@ -210,7 +210,8 @@ class OrderTrack extends React.Component {
           <div className='dynamic-api-form'>
             <h4>Please input your order ID below</h4> 
             {customFormComponent}            
-            {this.state.isDataLoaded && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
+            {this.state.isDataLoaded && this.state.emptyOrder && <h2>Invalid Order</h2>}
+            {this.state.isDataLoaded && !this.state.emptyOrder && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
             
             {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}
           </div>
@@ -223,7 +224,7 @@ class OrderTrack extends React.Component {
             {/*buttonComponent*/}
             
             {/*toolComponent1*/}
-            {this.state.isDataLoaded && this.state.emptyOrder && <h2>Invalid Order</h2>}
+            
             
           </div>
           
