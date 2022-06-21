@@ -205,13 +205,12 @@ class OrderTrack extends React.Component {
 
     return (
       <div className='data-display'>
-        <div className='header'>
-          <h1>Dynamic API Input</h1>
-          
+        <div className='header'>          
           <div className='dynamic-api-form'>
             <h4>Please input your order ID below</h4> 
-            {this.state.isDataLoaded && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
             {customFormComponent}            
+            {this.state.isDataLoaded && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
+            
             {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}
           </div>
           
