@@ -3,6 +3,7 @@ import '../App.css';
 import axios from 'axios';
 
 import DisplayTable from './ntua/displayTable';
+import NewDataDisplay from '../new-data-display';
 import Button from 'react-bootstrap/Button'
 import { IoRefreshOutline } from 'react-icons/io5';
 
@@ -209,6 +210,7 @@ class OrderTrack extends React.Component {
           
           <div className='dynamic-api-form'>
             <h4>Please input your order ID below</h4> 
+            {this.state.isDataLoaded && <NewDataDisplay data={this.state.data} key={this.state.API_URL} settings={this.state.settings}/> }
             {customFormComponent}            
             {/*<button className='refresh-button' type='button' onClick={this.refreshData}>Refresh Data</button>*/}
           </div>
@@ -218,9 +220,9 @@ class OrderTrack extends React.Component {
         <div className="tool-card-wrapper">
         
           <div className="tool-card-wrapper-array">
-            {buttonComponent}
+            {/*buttonComponent*/}
             
-            {toolComponent1}
+            {/*toolComponent1*/}
             {this.state.emptyOrder && <h2>Invalid Order</h2>}
             
           </div>
