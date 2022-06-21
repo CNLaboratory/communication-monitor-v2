@@ -60,7 +60,8 @@ class OrderTrack extends React.Component {
         console.log('response.data:', response.data);
         if (response.data.length === 0) {
           console.log('empty order');
-          this.setState({emptyOrder: true});
+          this.setState({emptyOrder: true, isDataLoaded: true});
+
 
         } else {
           this.setState({data:response.data, emptyOrder: false}, () => {
@@ -141,7 +142,7 @@ class OrderTrack extends React.Component {
                 
                 
                 endpoint = 'https://communicationmonitor.cn.ntua.gr:5000/evaluateorders?order=';
-                this.setState({API_URL: endpoint + formValues[url]['url']}, () => {
+                this.setState({API_URL: endpoint + formValues[url]['url'], isTransfering: true, data: []}, () => {
                 
                     this.getProductData();
                     //displayTableComponent.push(<DisplayTable columns={this.state.columns} data={this.state.data} />);
@@ -222,12 +223,10 @@ class OrderTrack extends React.Component {
             {/*buttonComponent*/}
             
             {/*toolComponent1*/}
-            {this.state.emptyOrder && <h2>Invalid Order</h2>}
+            {this.state.isDataLoaded && this.state.emptyOrder && <h2>Invalid Order</h2>}
             
           </div>
-          <div className="tool-card-wrapper-inner">
-            {/*toolCardComponentsArray*/}
-          </div>
+          
         </div>
         <div className="section-charts">
 
