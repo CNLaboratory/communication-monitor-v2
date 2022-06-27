@@ -181,7 +181,7 @@ class OrderTrack extends React.Component {
             {this.state.formValues.map((element, index) => (
                 <div className="form-inline" key={index}>
                     <label>Order ID</label>
-                    <input type="number" name="url" value={element.url || ""} onChange={e => this.handleChange(index, e)} />
+                    <input name="url" value={element.url || ""} onChange={e => this.handleChange(index, e)} />
                     {
                         index ? 
                         <button type="button"  className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button> 
