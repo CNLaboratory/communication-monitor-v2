@@ -83,7 +83,6 @@ export class NewDashboard extends React.Component {
       keys: [],
       labels: [],
       autoRefreshEnabled: true,
-      refreshInterval: 10000,
       
       messageCounter: 0,
       searchBarQuery: '',
@@ -294,6 +293,7 @@ export class NewDashboard extends React.Component {
       settings: settings
     }, () => {
       localStorage.setItem('settings', JSON.stringify(this.state.settings));
+      this.handleAutoRefreshChanged(true);
     })
   }
 
@@ -353,32 +353,37 @@ export class NewDashboard extends React.Component {
   }
 
   updateAutoRefresh() {
-    
-    if (this.state.autoRefreshEnabled && this.state.refreshInterval) {
+    clearInterval(this.state.timer);
+    if (this.state.autoRefreshEnabled && this.state.settings.notificationsFetchInterval > 0) {
       this.state.getDataLocally ?
         this.setState({
-          timer: setInterval(this.getNotificationDataFromFile, this.state.refreshInterval)
+          timer: setInterval(this.getNotificationDataFromFile, this.state.settings.notificationsFetchInterval)
         })
         :
         this.setState({
-          timer: setInterval(this.getNotificationData, this.state.refreshInterval)
+          timer: setInterval(this.getNotificationData, this.state.settings.notificationsFetchInterval)
         })
     }
   }
-  handleAutoRefreshChanged(autoRefreshEnabled) {
-    if (autoRefreshEnabled) {
+  handleAutoRefreshChanged() {
+    console.log('handleAutoRefreshChanged');
+    console.log('autoRefreshEnabled:', this.state.autoRefreshEnabled);
+    console.log('notificationsFetchInterval:', this.state.settings.notificationsFetchInterval);
+    if (this.state.autoRefreshEnabled && this.state.settings.notificationsFetchInterval > 0) {
+      clearInterval(this.state.timer);
       this.state.getDataLocally ?
         this.setState({
-          timer: setInterval(this.getNotificationDataFromFile, this.state.refreshInterval)
+          timer: setInterval(this.getNotificationDataFromFile, this.state.settings.notificationsFetchInterval)
         })
       :
         this.setState({
-          timer: setInterval(this.getNotificationData, this.state.refreshInterval)
+          timer: setInterval(this.getNotificationData, this.state.settings.notificationsFetchInterval)
         })
       
     } else {
       clearInterval(this.state.timer);
     }
+    
   }
   onSearchBarBlur() {
     this.setState({
@@ -514,6 +519,7 @@ export class NewDashboard extends React.Component {
     };
 
   getNotificationData() {
+    
     const axiosInstance = axios.create();
     axiosInstance.defaults.timeout = this.state.settings.operationTimeOut;
 
@@ -524,6 +530,7 @@ export class NewDashboard extends React.Component {
         this.processData();
       });
     });
+    
   }
   refreshData() {
     console.log('refreshData()');

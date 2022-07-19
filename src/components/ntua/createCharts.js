@@ -104,6 +104,8 @@ export default class CreateCharts extends React.Component {
         let labels = [];
         let cmCharts = [];
         let graphDataSets = [];
+        let backgroundColors = [];
+        
         
 
         for (let i = 0; i < keys.length; i++) {    
@@ -121,13 +123,30 @@ export default class CreateCharts extends React.Component {
                 graphData.push(inputData[y][key]);   
 
             }
-            let backgroundColor = i < COLORS.length ? COLORS[i] : this.dynamicColors();
+            let datasetBackgroundColor = i < COLORS.length ? COLORS[i] : this.dynamicColors();
             
-            graphDataSets.push({
-                label: key,
-                data: graphData,
-                backgroundColor: backgroundColor
-            });
+            if (this.state.selectedChartType === 'pie' || this.state.selectedChartType === 'doughnut' || this.state.selectedChartType === 'polararea' ) {
+                for (let j = 0; j < inputData.length; j++ ) {
+                    backgroundColors.push(this.dynamicColors());
+                    
+                    //console.log('selectedChartType:', this.state.selectedChartType);
+                    //console.log('graphDataSets:', graphDataSets);
+                }
+                graphDataSets.push({
+                    label: key,
+                    data: graphData,
+                    backgroundColor: backgroundColors
+                });
+                    
+                } else {
+                    graphDataSets.push({
+                        label: key,
+                        data: graphData,
+                        backgroundColor: datasetBackgroundColor
+                    });
+                }
+
+            
             
         }
         const data = {
